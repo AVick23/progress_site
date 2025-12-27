@@ -1,0 +1,1650 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Для репетиторов - Прогресс</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="telegram-app">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fab fa-telegram"></i>
+                    <span>Прогресс</span>
+                </div>
+                <button class="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            
+            <div class="sidebar-search">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Поиск...">
+                </div>
+            </div>
+            
+            <div class="sidebar-menu">
+                <a href="index.html" class="menu-item">
+                    <i class="fas fa-home"></i>
+                    <span>Главная</span>
+                </a>
+                <a href="tutor.html" class="menu-item active">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                    <span>Для репетиторов</span>
+                </a>
+                <a href="student.html" class="menu-item">
+                    <i class="fas fa-user-graduate"></i>
+                    <span>Для учеников</span>
+                </a>
+                <a href="features.html" class="menu-item">
+                    <i class="fas fa-star"></i>
+                    <span>Функционал</span>
+                </a>
+                <a href="contacts.html" class="menu-item">
+                    <i class="fas fa-phone"></i>
+                    <span>Контакты</span>
+                </a>
+            </div>
+            
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="avatar">П</div>
+                    <div class="user-details">
+                        <span class="user-name">Репетитор: Иванов И.И.</span>
+                        <span class="user-status">онлайн</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div class="content-header">
+                <h1><i class="fas fa-chalkboard-teacher"></i> Для репетиторов</h1>
+                <div class="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </div>
+            </div>
+            
+            <div class="chat-container">
+                <!-- Чат с ботом -->
+                <div class="telegram-chat" id="chatContainer">
+                    <!-- Сообщение от бота при входе -->
+                    <div class="message bot-message" id="welcomeMessage">
+                        <div class="message-avatar">П</div>
+                        <div class="message-content">
+                            <div class="message-sender">Бот "Прогресс"</div>
+                            <div class="message-text">
+                                <p>👋 <strong>Добро пожаловать, репетитор!</strong></p>
+                                <p>Это ваш личный кабинет для управления учебным процессом.</p>
+                                <p>👇 <strong>Главное меню репетитора:</strong></p>
+                            </div>
+                            
+                            <!-- Инлайн-кнопки главного меню -->
+                            <div class="inline-buttons" id="mainMenu">
+                                <div class="button-row">
+                                    <button class="inline-button" onclick="showSection('students')">
+                                        👨‍🎓 Мои ученики
+                                    </button>
+                                    <button class="inline-button" onclick="showSection('lessons')">
+                                        📅 Занятия
+                                    </button>
+                                </div>
+                                <div class="button-row">
+                                    <button class="inline-button" onclick="showSection('materials')">
+                                        📚 Банк тем
+                                    </button>
+                                    <button class="inline-button" onclick="showSection('statistics')">
+                                        📊 Статистика
+                                    </button>
+                                </div>
+                                <div class="button-row">
+                                    <button class="inline-button" onclick="showTutorProfile()">
+                                        ⚙️ Мой профиль
+                                    </button>
+                                    <button class="inline-button primary" onclick="startAddStudent()">
+                                        ➕ Добавить ученика
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="message-time" id="welcomeTime"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Индикатор печати -->
+                    <div class="typing-indicator" id="typingIndicator">
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                    </div>
+                    
+                    <!-- Контейнер для сообщений -->
+                    <div id="messageContainer"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===== ОСНОВНЫЕ УТИЛИТЫ =====
+        function getCurrentTime() {
+            const now = new Date();
+            return `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+        }
+
+        function createBotMessage(content) {
+            const message = document.createElement('div');
+            message.className = 'message bot-message';
+            message.innerHTML = `
+                <div class="message-avatar">П</div>
+                <div class="message-content">
+                    <div class="message-sender">Бот "Прогресс"</div>
+                    <div class="message-text">${content}</div>
+                    <div class="message-time">${getCurrentTime()}</div>
+                </div>
+            `;
+            return message;
+        }
+
+        function createUserMessage(content) {
+            const message = document.createElement('div');
+            message.className = 'message user-message';
+            message.style.marginLeft = 'auto';
+            message.style.marginRight = '0';
+            message.style.maxWidth = '75%';
+            message.innerHTML = `
+                <div class="message-content">
+                    <div class="message-sender">Вы</div>
+                    <div class="message-text">${content}</div>
+                    <div class="message-time">${getCurrentTime()}</div>
+                </div>
+            `;
+            return message;
+        }
+
+        // ===== ФУНКЦИИ ПРОКРУТКИ =====
+        function scrollToElement(element) {
+            const chatContainer = document.querySelector('.chat-container');
+            if (!chatContainer || !element) return;
+            
+            setTimeout(() => {
+                const containerRect = chatContainer.getBoundingClientRect();
+                const elementRect = element.getBoundingClientRect();
+                
+                const isInView = (
+                    elementRect.top >= containerRect.top &&
+                    elementRect.bottom <= containerRect.bottom
+                );
+                
+                if (!isInView) {
+                    const scrollTop = element.offsetTop - chatContainer.offsetTop - 50;
+                    chatContainer.scrollTo({
+                        top: Math.max(0, scrollTop),
+                        behavior: 'smooth'
+                    });
+                }
+            }, 50);
+        }
+
+        function scrollToBottom() {
+            const chatContainer = document.querySelector('.chat-container');
+            if (chatContainer) {
+                setTimeout(() => {
+                    chatContainer.scrollTo({
+                        top: chatContainer.scrollHeight,
+                        behavior: 'smooth'
+                    });
+                }, 100);
+            }
+        }
+
+        function showTypingIndicator() {
+            const typingIndicator = document.getElementById('typingIndicator');
+            typingIndicator.style.opacity = '1';
+            typingIndicator.style.height = 'auto';
+            scrollToBottom();
+        }
+
+        function hideTypingIndicator() {
+            const typingIndicator = document.getElementById('typingIndicator');
+            typingIndicator.style.opacity = '0';
+            setTimeout(() => {
+                typingIndicator.style.height = '0';
+            }, 300);
+        }
+
+        // ===== СОСТОЯНИЯ ДЛЯ РАЗНЫХ ПРОЦЕССОВ =====
+        let addStudentState = {
+            step: 0,
+            studentName: '',
+            discipline: '',
+            comment: '',
+            token: ''
+        };
+
+        let profileState = {
+            step: 0,
+            editingField: ''
+        };
+
+        // ===== ДАННЫЕ ПРОФИЛЯ РЕПЕТИТОРА =====
+        let tutorProfile = {
+            fullName: "Иванов Иван Иванович",
+            disciplines: ["Математика", "Физика", "Информатика"],
+            contacts: "+7 (999) 123-45-67, tutor@mail.ru",
+            about: "Опыт работы 5 лет, фокус на практических задачах",
+            subjects: 3,
+            topics: 15,
+            materials: 47
+        };
+
+        const disciplines = ['Математика', 'Физика', 'Информатика', 'Русский язык', 'Английский язык', 'Химия', 'Биология'];
+
+        // ===== ОСНОВНЫЕ ФУНКЦИИ =====
+        function showSection(sectionName) {
+            const messageContainer = document.getElementById('messageContainer');
+            const typingIndicator = document.getElementById('typingIndicator');
+            
+            // Очищаем предыдущие сообщения
+            messageContainer.innerHTML = '';
+            
+            showTypingIndicator();
+            
+            setTimeout(() => {
+                hideTypingIndicator();
+                
+                let sectionMessage;
+                
+                switch(sectionName) {
+                    case 'students':
+                        sectionMessage = createBotMessage(`
+                            👨‍🎓 <strong>Мои ученики</strong><br><br>
+                            📋 <strong>Список учеников:</strong><br><br>
+                            <div class="student-list">
+                                <div class="student-category">
+                                    <strong>📚 Математика</strong>
+                                    <div class="student-item">
+                                        <span class="student-name">Иванов Иван</span>
+                                        <span class="student-comment">— Готовимся к олимпиаде</span>
+                                    </div>
+                                    <div class="student-item">
+                                        <span class="student-name">Петров Петр</span>
+                                        <span class="student-comment">— Базовый курс</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="student-category">
+                                    <strong>⚛️ Физика</strong>
+                                    <div class="student-item">
+                                        <span class="student-name">Сидоров Сидор</span>
+                                        <span class="student-comment">— ОГЭ 2025</span>
+                                    </div>
+                                </div>
+                            </div><br>
+                            <div class="inline-buttons">
+                                <button class="inline-button" onclick="showMainMenu()">
+                                    ← Назад в меню
+                                </button>
+                                <button class="inline-button primary" onclick="startAddStudent()">
+                                    ➕ Добавить ученика
+                                </button>
+                            </div>
+                        `);
+                        break;
+                        
+                    case 'lessons':
+                        sectionMessage = createBotMessage(`
+                            📅 <strong>Занятия</strong><br><br>
+                            🗓️ <strong>Ближайшие занятия:</strong><br>
+                            • 15 декабря 2025 — Иванов Иван (Математика)<br>
+                            • 16 декабря 2025 — Петров Петр (Математика)<br>
+                            • 17 декабря 2025 — Сидоров Сидор (Физика)<br><br>
+                            📊 <strong>Статистика занятий:</strong><br>
+                            • Всего занятий: 24<br>
+                            • Проведено: 20 (83.3%)<br>
+                            • Отменено: 2 (8.3%)<br>
+                            • Перенесено: 2 (8.3%)<br><br>
+                            <div class="inline-buttons">
+                                <button class="inline-button" onclick="showMainMenu()">
+                                    ← Назад в меню
+                                </button>
+                                <button class="inline-button primary" onclick="createNewLesson()">
+                                    ➕ Добавить занятие
+                                </button>
+                            </div>
+                        `);
+                        break;
+                        
+                    case 'materials':
+                        sectionMessage = createBotMessage(`
+                            📚 <strong>Банк тем</strong><br><br>
+                            📁 <strong>Структура материалов:</strong><br>
+                            <div class="materials-structure">
+                                <div class="folder">
+                                    📁 Математика
+                                    <div class="subfolder">
+                                        ├── 📁 Алгебра
+                                        <div class="subfolder">
+                                        │   ├── 📄 Теория уравнений.pdf
+                                        <br>│   └── 📄 Практические задачи.doc
+                                        </div>
+                                        <br>└── 📁 Геометрия
+                                    </div>
+                                </div>
+                            </div><br>
+                            <div class="inline-buttons">
+                                <button class="inline-button" onclick="showMainMenu()">
+                                    ← Назад в меню
+                                </button>
+                                <button class="inline-button primary">
+                                    ➕ Добавить материал
+                                </button>
+                            </div>
+                        `);
+                        break;
+                        
+                    case 'statistics':
+                        sectionMessage = createBotMessage(`
+                            📊 <strong>Статистика и аналитика</strong><br><br>
+                            📈 <strong>Ключевые показатели:</strong><br>
+                            • Общая успеваемость: 85.7%<br>
+                            • Эффективность: 92.3%<br>
+                            • Качество работы: 95.1%<br>
+                            • Среднее время выполнения: 2.3 дня<br><br>
+                            📋 <strong>Распределение заданий:</strong><br>
+                            • Выполнено: 24 (80%)<br>
+                            • В работе: 4 (13.3%)<br>
+                            • Просрочено: 1 (3.3%)<br>
+                            • На проверке: 1 (3.3%)<br><br>
+                            <div class="inline-buttons">
+                                <button class="inline-button" onclick="showMainMenu()">
+                                    ← Назад в меню
+                                </button>
+                                <button class="inline-button primary">
+                                    📥 Экспорт отчета
+                                </button>
+                            </div>
+                        `);
+                        break;
+                }
+                
+                if (sectionMessage) {
+                    messageContainer.appendChild(sectionMessage);
+                    setTimeout(() => {
+                        scrollToElement(sectionMessage);
+                    }, 150);
+                }
+            }, 800);
+        }
+
+        function showMainMenu() {
+            const messageContainer = document.getElementById('messageContainer');
+            messageContainer.innerHTML = '';
+            
+            setTimeout(() => {
+                const welcomeMessage = document.getElementById('welcomeMessage');
+                scrollToElement(welcomeMessage);
+            }, 50);
+        }
+
+        // ===== ФУНКЦИИ ПРОФИЛЯ РЕПЕТИТОРА =====
+        function showTutorProfile() {
+            profileState.step = 0;
+            profileState.editingField = '';
+            
+            const messageContainer = document.getElementById('messageContainer');
+            messageContainer.innerHTML = '';
+            
+            showTypingIndicator();
+            
+            setTimeout(() => {
+                hideTypingIndicator();
+                
+                const profileMessage = createBotMessage(`
+                    ⚙️ <strong>Мой профиль</strong><br><br>
+                    👤 <strong>ФИО:</strong> ${tutorProfile.fullName}<br>
+                    📚 <strong>Дисциплины:</strong> ${tutorProfile.disciplines.length ? tutorProfile.disciplines.join(', ') : '—'}<br>
+                    📞 <strong>Контакты:</strong> ${tutorProfile.contacts || '—'}<br>
+                    💬 <strong>О себе:</strong> ${tutorProfile.about || '—'}<br><br>
+                    <strong>Что вы хотите изменить?</strong><br><br>
+                    <div class="inline-buttons">
+                        <button class="inline-button" onclick="editFullName()">
+                            ✏️ Изменить ФИО
+                        </button>
+                        <button class="inline-button" onclick="manageDisciplines()">
+                            📚 Управление дисциплинами
+                        </button>
+                    </div>
+                    <div class="inline-buttons">
+                        <button class="inline-button" onclick="editContacts()">
+                            📞 Изменить контакты
+                        </button>
+                        <button class="inline-button" onclick="editAbout()">
+                            📝 Редактировать «О себе»
+                        </button>
+                    </div>
+                    <div class="inline-buttons">
+                        <button class="inline-button danger" onclick="deleteProfile()">
+                            🗑️ Удалить профиль
+                        </button>
+                        <button class="inline-button" onclick="showMainMenu()">
+                            ← Назад в меню
+                        </button>
+                    </div>
+                `);
+                
+                messageContainer.appendChild(profileMessage);
+                setTimeout(() => {
+                    scrollToElement(profileMessage);
+                }, 150);
+            }, 800);
+        }
+
+        // Редактирование ФИО
+        function editFullName() {
+            profileState.step = 1;
+            profileState.editingField = 'fullName';
+            
+            const messageContainer = document.getElementById('messageContainer');
+            messageContainer.innerHTML = '';
+            
+            showTypingIndicator();
+            
+            setTimeout(() => {
+                hideTypingIndicator();
+                
+                const editMessage = createBotMessage(`
+                    ✏️ <strong>Редактирование ФИО</strong><br><br>
+                    Введите ваше новое ФИО:<br><br>
+                    <div class="example-input">
+                        <strong>Примеры корректных ФИО:</strong><br>
+                        <code>Иванов Иван Иванович</code><br>
+                        <code>Петрова Мария</code><br><br>
+                        <strong>Примеры некорректных:</strong><br>
+                        <code>Иван (только имя)</code><br>
+                        <code>   (пустая строка)</code>
+                    </div>
+                    <br>
+                    <div class="input-wrapper">
+                        <input type="text" id="fullNameField" placeholder="Введите ФИО (минимум 2 слова)" 
+                               value="${tutorProfile.fullName}" onkeypress="handleFieldEnter(event, 'fullName')">
+                        <button class="inline-button small" onclick="submitField('fullName')">
+                            Сохранить
+                        </button>
+                    </div>
+                    <br>
+                    <div class="inline-buttons">
+                        <button class="inline-button" onclick="showTutorProfile()">
+                            ← Отмена
+                        </button>
+                    </div>
+                `);
+                
+                messageContainer.appendChild(editMessage);
+                setTimeout(() => {
+                    scrollToElement(editMessage);
+                    document.getElementById('fullNameField').focus();
+                }, 150);
+            }, 800);
+        }
+
+        // Управление дисциплинами
+        function manageDisciplines() {
+            profileState.step = 2;
+            profileState.editingField = 'disciplines';
+            
+            const messageContainer = document.getElementById('messageContainer');
+            messageContainer.innerHTML = '';
+            
+            showTypingIndicator();
+            
+            setTimeout(() => {
+                hideTypingIndicator();
+                
+                let disciplinesList = '';
+                if (tutorProfile.disciplines.length > 0) {
+                    disciplinesList = tutorProfile.disciplines.map(discipline => `
+                        <div class="disciplines-item">
+                            <span>${discipline}</span>
+                            <button class="inline-button small danger" onclick="removeDiscipline('${discipline}')">
+                                ❌ Удалить
+                            </button>
+                        </div>
+                    `).join('');
+                } else {
+                    disciplinesList = '<p style="color: #8e8e93; font-style: italic;">📭 У вас пока нет дисциплин.</p>';
+                }
+                
+                const disciplinesMessage = createBotMessage(`
+                    📚 <strong>Управление дисциплинами</strong><br><br>
+                    ${disciplinesList}
+                    <br>
+                    <div class="inline-buttons">
+                        <button class="inline-button" onclick="showTutorProfile()">
+                            ← Назад в профиль
+                        </button>
+                        <button class="inline-button primary" onclick="addNewDiscipline()">
+                            ➕ Добавить дисциплину
+                        </button>
+                    </div>
+                `);
+                
+                messageContainer.appendChild(disciplinesMessage);
+                setTimeout(() => {
+                    scrollToElement(disciplinesMessage);
+                }, 150);
+            }, 800);
+        }
+
+        function removeDiscipline(disciplineName) {
+            tutorProfile.disciplines = tutorProfile.disciplines.filter(d => d !== disciplineName);
+            
+            const messageContainer = document.getElementById('messageContainer');
+            const userMessage = createUserMessage(`Удалить: ${disciplineName}`);
+            messageContainer.appendChild(userMessage);
+            
+            showTypingIndicator();
+            
+            setTimeout(() => {
+                hideTypingIndicator();
+                const successMessage = createBotMessage(`
+                    ✅ <strong>Дисциплина удалена.</strong>
+                `);
+                messageContainer.appendChild(successMessage);
+                setTimeout(() => {
+                    manageDisciplines();
+                }, 800);
+            }, 800);
+        }
+
+        function addNewDiscipline() {
+            const messageContainer = document.getElementById('messageContainer');
+            messageContainer.innerHTML = '';
+            
+            showTypingIndicator();
+            
+            setTimeout(() => {
+                hideTypingIndicator();
+                
+                const addMessage = createBotMessage(`
+                    ➕ <strong>Добавление новой дисциплины</strong><br><br>
+                    Введите название новой дисциплины:<br><br>
+                    <div class="input-wrapper">
+                        <input type="text" id="newDisciplineField" placeholder="Например: Математика" 
+                               onkeypress="handleFieldEnter(event, 'newDiscipline')">
+                        <button class="inline-button small" onclick="submitField('newDiscipline')">
+                            Добавить
+                        </button>
+                    </div>
+                    <br>
+                    <div class="inline-buttons">
+                        <button class="inline-button" onclick="manageDisciplines()">
+                            ← Отмена
+                        </button>
+                    </div>
+                `);
+                
+                messageContainer.appendChild(addMessage);
+                setTimeout(() => {
+                    scrollToElement(addMessage);
+                    document.getElementById('newDisciplineField').focus();
+                }, 150);
+            }, 800);
+        }
+
+        // Редактирование контактов
+        function editContacts() {
+            profileState.step = 3;
+            profileState.editingField = 'contacts';
+            
+            const messageContainer = document.getElementById('messageContainer');
+            messageContainer.innerHTML = '';
+            
+            showTypingIndicator();
+            
+            setTimeout(() => {
+                hideTypingIndicator();
+                
+                const editMessage = createBotMessage(`
+                    📞 <strong>Изменение контактов</strong><br><br>
+                    Введите контакты для связи:<br>
+                    Телефон, email, Telegram — всё, что удобно ученикам.<br><br>
+                    <div class="example-input">
+                        <strong>Примеры корректных контактов:</strong><br>
+                        <code>+7 (999) 123-45-67, email@example.com</code><br>
+                        <code>Telegram: @tutor_ivanov, WhatsApp: +79991234567</code><br>
+                        <code>email@tutor.com, телефон: 8-800-123-45-67</code>
+                    </div>
+                    <br>
+                    <div class="input-wrapper">
+                        <input type="text" id="contactsField" placeholder="Введите контакты (минимум 5 символов)" 
+                               value="${tutorProfile.contacts}" onkeypress="handleFieldEnter(event, 'contacts')">
+                        <button class="inline-button small" onclick="submitField('contacts')">
+                            Сохранить
+                        </button>
+                    </div>
+                    <br>
+                    <div class="inline-buttons">
+                        <button class="inline-button" onclick="showTutorProfile()">
+                            ← Отмена
+                        </button>
+                    </div>
+                `);
+                
+                messageContainer.appendChild(editMessage);
+                setTimeout(() => {
+                    scrollToElement(editMessage);
+                    document.getElementById('contactsField').focus();
+                }, 150);
+            }, 800);
+        }
+
+        // Редактирование "О себе"
+        function editAbout() {
+            profileState.step = 4;
+            profileState.editingField = 'about';
+            
+            const messageContainer = document.getElementById('messageContainer');
+            messageContainer.innerHTML = '';
+            
+            showTypingIndicator();
+            
+            setTimeout(() => {
+                hideTypingIndicator();
+                
+                const editMessage = createBotMessage(`
+                    📝 <strong>Редактирование "О себе"</strong><br><br>
+                    Расскажите о себе:<br>
+                    Ваш опыт, подход к обучению, цели. Это поможет ученикам вас лучше понять.<br><br>
+                    <div class="example-input">
+                        <strong>Пример описания:</strong><br>
+                        <code>Опыт преподавания - 7 лет. Специализация: подготовка к ЕГЭ и ОГЭ по математике.<br>
+                        Мои ученики регулярно сдают экзамены на 80+ баллов.<br>
+                        Индивидуальный подход к каждому ученику.</code>
+                    </div>
+                    <br>
+                    <div class="input-wrapper">
+                        <textarea id="aboutField" placeholder="Расскажите о себе (минимум 10 символов)" 
+                                  rows="4" onkeypress="handleTextareaEnter(event, 'about')">${tutorProfile.about}</textarea>
+                        <button class="inline-button small" onclick="submitField('about')">
+                            Сохранить
+                        </button>
+                    </div>
+                    <br>
+                    <div class="inline-buttons">
+                        <button class="inline-button" onclick="showTutorProfile()">
+                            ← Отмена
+                        </button>
+                    </div>
+                `);
+                
+                messageContainer.appendChild(editMessage);
+                setTimeout(() => {
+                    scrollToElement(editMessage);
+                    document.getElementById('aboutField').focus();
+                }, 150);
+            }, 800);
+        }
+
+        // Удаление профиля
+        function deleteProfile() {
+            profileState.step = 5;
+            profileState.editingField = 'delete';
+            
+            const messageContainer = document.getElementById('messageContainer');
+            messageContainer.innerHTML = '';
+            
+            showTypingIndicator();
+            
+            setTimeout(() => {
+                hideTypingIndicator();
+                
+                const deleteMessage = createBotMessage(`
+                    ⚠️ <strong>УДАЛЕНИЕ ПРОФИЛЯ</strong><br><br>
+                    Вы собираетесь удалить свой профиль. Это необратимо.<br><br>
+                    <div class="profile-stats">
+                        <strong>Статистика:</strong><br>
+                        • Дисциплины: ${tutorProfile.subjects}<br>
+                        • Темы: ${tutorProfile.topics}<br>
+                        • Материалы: ${tutorProfile.materials}<br>
+                    </div>
+                    <br>
+                    <em>Рекомендуется экспортировать данные перед удалением.</em><br><br>
+                    <div class="inline-buttons">
+                        <button class="inline-button warning" onclick="exportAndDelete()">
+                            📤 Экспортировать и удалить
+                        </button>
+                        <button class="inline-button danger" onclick="deleteWithoutExport()">
+                            🗑️ Удалить без экспорта
+                        </button>
+                    </div>
+                    <br>
+                    <div class="inline-buttons">
+                        <button class="inline-button" onclick="showTutorProfile()">
+                            ❌ Отмена
+                        </button>
+                    </div>
+                `);
+                
+                messageContainer.appendChild(deleteMessage);
+                setTimeout(() => {
+                    scrollToElement(deleteMessage);
+                }, 150);
+            }, 800);
+        }
+
+        function exportAndDelete() {
+            const messageContainer = document.getElementById('messageContainer');
+            const userMessage = createUserMessage("Экспортировать и удалить");
+            messageContainer.appendChild(userMessage);
+            
+            showTypingIndicator();
+            
+            setTimeout(() => {
+                hideTypingIndicator();
+                const exportMessage = createBotMessage(`
+                    📁 <strong>Ваш архив с данными готов!</strong><br><br>
+                    <div class="export-info">
+                        <strong>Содержимое архива:</strong><br>
+                        • Все дисциплины<br>
+                        • Все темы с материалами<br>
+                        • Файлы, ссылки, текстовые материалы<br>
+                        • README файл с описанием<br><br>
+                        <em>В реальном боте здесь был бы прикреплён ZIP-файл</em>
+                    </div>
+                `);
+                messageContainer.appendChild(exportMessage);
+                setTimeout(() => {
+                    showTypingIndicator();
+                    setTimeout(() => {
+                        hideTypingIndicator();
+                        const deleteMessage = createBotMessage(`
+                            ✅ <strong>Данные экспортированы!</strong><br>
+                            Теперь ваш профиль будет удалён...
+                        `);
+                        messageContainer.appendChild(deleteMessage);
+                        setTimeout(() => {
+                            resetProfile();
+                        }, 1500);
+                    }, 1200);
+                }, 1500);
+            }, 1200);
+        }
+
+        function deleteWithoutExport() {
+            const messageContainer = document.getElementById('messageContainer');
+            const userMessage = createUserMessage("Удалить без экспорта");
+            messageContainer.appendChild(userMessage);
+            
+            showTypingIndicator();
+            
+            setTimeout(() => {
+                hideTypingIndicator();
+                const confirmMessage = createBotMessage(`
+                    ⚠️ <strong>Вы уверены?</strong><br><br>
+                    Все данные будут удалены без возможности восстановления.<br><br>
+                    <div class="inline-buttons">
+                        <button class="inline-button danger" onclick="confirmDelete()">
+                            🗑️ Да, удалить безвозвратно
+                        </button>
+                        <button class="inline-button" onclick="deleteProfile()">
+                            ❌ Отмена
+                        </button>
+                    </div>
+                `);
+                messageContainer.appendChild(confirmMessage);
+                setTimeout(() => {
+                    scrollToElement(confirmMessage);
+                }, 150);
+            }, 800);
+        }
+
+        function confirmDelete() {
+            const messageContainer = document.getElementById('messageContainer');
+            const userMessage = createUserMessage("Да, удалить безвозвратно");
+            messageContainer.appendChild(userMessage);
+            
+            showTypingIndicator();
+            
+            setTimeout(() => {
+                hideTypingIndicator();
+                const deletingMessage = createBotMessage(`
+                    ⚠️ <strong>Удаление профиля...</strong><br>
+                    Это может занять несколько секунд.
+                `);
+                messageContainer.appendChild(deletingMessage);
+                setTimeout(() => {
+                    resetProfile();
+                }, 1500);
+            }, 800);
+        }
+
+        function resetProfile() {
+            // Сброс профиля к начальному состоянию
+            tutorProfile = {
+                fullName: "",
+                disciplines: [],
+                contacts: "",
+                about: "",
+                subjects: 0,
+                topics: 0,
+                materials: 0
+            };
+            
+            const messageContainer = document.getElementById('messageContainer');
+            
+            showTypingIndicator();
+            
+            setTimeout(() => {
+                hideTypingIndicator();
+                const finalMessage = createBotMessage(`
+                    ✅ <strong>Ваш профиль успешно удален.</strong><br><br>
+                    Спасибо за использование нашего сервиса!<br>
+                    Если захотите вернуться, просто нажмите /start
+                `);
+                messageContainer.appendChild(finalMessage);
+                setTimeout(() => {
+                    showMainMenu();
+                }, 2000);
+            }, 1200);
+        }
+
+        // ===== ОБРАБОТЧИКИ ВВОДА =====
+        function handleFieldEnter(event, fieldName) {
+            if (event.key === 'Enter') {
+                if (event.shiftKey) return; // Shift+Enter для переноса строки
+                event.preventDefault();
+                submitField(fieldName);
+            }
+        }
+
+        function handleTextareaEnter(event, fieldName) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                submitField(fieldName);
+            }
+        }
+
+        function submitField(fieldName) {
+            let inputElement, value, isValid = true;
+            
+            switch(fieldName) {
+                case 'fullName':
+                    inputElement = document.getElementById('fullNameField');
+                    value = inputElement.value.trim();
+                    isValid = value.split(' ').filter(word => word.length > 0).length >= 2;
+                    if (!isValid) {
+                        showFieldError('fullName', 'Укажите как минимум имя и фамилию (два слова).', value);
+                        return;
+                    }
+                    tutorProfile.fullName = value;
+                    break;
+                    
+                case 'contacts':
+                    inputElement = document.getElementById('contactsField');
+                    value = inputElement.value.trim();
+                    isValid = value.length >= 5;
+                    if (!isValid) {
+                        showFieldError('contacts', 'Контакты слишком короткие. Попробуйте ещё раз:', value);
+                        return;
+                    }
+                    tutorProfile.contacts = value;
+                    break;
+                    
+                case 'about':
+                    inputElement = document.getElementById('aboutField');
+                    value = inputElement.value.trim();
+                    isValid = value.length >= 10;
+                    if (!isValid) {
+                        showFieldError('about', 'Расскажите подробнее (минимум 10 символов).', value);
+                        return;
+                    }
+                    tutorProfile.about = value;
+                    break;
+                    
+                case 'newDiscipline':
+                    inputElement = document.getElementById('newDisciplineField');
+                    value = inputElement.value.trim();
+                    isValid = value.length >= 2;
+                    if (!isValid) {
+                        showFieldError('newDiscipline', 'Название должно содержать минимум 2 символа.', value);
+                        return;
+                    }
+                    if (!tutorProfile.disciplines.includes(value)) {
+                        tutorProfile.disciplines.push(value);
+                    }
+                    break;
+            }
+            
+            // Показать сообщение пользователя
+            const messageContainer = document.getElementById('messageContainer');
+            const userMessage = createUserMessage(value || '[Пусто]');
+            messageContainer.appendChild(userMessage);
+            
+            // Показать успешное сообщение
+            showTypingIndicator();
+            setTimeout(() => {
+                hideTypingIndicator();
+                const successMessage = createBotMessage(`
+                    ✅ <strong>${getSuccessMessage(fieldName)}</strong>
+                `);
+                messageContainer.appendChild(successMessage);
+                setTimeout(() => {
+                    if (fieldName === 'newDiscipline') {
+                        manageDisciplines();
+                    } else {
+                        showTutorProfile();
+                    }
+                }, 800);
+            }, 800);
+        }
+
+        function showFieldError(fieldName, errorMessage, currentValue) {
+            const messageContainer = document.getElementById('messageContainer');
+            const errorField = createBotMessage(`
+                ❌ <strong>Ошибка:</strong> ${errorMessage}<br><br>
+                <div class="input-wrapper">
+                    ${fieldName === 'about' ? 
+                        `<textarea id="${fieldName}FieldRetry" placeholder="Введите значение" rows="4">${currentValue}</textarea>` :
+                        `<input type="text" id="${fieldName}FieldRetry" placeholder="Введите значение" value="${currentValue}">`
+                    }
+                    <button class="inline-button small" onclick="retryField('${fieldName}')">
+                        Попробовать снова
+                    </button>
+                </div>
+            `);
+            messageContainer.appendChild(errorField);
+            setTimeout(() => {
+                scrollToElement(errorField);
+                const retryField = document.getElementById(`${fieldName}FieldRetry`);
+                if (retryField) retryField.focus();
+            }, 150);
+        }
+
+        function retryField(fieldName) {
+            const inputElement = document.getElementById(`${fieldName}FieldRetry`);
+            const value = inputElement.value.trim();
+            
+            let isValid = true;
+            switch(fieldName) {
+                case 'fullName':
+                    isValid = value.split(' ').filter(word => word.length > 0).length >= 2;
+                    if (isValid) tutorProfile.fullName = value;
+                    break;
+                case 'contacts':
+                    isValid = value.length >= 5;
+                    if (isValid) tutorProfile.contacts = value;
+                    break;
+                case 'about':
+                    isValid = value.length >= 10;
+                    if (isValid) tutorProfile.about = value;
+                    break;
+                case 'newDiscipline':
+                    isValid = value.length >= 2;
+                    if (isValid && !tutorProfile.disciplines.includes(value)) {
+                        tutorProfile.disciplines.push(value);
+                    }
+                    break;
+            }
+            
+            if (!isValid) {
+                alert('Пожалуйста, исправьте ошибку и попробуйте снова.');
+                return;
+            }
+            
+            const messageContainer = document.getElementById('messageContainer');
+            const lastMessage = messageContainer.lastChild;
+            if (lastMessage) {
+                messageContainer.removeChild(lastMessage);
+            }
+            
+            const userMessage = createUserMessage(value);
+            messageContainer.appendChild(userMessage);
+            
+            showTypingIndicator();
+            setTimeout(() => {
+                hideTypingIndicator();
+                const successMessage = createBotMessage(`
+                    ✅ <strong>${getSuccessMessage(fieldName)}</strong>
+                `);
+                messageContainer.appendChild(successMessage);
+                setTimeout(() => {
+                    if (fieldName === 'newDiscipline') {
+                        manageDisciplines();
+                    } else {
+                        showTutorProfile();
+                    }
+                }, 800);
+            }, 800);
+        }
+
+        function getSuccessMessage(fieldName) {
+            switch(fieldName) {
+                case 'fullName': return 'ФИО успешно обновлено!';
+                case 'contacts': return 'Контакты успешно обновлены!';
+                case 'about': return 'Описание успешно обновлено!';
+                case 'newDiscipline': return 'Дисциплина добавлена!';
+                default: return 'Изменения сохранены!';
+            }
+        }
+
+        // ===== ПРОЦЕСС ДОБАВЛЕНИЯ УЧЕНИКА (существующий код) =====
+        function startAddStudent() {
+            addStudentState = {
+                step: 1,
+                studentName: '',
+                discipline: '',
+                comment: '',
+                token: ''
+            };
+            
+            const messageContainer = document.getElementById('messageContainer');
+            messageContainer.innerHTML = '';
+            
+            showTypingIndicator();
+            
+            setTimeout(() => {
+                hideTypingIndicator();
+                
+                const startMessage = createBotMessage(`
+                    👤 <strong>Этап 1: Ввод имени ученика</strong><br><br>
+                    Введите имя ученика, которого хотите добавить.<br><br>
+                    <div class="example-input">
+                        <strong>Пример ввода:</strong><br>
+                        <code>Иван Петров</code>
+                    </div>
+                    <br>
+                    <div id="studentNameInput" class="input-wrapper">
+                        <input type="text" id="studentNameField" placeholder="Введите имя ученика" 
+                               onkeypress="handleStudentNameEnter(event)">
+                        <button class="inline-button small" onclick="submitStudentName()">
+                            Далее →
+                        </button>
+                    </div>
+                    <br>
+                    <div class="inline-buttons">
+                        <button class="inline-button" onclick="showMainMenu()">
+                            ← Отмена
+                        </button>
+                    </div>
+                `);
+                
+                messageContainer.appendChild(startMessage);
+                setTimeout(() => {
+                    scrollToElement(startMessage);
+                    document.getElementById('studentNameField').focus();
+                }, 150);
+            }, 800);
+        }
+
+        function handleStudentNameEnter(event) {
+            if (event.key === 'Enter') {
+                submitStudentName();
+            }
+        }
+
+        function submitStudentName() {
+            const nameInput = document.getElementById('studentNameField');
+            const studentName = nameInput.value.trim();
+            
+            if (studentName.length < 2) {
+                const messageContainer = document.getElementById('messageContainer');
+                const errorMessage = createBotMessage(`
+                    ❌ <strong>Ошибка:</strong> Имя слишком короткое. Попробуйте ещё раз.<br><br>
+                    <div class="input-wrapper">
+                        <input type="text" id="studentNameFieldRetry" placeholder="Введите имя ученика (минимум 2 символа)" 
+                               value="${studentName}" onkeypress="handleStudentNameEnter(event)">
+                        <button class="inline-button small" onclick="submitStudentNameRetry()">
+                            Далее →
+                        </button>
+                    </div>
+                `);
+                
+                messageContainer.appendChild(errorMessage);
+                setTimeout(() => {
+                    scrollToElement(errorMessage);
+                    document.getElementById('studentNameFieldRetry').focus();
+                }, 150);
+                return;
+            }
+            
+            addStudentState.studentName = studentName;
+            addStudentState.step = 2;
+            
+            const userMessage = createUserMessage(studentName);
+            const messageContainer = document.getElementById('messageContainer');
+            messageContainer.appendChild(userMessage);
+            
+            showTypingIndicator();
+            
+            setTimeout(() => {
+                hideTypingIndicator();
+                showDisciplineSelection();
+            }, 800);
+        }
+
+        function submitStudentNameRetry() {
+            const nameInput = document.getElementById('studentNameFieldRetry');
+            const studentName = nameInput.value.trim();
+            
+            if (studentName.length < 2) {
+                alert('Имя должно содержать минимум 2 символа');
+                return;
+            }
+            
+            addStudentState.studentName = studentName;
+            addStudentState.step = 2;
+            
+            const messageContainer = document.getElementById('messageContainer');
+            const lastMessage = messageContainer.lastChild;
+            if (lastMessage) {
+                messageContainer.removeChild(lastMessage);
+            }
+            
+            const userMessage = createUserMessage(studentName);
+            messageContainer.appendChild(userMessage);
+            
+            showTypingIndicator();
+            
+            setTimeout(() => {
+                hideTypingIndicator();
+                showDisciplineSelection();
+            }, 800);
+        }
+
+        function showDisciplineSelection() {
+            const messageContainer = document.getElementById('messageContainer');
+            
+            const disciplineMessage = createBotMessage(`
+                📚 <strong>Этап 2: Выбор дисциплины</strong><br><br>
+                По какой дисциплине вы будете заниматься с <strong>${addStudentState.studentName}</strong>?<br><br>
+                <div class="inline-buttons">
+                    ${disciplines.map(discipline => `
+                        <button class="inline-button" onclick="selectDiscipline('${discipline}')">
+                            ${discipline}
+                        </button>
+                    `).join('')}
+                </div>
+                <br>
+                <div class="inline-buttons">
+                    <button class="inline-button" onclick="startAddStudent()">
+                        ← Назад
+                    </button>
+                </div>
+            `);
+            
+            messageContainer.appendChild(disciplineMessage);
+            setTimeout(() => {
+                scrollToElement(disciplineMessage);
+            }, 150);
+        }
+
+        function selectDiscipline(selectedDiscipline) {
+            addStudentState.discipline = selectedDiscipline;
+            addStudentState.step = 3;
+            
+            const messageContainer = document.getElementById('messageContainer');
+            
+            const userMessage = createUserMessage(selectedDiscipline);
+            messageContainer.appendChild(userMessage);
+            
+            showTypingIndicator();
+            
+            setTimeout(() => {
+                hideTypingIndicator();
+                showCommentStep();
+            }, 800);
+        }
+
+        function showCommentStep() {
+            const messageContainer = document.getElementById('messageContainer');
+            
+            const commentMessage = createBotMessage(`
+                💬 <strong>Этап 3: Добавление комментария (опционально)</strong><br><br>
+                Хотите добавить комментарий? (например, «Готовим к ОГЭ»)<br><br>
+                <div class="example-input">
+                    <strong>Что можно указать:</strong><br>
+                    • Цель обучения (подготовка к ЕГЭ, ОГЭ, олимпиаде)<br>
+                    • Уровень ученика (начальный, продвинутый)<br>
+                    • Особенности обучения<br>
+                </div>
+                <br>
+                <div id="commentInput" class="input-wrapper">
+                    <input type="text" id="commentField" placeholder="Введите комментарий (или оставьте пустым)" 
+                           onkeypress="handleCommentEnter(event)">
+                    <button class="inline-button small" onclick="submitComment()">
+                        Далее →
+                    </button>
+                </div>
+                <br>
+                <div class="inline-buttons">
+                    <button class="inline-button" onclick="showDisciplineSelection()">
+                        ← Назад
+                    </button>
+                    <button class="inline-button" onclick="skipComment()">
+                        Пропустить
+                    </button>
+                </div>
+            `);
+            
+            messageContainer.appendChild(commentMessage);
+            setTimeout(() => {
+                scrollToElement(commentMessage);
+                document.getElementById('commentField').focus();
+            }, 150);
+        }
+
+        function handleCommentEnter(event) {
+            if (event.key === 'Enter') {
+                submitComment();
+            }
+        }
+
+        function submitComment() {
+            const commentInput = document.getElementById('commentField');
+            const comment = commentInput.value.trim();
+            
+            addStudentState.comment = comment;
+            
+            const messageContainer = document.getElementById('messageContainer');
+            
+            const userMessage = createUserMessage(comment || '[Без комментария]');
+            messageContainer.appendChild(userMessage);
+            
+            showTypingIndicator();
+            
+            setTimeout(() => {
+                hideTypingIndicator();
+                generateToken();
+            }, 800);
+        }
+
+        function skipComment() {
+            addStudentState.comment = '';
+            
+            const messageContainer = document.getElementById('messageContainer');
+            
+            const userMessage = createUserMessage('[Пропустить комментарий]');
+            messageContainer.appendChild(userMessage);
+            
+            showTypingIndicator();
+            
+            setTimeout(() => {
+                hideTypingIndicator();
+                generateToken();
+            }, 800);
+        }
+
+        function generateToken() {
+            // Генерация случайного токена формата XXXX-XXXX
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let token = '';
+            
+            for (let i = 0; i < 4; i++) {
+                token += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            token += '-';
+            for (let i = 0; i < 4; i++) {
+                token += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            
+            addStudentState.token = token;
+            addStudentState.step = 4;
+            
+            showTypingIndicator();
+            
+            setTimeout(() => {
+                hideTypingIndicator();
+                showTokenResult();
+            }, 1200);
+        }
+
+        function showTokenResult() {
+            const messageContainer = document.getElementById('messageContainer');
+            
+            let commentText = '';
+            if (addStudentState.comment) {
+                commentText = `<strong>Комментарий:</strong> ${addStudentState.comment}<br>`;
+            }
+            
+            const resultMessage = createBotMessage(`
+                ✅ <strong>Этап 4: Данные для добавления ученика сохранены!</strong><br><br>
+                <div class="student-summary">
+                    <strong>Имя:</strong> ${addStudentState.studentName}<br>
+                    <strong>Дисциплина:</strong> ${addStudentState.discipline}<br>
+                    ${commentText}
+                </div>
+                <br>
+                📋 <strong>Отправьте этот токен ученику:</strong><br>
+                <div class="token-display">
+                    ${addStudentState.token}
+                </div>
+                <br>
+                ⏰ <strong>Токен действителен 1 час.</strong><br><br>
+                <div class="instructions">
+                    <strong>Инструкция для ученика:</strong><br>
+                    1. Перейдите в бота @ProgressTutorBot<br>
+                    2. Отправьте команду /start<br>
+                    3. Нажмите "👨‍🎓 Я ученик"<br>
+                    4. Введите токен: <code>${addStudentState.token}</code><br>
+                </div>
+                <br>
+                <div class="inline-buttons">
+                    <button class="inline-button primary" onclick="copyToken()">
+                        📋 Скопировать токен
+                    </button>
+                    <button class="inline-button" onclick="addAnotherStudent()">
+                        ➕ Добавить еще ученика
+                    </button>
+                </div>
+                <br>
+                <div class="inline-buttons">
+                    <button class="inline-button" onclick="showMainMenu()">
+                        ← Вернуться в меню
+                    </button>
+                </div>
+            `);
+            
+            messageContainer.appendChild(resultMessage);
+            setTimeout(() => {
+                scrollToElement(resultMessage);
+            }, 150);
+        }
+
+        function copyToken() {
+            navigator.clipboard.writeText(addStudentState.token)
+                .then(() => {
+                    const messageContainer = document.getElementById('messageContainer');
+                    const notification = createBotMessage(`
+                        📋 <strong>Токен скопирован в буфер обмена!</strong><br>
+                        <code>${addStudentState.token}</code>
+                    `);
+                    messageContainer.appendChild(notification);
+                    setTimeout(() => {
+                        scrollToElement(notification);
+                    }, 100);
+                })
+                .catch(err => {
+                    console.error('Ошибка копирования: ', err);
+                    alert('Скопируйте токен вручную: ' + addStudentState.token);
+                });
+        }
+
+        function addAnotherStudent() {
+            startAddStudent();
+        }
+
+        function createNewLesson() {
+            const messageContainer = document.getElementById('messageContainer');
+            
+            const lessonMessage = createBotMessage(`
+                📅 <strong>Создание нового занятия</strong><br><br>
+                <div class="inline-buttons">
+                    <button class="inline-button" onclick="showSection('lessons')">
+                        ← Назад
+                    </button>
+                </div>
+            `);
+            
+            messageContainer.appendChild(lessonMessage);
+            setTimeout(() => {
+                scrollToElement(lessonMessage);
+            }, 150);
+        }
+        const menuToggle = document.querySelector('.menu-toggle');
+            const sidebar = document.querySelector('.sidebar');
+            
+            if (menuToggle) {
+                menuToggle.addEventListener('click', function() {
+                    sidebar.classList.toggle('mobile-open');
+                });
+            }
+
+        // ===== ИНИЦИАЛИЗАЦИЯ =====
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('welcomeTime').textContent = getCurrentTime();
+            
+            const welcomeMessage = document.getElementById('welcomeMessage');
+            setTimeout(() => {
+                welcomeMessage.style.opacity = '1';
+                welcomeMessage.style.transform = 'translateY(0)';
+            }, 300);
+            
+            setInterval(() => {
+                const timeElement = document.getElementById('welcomeTime');
+                if (timeElement) {
+                    timeElement.textContent = getCurrentTime();
+                }
+            }, 60000);
+        });
+    </script>
+
+    <style>
+        /* Стили для процесса добавления ученика */
+        .input-wrapper {
+            display: flex;
+            gap: 10px;
+            margin: 10px 0;
+        }
+        
+        .input-wrapper input,
+        .input-wrapper textarea {
+            flex: 1;
+            padding: 10px 14px;
+            background: rgba(118, 118, 128, 0.12);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 14px;
+            font-family: inherit;
+            resize: vertical;
+        }
+        
+        .input-wrapper input:focus,
+        .input-wrapper textarea:focus {
+            outline: none;
+            border-color: var(--text-accent);
+            box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.15);
+        }
+        
+        .inline-button.small {
+            padding: 8px 12px;
+            font-size: 12px;
+        }
+        
+        .inline-button.danger {
+            background: rgba(255, 59, 48, 0.1);
+            color: #ff3b30;
+            border-color: #ff3b30;
+        }
+        
+        .inline-button.danger:hover {
+            background: rgba(255, 59, 48, 0.2);
+        }
+        
+        .inline-button.warning {
+            background: rgba(255, 149, 0, 0.1);
+            color: #ff9500;
+            border-color: #ff9500;
+        }
+        
+        .inline-button.warning:hover {
+            background: rgba(255, 149, 0, 0.2);
+        }
+        
+        .example-input {
+            background: rgba(118, 118, 128, 0.08);
+            border-radius: 10px;
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 3px solid var(--text-accent);
+        }
+        
+        .example-input code {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            display: inline-block;
+            margin: 2px 0;
+        }
+        
+        .student-list {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 15px;
+            border: 1px solid var(--border-light);
+        }
+        
+        .student-category {
+            margin-bottom: 15px;
+        }
+        
+        .student-category:last-child {
+            margin-bottom: 0;
+        }
+        
+        .student-item {
+            padding: 8px 12px;
+            margin: 5px 0;
+            background: rgba(118, 118, 128, 0.08);
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .student-name {
+            font-weight: 500;
+        }
+        
+        .student-comment {
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+        
+        .materials-structure {
+            font-family: monospace;
+            font-size: 13px;
+            background: rgba(118, 118, 128, 0.08);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid var(--border-light);
+        }
+        
+        .folder {
+            padding-left: 10px;
+        }
+        
+        .subfolder {
+            padding-left: 20px;
+            color: var(--text-secondary);
+        }
+        
+        .token-display {
+            font-family: monospace;
+            font-size: 24px;
+            font-weight: 700;
+            text-align: center;
+            padding: 15px;
+            background: linear-gradient(135deg, #007aff, #5856d6);
+            color: white;
+            border-radius: 12px;
+            letter-spacing: 2px;
+            margin: 10px 0;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .student-summary {
+            background: rgba(118, 118, 128, 0.08);
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 3px solid #34c759;
+        }
+        
+        .profile-stats {
+            background: rgba(255, 59, 48, 0.08);
+            padding: 12px;
+            border-radius: 10px;
+            border-left: 3px solid #ff3b30;
+        }
+        
+        .export-info {
+            background: rgba(255, 149, 0, 0.08);
+            padding: 12px;
+            border-radius: 10px;
+            border-left: 3px solid #ff9500;
+        }
+        
+        .instructions {
+            background: rgba(0, 122, 255, 0.08);
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 13px;
+            border-left: 3px solid #007aff;
+        }
+        
+        .button-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .disciplines-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 12px;
+            margin: 6px 0;
+            background: rgba(118, 118, 128, 0.08);
+            border-radius: 8px;
+            border-left: 3px solid #5856d6;
+        }
+        
+        .disciplines-item span {
+            font-weight: 500;
+        }
+        
+        .user-message .message-content {
+            background: linear-gradient(135deg, #007aff, #5856d6);
+            color: white;
+        }
+        
+        .user-message .message-sender {
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .user-message .message-time {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        @media (max-width: 768px) {
+            .input-wrapper {
+                flex-direction: column;
+            }
+            
+            .button-row {
+                flex-direction: column;
+            }
+            
+            .token-display {
+                font-size: 18px;
+                padding: 10px;
+            }
+            
+            .disciplines-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            
+            .disciplines-item button {
+                align-self: flex-end;
+            }
+        }
+    </style>
+</body>
+</html>

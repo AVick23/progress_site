@@ -3,3377 +3,662 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Прогресс - Интеллектуальная система управления учебным процессом</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <style>
-        :root {
-            --primary-color: #6200ee;
-            --primary-light: #bb86fc;
-            --primary-dark: #3700b3;
-            --secondary-color: #03dac6;
-            --secondary-light: #66fff9;
-            --secondary-dark: #018786;
-            --surface-color: #ffffff;
-            --background-color: #f5f5f7;
-            --error-color: #b00020;
-            --on-primary: #ffffff;
-            --on-secondary: #000000;
-            --on-surface: #212121;
-            --on-background: #000000;
-            --on-error: #ffffff;
-            --shadow-1: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-            --shadow-2: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-            --shadow-3: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-            --shadow-4: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
-            --shadow-5: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
-            --border-radius: 8px;
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: var(--background-color);
-            color: var(--on-background);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 16px;
-        }
-
-        /* Header styles */
-        header {
-            background-color: var(--surface-color);
-            box-shadow: var(--shadow-1);
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            transition: var(--transition);
-        }
-
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 16px 0;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-        }
-
-        .logo-icon {
-            background-color: var(--primary-color);
-            color: var(--on-primary);
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            font-weight: bold;
-        }
-
-        .logo-text {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--on-surface);
-        }
-
-        .logo-text span {
-            color: var(--primary-color);
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 24px;
-        }
-
-        nav a {
-            text-decoration: none;
-            color: var(--on-background);
-            font-weight: 500;
-            font-size: 16px;
-            transition: var(--transition);
-            position: relative;
-        }
-
-        nav a:hover {
-            color: var(--primary-color);
-        }
-
-        nav a::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: var(--primary-color);
-            transition: var(--transition);
-        }
-
-        nav a:hover::after {
-            width: 100%;
-        }
-
-        .mobile-menu-button {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 24px;
-            color: var(--on-background);
-            cursor: pointer;
-        }
-
-        /* Hero section */
-        .hero {
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
-            padding: 160px 0 80px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-content {
-            max-width: 800px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 2;
-        }
-
-        .hero h1 {
-            font-size: 48px;
-            font-weight: 700;
-            margin-bottom: 24px;
-            color: var(--on-surface);
-            line-height: 1.2;
-        }
-
-        .hero-subtitle {
-            font-size: 24px;
-            font-weight: 500;
-            margin-bottom: 24px;
-            color: var(--primary-color);
-        }
-
-        .hero p {
-            font-size: 18px;
-            margin-bottom: 40px;
-            color: #5f6368;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-            line-height: 1.7;
-        }
-
-        .hero-statistics {
-            display: flex;
-            justify-content: center;
-            gap: 32px;
-            margin: 32px 0;
-            flex-wrap: wrap;
-        }
-
-        .stat-item {
-            text-align: center;
-            min-width: 150px;
-        }
-
-        .stat-number {
-            font-size: 32px;
-            font-weight: 700;
-            color: var(--primary-color);
-            margin-bottom: 8px;
-        }
-
-        .stat-label {
-            font-size: 16px;
-            color: #5f6368;
-        }
-
-        .highlight-badge {
-            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            padding: 8px 24px;
-            border-radius: 20px;
-            font-weight: 500;
-            display: inline-block;
-            margin: 24px 0;
-            box-shadow: var(--shadow-2);
-            font-size: 18px;
-        }
-
-        .personal-intro {
-            background-color: rgba(98, 0, 238, 0.05);
-            border-left: 4px solid var(--primary-color);
-            padding: 24px;
-            text-align: left;
-            border-radius: 0 var(--border-radius) var(--border-radius) 0;
-            margin: 32px auto;
-            max-width: 700px;
-            font-style: italic;
-        }
-
-        .personal-intro p {
-            margin-bottom: 12px;
-        }
-
-        .personal-intro .author {
-            font-weight: 700;
-            color: var(--primary-color);
-            margin-top: 8px;
-        }
-
-        .hero-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 16px;
-            margin-bottom: 40px;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 14px 32px;
-            border-radius: var(--border-radius);
-            font-weight: 500;
-            font-size: 16px;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            cursor: pointer;
-            transition: var(--transition);
-            border: none;
-            box-shadow: var(--shadow-1);
-        }
-
-        .btn-primary {
-            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-            color: var(--on-primary);
-        }
-
-        .btn-primary:hover {
-            box-shadow: var(--shadow-3);
-            transform: translateY(-2px);
-        }
-
-        .btn-secondary {
-            background-color: var(--surface-color);
-            color: var(--primary-color);
-            border: 1px solid var(--primary-color);
-        }
-
-        .btn-secondary:hover {
-            box-shadow: var(--shadow-2);
-            background-color: rgba(98, 0, 238, 0.05);
-        }
-
-        .btn-demo {
-            background: linear-gradient(90deg, var(--secondary-color), var(--secondary-dark));
-            color: white;
-        }
-
-        .btn-demo:hover {
-            box-shadow: var(--shadow-3);
-            transform: translateY(-2px);
-        }
-
-        .hero-image {
-            display: flex;
-            justify-content: center;
-            margin-top: 40px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .phone-mockup {
-            position: relative;
-            width: 320px;
-            height: 640px;
-            background-color: #121212;
-            border-radius: 40px;
-            overflow: hidden;
-            box-shadow: var(--shadow-4);
-            border: 10px solid #000;
-            transform: rotate(-5deg);
-        }
-
-        .phone-mockup.right {
-            transform: rotate(5deg);
-            margin-left: -50px;
-        }
-
-        .phone-screen {
-            background: linear-gradient(135deg, #6200ee 0%, #3700b3 100%);
-            height: 100%;
-            padding: 24px;
-            display: flex;
-            flex-direction: column;
-            color: white;
-        }
-
-        .phone-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 24px;
-        }
-
-        .phone-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: #bb86fc;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 18px;
-        }
-
-        .phone-time {
-            font-size: 14px;
-            font-weight: 300;
-        }
-
-        .phone-body {
-            flex-grow: 1;
-        }
-
-        .phone-menu {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
-            margin-top: 16px;
-        }
-
-        .phone-card {
-            background-color: rgba(255, 255, 255, 0.15);
-            border-radius: 12px;
-            padding: 16px;
-            text-align: center;
-            transition: var(--transition);
-        }
-
-        .phone-card:hover {
-            background-color: rgba(255, 255, 255, 0.25);
-            transform: translateY(-2px);
-        }
-
-        .phone-icon {
-            font-size: 28px;
-            margin-bottom: 8px;
-            display: flex;
-            justify-content: center;
-        }
-
-        .phone-footer {
-            margin-top: 16px;
-            display: flex;
-            justify-content: space-around;
-            padding-top: 16px;
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .floating {
-            animation: floating 3s ease-in-out infinite;
-        }
-
-        @keyframes floating {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
-        }
-
-        /* Section styles */
-        section {
-            padding: 80px 0;
-            position: relative;
-        }
-
-        .section-bg {
-            background-color: var(--surface-color);
-        }
-
-        .section-dark {
-            background: linear-gradient(135deg, #121212 0%, #1e1e1e 100%);
-            color: #e0e0e0;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 60px;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .section-header h2 {
-            font-size: 36px;
-            font-weight: 700;
-            margin-bottom: 16px;
-            color: var(--on-surface);
-            position: relative;
-            display: inline-block;
-        }
-
-        .section-header h2::after {
-            content: '';
-            position: absolute;
-            bottom: -8px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-            border-radius: 2px;
-        }
-
-        .section-header p {
-            font-size: 18px;
-            color: #5f6368;
-            margin-top: 24px;
-            line-height: 1.7;
-        }
-
-        .gradient-text {
-            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-weight: 700;
-        }
-
-        /* Problem section */
-        .real-problem {
-            max-width: 800px;
-            margin: 0 auto 40px;
-            line-height: 1.8;
-            font-size: 18px;
-        }
-
-        .problem-scenario {
-            background-color: var(--surface-color);
-            border-radius: var(--border-radius);
-            padding: 32px;
-            box-shadow: var(--shadow-1);
-            margin: 32px 0;
-            position: relative;
-            border-left: 4px solid var(--primary-color);
-        }
-
-        .problem-scenario h3 {
-            font-size: 24px;
-            margin-bottom: 16px;
-            color: var(--primary-color);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .problem-stats {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            margin: 40px 0;
-            gap: 24px;
-        }
-
-        .stat-card {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(240, 248, 255, 0.9));
-            border-radius: var(--border-radius);
-            padding: 24px;
-            text-align: center;
-            min-width: 200px;
-            box-shadow: var(--shadow-1);
-        }
-
-        .stat-card h4 {
-            font-size: 20px;
-            margin-bottom: 12px;
-            color: var(--on-surface);
-        }
-
-        .stat-card .number {
-            font-size: 36px;
-            font-weight: 700;
-            color: var(--primary-color);
-            margin: 8px 0;
-        }
-
-        .cost-calculation {
-            background-color: rgba(255, 87, 34, 0.1);
-            border-radius: var(--border-radius);
-            padding: 24px;
-            margin: 32px 0;
-            border-left: 4px solid #ff5722;
-        }
-
-        .cost-calculation h3 {
-            font-size: 24px;
-            margin-bottom: 16px;
-            color: #ff5722;
-        }
-
-        .cost-items {
-            margin-left: 24px;
-        }
-
-        .cost-items li {
-            margin-bottom: 12px;
-            font-size: 18px;
-        }
-
-        .real-story {
-            background-color: rgba(0, 150, 136, 0.1);
-            border-radius: var(--border-radius);
-            padding: 32px;
-            margin: 40px 0;
-            position: relative;
-            border-left: 4px solid var(--secondary-color);
-        }
-
-        .real-story .author {
-            font-weight: 700;
-            color: var(--secondary-dark);
-            font-size: 18px;
-            margin-top: 16px;
-        }
-
-        /* USP section */
-        .usp-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 32px;
-            margin-top: 40px;
-        }
-
-        .usp-card {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.85));
-            border-radius: var(--border-radius);
-            padding: 32px;
-            box-shadow: var(--shadow-2);
-            transition: var(--transition);
-            border: 1px solid rgba(98, 0, 238, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .usp-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-        }
-
-        .usp-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-3);
-        }
-
-        .usp-icon {
-            width: 72px;
-            height: 72px;
-            background: linear-gradient(135deg, rgba(98, 0, 238, 0.1), rgba(3, 218, 198, 0.1));
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 24px;
-            font-size: 32px;
-            color: var(--primary-color);
-        }
-
-        .usp-card h3 {
-            font-size: 24px;
-            margin-bottom: 16px;
-            color: var(--on-surface);
-        }
-
-        .usp-card p {
-            color: #5f6368;
-            margin-bottom: 16px;
-            line-height: 1.7;
-        }
-
-        .usp-highlight {
-            background-color: rgba(3, 218, 198, 0.15);
-            padding: 4px 12px;
-            border-radius: 4px;
-            font-weight: 500;
-            display: inline-block;
-            margin: 8px 0;
-        }
-
-        .system-token {
-            background-color: rgba(98, 0, 238, 0.05);
-            border-radius: var(--border-radius);
-            padding: 24px;
-            margin: 24px 0;
-        }
-
-        .token-example {
-            font-family: monospace;
-            font-size: 28px;
-            font-weight: 700;
-            text-align: center;
-            color: var(--primary-color);
-            letter-spacing: 4px;
-            margin: 16px 0;
-            padding: 16px;
-            background-color: rgba(98, 0, 238, 0.1);
-            border-radius: 8px;
-        }
-
-        .feature-example {
-            background-color: var(--surface-color);
-            border-radius: var(--border-radius);
-            padding: 24px;
-            margin: 24px 0;
-            box-shadow: var(--shadow-1);
-        }
-
-        .reminder-cascade {
-            display: flex;
-            justify-content: center;
-            gap: 24px;
-            margin: 24px 0;
-            flex-wrap: wrap;
-        }
-
-        .reminder-item {
-            text-align: center;
-            min-width: 150px;
-        }
-
-        .reminder-time {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--primary-color);
-            margin-bottom: 8px;
-        }
-
-        .reminder-label {
-            color: #5f6368;
-        }
-
-        .case-study {
-            background-color: rgba(255, 235, 59, 0.15);
-            border-radius: var(--border-radius);
-            padding: 24px;
-            margin: 32px 0;
-            border-left: 4px solid #ffc107;
-        }
-
-        .case-study h4 {
-            font-size: 20px;
-            margin-bottom: 16px;
-            color: #ff9800;
-        }
-
-        .heat-map {
-            text-align: center;
-            margin: 24px 0;
-            font-family: monospace;
-            font-size: 14px;
-        }
-
-        .schedule-change {
-            background-color: rgba(76, 175, 80, 0.15);
-            border-radius: var(--border-radius);
-            padding: 24px;
-            margin: 24px 0;
-            border-left: 4px solid #4caf50;
-        }
-
-        .results {
-            font-weight: 700;
-            color: #4caf50;
-            font-size: 20px;
-            margin-top: 16px;
-        }
-
-        /* Features section */
-        .features-tabs {
-            display: flex;
-            justify-content: center;
-            gap: 16px;
-            margin-bottom: 40px;
-            flex-wrap: wrap;
-        }
-
-        .tab-btn {
-            padding: 12px 28px;
-            border-radius: 24px;
-            background-color: rgba(98, 0, 238, 0.1);
-            color: var(--primary-color);
-            border: none;
-            font-weight: 500;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .tab-btn.active, .tab-btn:hover {
-            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-            color: white;
-        }
-
-        .features-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 32px;
-        }
-
-        .feature-card {
-            background-color: var(--surface-color);
-            border-radius: var(--border-radius);
-            padding: 32px;
-            box-shadow: var(--shadow-1);
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .feature-card:hover {
-            box-shadow: var(--shadow-2);
-            transform: translateY(-5px);
-        }
-
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 5px;
-            height: 100%;
-            background: linear-gradient(180deg, var(--primary-color), var(--secondary-color));
-        }
-
-        .feature-icon {
-            width: 64px;
-            height: 64px;
-            background-color: rgba(98, 0, 238, 0.1);
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 24px;
-            color: var(--primary-color);
-            font-size: 28px;
-        }
-
-        .feature-card h3 {
-            font-size: 24px;
-            margin-bottom: 16px;
-            color: var(--on-surface);
-        }
-
-        .feature-card p {
-            color: #5f6368;
-            margin-bottom: 16px;
-            line-height: 1.7;
-        }
-
-        .feature-detail {
-            margin-top: 16px;
-            padding: 16px;
-            background-color: rgba(98, 0, 238, 0.05);
-            border-radius: 8px;
-        }
-
-        .feature-step {
-            margin-bottom: 12px;
-            display: flex;
-            gap: 12px;
-        }
-
-        .step-number {
-            min-width: 28px;
-            height: 28px;
-            background-color: var(--primary-color);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-        }
-
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 24px;
-            margin-top: 32px;
-        }
-
-        .feature-item {
-            background-color: rgba(0, 0, 0, 0.03);
-            padding: 16px;
-            border-radius: 8px;
-        }
-
-        /* ROI section */
-        .roi-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 32px;
-            margin-top: 40px;
-        }
-
-        .roi-card {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(240, 248, 255, 0.9));
-            border-radius: var(--border-radius);
-            padding: 32px;
-            text-align: center;
-            box-shadow: var(--shadow-1);
-            transition: var(--transition);
-            border: 1px solid rgba(98, 0, 238, 0.1);
-        }
-
-        .roi-card:hover {
-            box-shadow: var(--shadow-3);
-            transform: scale(1.03);
-        }
-
-        .roi-icon {
-            font-size: 48px;
-            color: var(--primary-color);
-            margin-bottom: 16px;
-        }
-
-        .roi-number {
-            font-size: 36px;
-            font-weight: 700;
-            color: var(--primary-color);
-            margin: 16px 0;
-        }
-
-        .roi-label {
-            font-size: 18px;
-            font-weight: 500;
-            color: var(--on-surface);
-            margin-bottom: 12px;
-        }
-
-        .roi-note {
-            color: #5f6368;
-            font-size: 14px;
-            margin-top: 8px;
-        }
-
-        /* Comparison section */
-        .comparison-container {
-            overflow-x: auto;
-            margin-top: 40px;
-        }
-
-        .comparison-table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 900px;
-        }
-
-        .comparison-table th, .comparison-table td {
-            padding: 16px 24px;
-            text-align: left;
-            border-bottom: 1px solid #e0e0e0;
-        }
-
-        .comparison-table th {
-            background-color: rgba(98, 0, 238, 0.05);
-            font-weight: 600;
-            color: var(--primary-color);
-        }
-
-        .comparison-table tr:hover td {
-            background-color: rgba(98, 0, 238, 0.02);
-        }
-
-        .comparison-table .highlight {
-            background-color: rgba(3, 218, 198, 0.1);
-            font-weight: 500;
-        }
-
-        .check {
-            color: var(--secondary-color);
-            font-size: 20px;
-        }
-
-        .cross {
-            color: var(--error-color);
-            font-size: 20px;
-        }
-
-        .roi-calculation {
-            background-color: rgba(98, 0, 238, 0.05);
-            border-radius: var(--border-radius);
-            padding: 32px;
-            margin: 40px 0;
-        }
-
-        .roi-calculation h3 {
-            font-size: 24px;
-            margin-bottom: 24px;
-            color: var(--primary-color);
-            text-align: center;
-        }
-
-        .roi-details {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 24px;
-            margin-top: 24px;
-        }
-
-        .roi-detail {
-            text-align: center;
-            padding: 16px;
-        }
-
-        .roi-detail .value {
-            font-size: 28px;
-            font-weight: 700;
-            color: var(--primary-color);
-            margin: 8px 0;
-        }
-
-        /* Testimonials */
-        .testimonials {
-            text-align: center;
-        }
-
-        .testimonial-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 32px;
-            margin-top: 40px;
-        }
-
-        .testimonial-card {
-            background-color: var(--surface-color);
-            border-radius: var(--border-radius);
-            padding: 32px;
-            box-shadow: var(--shadow-1);
-            position: relative;
-            border: 1px solid rgba(0, 0, 0, 0.05);
-        }
-
-        .testimonial-card::before {
-            content: '"';
-            position: absolute;
-            top: 16px;
-            left: 16px;
-            font-size: 64px;
-            color: rgba(98, 0, 238, 0.1);
-            font-family: Georgia, serif;
-            line-height: 1;
-        }
-
-        .testimonial-text {
-            font-style: italic;
-            margin-bottom: 24px;
-            position: relative;
-            z-index: 1;
-            font-size: 18px;
-            line-height: 1.7;
-        }
-
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .author-avatar {
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            font-size: 20px;
-        }
-
-        .author-info h4 {
-            font-size: 18px;
-            margin-bottom: 4px;
-            color: var(--on-surface);
-        }
-
-        .author-info p {
-            color: var(--primary-color);
-            font-weight: 500;
-        }
-
-        /* Pricing section */
-        .pricing-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 32px;
-            margin-top: 40px;
-        }
-
-        .pricing-card {
-            background-color: var(--surface-color);
-            border-radius: var(--border-radius);
-            padding: 40px 32px;
-            box-shadow: var(--shadow-1);
-            text-align: center;
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-            border: 1px solid rgba(0, 0, 0, 0.05);
-        }
-
-        .pricing-card.featured {
-            box-shadow: var(--shadow-3);
-            transform: scale(1.05);
-            border: 2px solid var(--primary-color);
-        }
-
-        .pricing-card.featured::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-        }
-
-        .pricing-card:hover {
-            box-shadow: var(--shadow-2);
-            transform: translateY(-5px);
-        }
-
-        .pricing-card.featured:hover {
-            transform: scale(1.05) translateY(-5px);
-        }
-
-        .pricing-header {
-            margin-bottom: 24px;
-        }
-
-        .pricing-name {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: var(--on-surface);
-        }
-
-        .pricing-price {
-            font-size: 48px;
-            font-weight: 700;
-            color: var(--primary-color);
-            margin: 16px 0;
-        }
-
-        .pricing-price span {
-            font-size: 16px;
-            font-weight: 400;
-            color: #5f6368;
-        }
-
-        .pricing-features {
-            list-style: none;
-            margin-bottom: 32px;
-        }
-
-        .pricing-features li {
-            padding: 12px 0;
-            border-bottom: 1px solid #e0e0e0;
-            color: #5f6368;
-            font-size: 16px;
-        }
-
-        .pricing-features li:last-child {
-            border-bottom: none;
-        }
-
-        .pricing-features li.featured {
-            color: var(--primary-color);
-            font-weight: 500;
-        }
-
-        .badge {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            background: linear-gradient(90deg, var(--secondary-color), var(--secondary-dark));
-            color: white;
-            padding: 4px 12px;
-            border-radius: 16px;
-            font-size: 14px;
-            font-weight: 500;
-            box-shadow: var(--shadow-1);
-        }
-
-        /* CTA section */
-        .cta {
-            text-align: center;
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
-            color: var(--on-primary);
-            padding: 100px 0;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .cta-content {
-            position: relative;
-            z-index: 2;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .cta h2 {
-            font-size: 40px;
-            margin-bottom: 24px;
-            line-height: 1.3;
-        }
-
-        .cta p {
-            font-size: 20px;
-            max-width: 700px;
-            margin: 0 auto 40px;
-            opacity: 0.9;
-            line-height: 1.7;
-        }
-
-        .cta-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 24px;
-            margin-top: 24px;
-            flex-wrap: wrap;
-        }
-
-        .btn-light {
-            background-color: var(--on-primary);
-            color: var(--primary-color);
-            padding: 14px 32px;
-            font-size: 18px;
-            font-weight: 500;
-        }
-
-        .btn-light:hover {
-            box-shadow: var(--shadow-3);
-            transform: translateY(-2px);
-        }
-
-        .btn-outline {
-            background-color: transparent;
-            border: 2px solid var(--on-primary);
-            color: var(--on-primary);
-            padding: 12px 30px;
-            font-size: 18px;
-            font-weight: 500;
-        }
-
-        .btn-outline:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-            transform: translateY(-2px);
-        }
-
-        /* Footer */
-        footer {
-            background-color: #121212;
-            color: #e0e0e0;
-            padding: 60px 0 32px;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-
-        .footer-column h3 {
-            font-size: 20px;
-            margin-bottom: 24px;
-            color: var(--on-primary);
-            position: relative;
-            padding-bottom: 8px;
-        }
-
-        .footer-column h3::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 40px;
-            height: 2px;
-            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-        }
-
-        .footer-column p {
-            color: #9e9e9e;
-            margin-bottom: 16px;
-            font-size: 15px;
-            line-height: 1.7;
-        }
-
-        .footer-links {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 12px;
-        }
-
-        .footer-links a {
-            color: #e0e0e0;
-            text-decoration: none;
-            transition: var(--transition);
-            display: block;
-            font-size: 15px;
-        }
-
-        .footer-links a:hover {
-            color: var(--primary-light);
-            transform: translateX(4px);
-        }
-
-        .social-links {
-            display: flex;
-            gap: 16px;
-            margin-top: 24px;
-        }
-
-        .social-link {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: #2d2d2d;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #e0e0e0;
-            text-decoration: none;
-            transition: var(--transition);
-        }
-
-        .social-link:hover {
-            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-            transform: translateY(-3px);
-        }
-
-        .copyright {
-            text-align: center;
-            padding-top: 32px;
-            border-top: 1px solid #2d2d2d;
-            color: #9e9e9e;
-            font-size: 14px;
-        }
-
-        /* Responsive styles */
-        @media (max-width: 992px) {
-            .hero h1 {
-                font-size: 40px;
-            }
-            
-            .phone-mockup {
-                width: 280px;
-                height: 560px;
-            }
-            
-            .phone-mockup.right {
-                display: none;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 36px;
-            }
-            
-            .hero-subtitle {
-                font-size: 20px;
-            }
-
-            .section-header h2 {
-                font-size: 28px;
-            }
-
-            .hero-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .phone-mockup {
-                width: 240px;
-                height: 480px;
-                transform: rotate(0deg) !important;
-            }
-
-            .nav-menu {
-                display: none;
-                position: absolute;
-                top: 70px;
-                left: 0;
-                right: 0;
-                background-color: var(--surface-color);
-                flex-direction: column;
-                padding: 24px 0;
-                box-shadow: var(--shadow-2);
-            }
-
-            .nav-menu.show {
-                display: flex;
-            }
-
-            .mobile-menu-button {
-                display: block;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .hero {
-                padding: 130px 0 60px;
-            }
-
-            .hero h1 {
-                font-size: 32px;
-            }
-            
-            .hero-subtitle {
-                font-size: 18px;
-            }
-
-            .section-header h2 {
-                font-size: 24px;
-            }
-
-            section {
-                padding: 60px 0;
-            }
-
-            .phone-mockup {
-                width: 220px;
-                height: 440px;
-            }
-
-            .cta h2 {
-                font-size: 32px;
-            }
-
-            .cta p {
-                font-size: 18px;
-            }
-
-            .pricing-card.featured {
-                transform: scale(1);
-            }
-
-            .pricing-card.featured:hover {
-                transform: translateY(-5px);
-            }
-
-            .features-tabs {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .tab-btn {
-                width: 100%;
-                max-width: 300px;
-            }
-        }
-
-        /* Animation classes */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-
-        .fade-in.appear {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Custom animations */
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(98, 0, 238, 0.4); }
-            70% { box-shadow: 0 0 0 12px rgba(98, 0, 238, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(98, 0, 238, 0); }
-        }
-
-        .pulse {
-            animation: pulse 2s infinite;
-        }
-
-        /* Stats animation */
-        .stats-highlight {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-            color: white;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-weight: bold;
-            margin: 0 2px;
-        }
-
-        /* Demo section */
-        .demo-section {
-            background: linear-gradient(135deg, #e8f4ff 0%, #f0f8ff 100%);
-        }
-
-        .demo-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-            align-items: center;
-            margin-top: 40px;
-        }
-
-        .demo-content {
-            padding: 32px;
-            background-color: var(--surface-color);
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow-2);
-        }
-
-        .demo-title {
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 24px;
-            color: var(--on-surface);
-        }
-
-        .demo-steps {
-            list-style: none;
-            margin: 24px 0;
-        }
-
-        .demo-steps li {
-            margin-bottom: 16px;
-            padding-left: 32px;
-            position: relative;
-            font-size: 16px;
-            line-height: 1.7;
-        }
-
-        .demo-steps li::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 8px;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background-color: var(--primary-color);
-        }
-
-        /* Security section */
-        .security-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 32px;
-            margin-top: 40px;
-        }
-
-        .security-card {
-            background-color: var(--surface-color);
-            border-radius: var(--border-radius);
-            padding: 32px;
-            box-shadow: var(--shadow-1);
-            text-align: center;
-            transition: var(--transition);
-        }
-
-        .security-card:hover {
-            box-shadow: var(--shadow-2);
-            transform: translateY(-5px);
-        }
-
-        .security-icon {
-            width: 72px;
-            height: 72px;
-            margin: 0 auto 24px;
-            background: linear-gradient(135deg, rgba(98, 0, 238, 0.1), rgba(3, 218, 198, 0.1));
-            border-radius: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 32px;
-            color: var(--primary-color);
-        }
-
-        .security-card h3 {
-            font-size: 22px;
-            margin-bottom: 16px;
-            color: var(--on-surface);
-        }
-
-        .security-card p {
-            color: #5f6368;
-            line-height: 1.7;
-        }
-        
-        .scenario-card {
-            background-color: var(--surface-color);
-            border-radius: var(--border-radius);
-            padding: 28px;
-            box-shadow: var(--shadow-1);
-            margin-bottom: 24px;
-            transition: var(--transition);
-            border-left: 4px solid var(--primary-color);
-        }
-        
-        .scenario-card:hover {
-            box-shadow: var(--shadow-2);
-            transform: translateY(-3px);
-        }
-        
-        .scenario-title {
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 12px;
-            color: var(--primary-color);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        
-        .scenario-content {
-            line-height: 1.7;
-            margin-bottom: 16px;
-        }
-        
-        .scenario-benefit {
-            background-color: rgba(76, 175, 80, 0.1);
-            padding: 12px;
-            border-radius: 8px;
-            font-weight: 500;
-            color: #2e7d32;
-        }
-        
-        .implementation-steps {
-            margin-top: 24px;
-        }
-        
-        .implementation-steps h4 {
-            font-size: 18px;
-            margin-bottom: 12px;
-            color: var(--primary-color);
-        }
-        
-        .steps-list {
-            list-style: none;
-            counter-reset: step-counter;
-        }
-        
-        .steps-list li {
-            counter-increment: step-counter;
-            margin-bottom: 16px;
-            padding-left: 32px;
-            position: relative;
-        }
-        
-        .steps-list li::before {
-            content: counter(step-counter);
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 24px;
-            height: 24px;
-            background-color: var(--primary-color);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 14px;
-        }
-        
-        .key-metrics {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            gap: 24px;
-            margin: 32px 0;
-        }
-        
-        .metric-card {
-            text-align: center;
-            min-width: 150px;
-        }
-        
-        .metric-value {
-            font-size: 36px;
-            font-weight: 700;
-            color: var(--primary-color);
-        }
-        
-        .metric-label {
-            font-size: 16px;
-            color: #5f6368;
-        }
-        
-        .detailed-case {
-            background-color: rgba(98, 0, 238, 0.03);
-            border-radius: var(--border-radius);
-            padding: 28px;
-            margin: 32px 0;
-        }
-        
-        .detailed-case h3 {
-            font-size: 22px;
-            margin-bottom: 16px;
-            color: var(--primary-color);
-        }
-        
-        .case-timeline {
-            margin-top: 16px;
-        }
-        
-        .timeline-item {
-            margin-bottom: 16px;
-            padding-left: 20px;
-            border-left: 2px solid var(--primary-color);
-            padding-bottom: 8px;
-        }
-        
-        .timeline-date {
-            font-weight: 500;
-            color: var(--primary-color);
-            margin-bottom: 4px;
-        }
-        
-        .feature-comparison {
-            margin: 32px 0;
-        }
-        
-        .feature-comparison h3 {
-            font-size: 22px;
-            margin-bottom: 16px;
-            text-align: center;
-            color: var(--on-surface);
-        }
-        
-        .comparison-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 24px;
-        }
-        
-        .comparison-item {
-            background-color: var(--surface-color);
-            padding: 20px;
-            border-radius: 8px;
-            text-align: center;
-            box-shadow: var(--shadow-1);
-        }
-        
-        .comparison-item.pro {
-            border-top: 4px solid var(--primary-color);
-        }
-        
-        .comparison-item.traditional {
-            border-top: 4px solid #ff9800;
-        }
-        
-        .comparison-value {
-            font-size: 28px;
-            font-weight: 700;
-            margin: 12px 0;
-        }
-        
-        .comparison-label {
-            font-size: 16px;
-            color: #5f6368;
-        }
-        
-        .roadmap {
-            margin: 40px 0;
-        }
-        
-        .roadmap h3 {
-            text-align: center;
-            font-size: 24px;
-            margin-bottom: 32px;
-            color: var(--on-surface);
-        }
-        
-        .timeline {
-            position: relative;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .timeline::after {
-            content: '';
-            position: absolute;
-            width: 4px;
-            background-color: var(--primary-color);
-            top: 0;
-            bottom: 0;
-            left: 50%;
-            margin-left: -2px;
-            border-radius: 2px;
-        }
-        
-        .timeline-item {
-            position: relative;
-            width: 50%;
-            padding: 20px 40px;
-            box-sizing: border-box;
-        }
-        
-        .timeline-item:nth-child(odd) {
-            left: 0;
-        }
-        
-        .timeline-item:nth-child(even) {
-            left: 50%;
-        }
-        
-        .timeline-content {
-            background-color: var(--surface-color);
-            padding: 24px;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow-1);
-            position: relative;
-            transition: var(--transition);
-        }
-        
-        .timeline-content:hover {
-            box-shadow: var(--shadow-2);
-            transform: translateY(-3px);
-        }
-        
-        .timeline-content::after {
-            content: '';
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background-color: var(--surface-color);
-            top: 26px;
-            border-radius: 50%;
-            z-index: 1;
-        }
-        
-        .timeline-item:nth-child(odd) .timeline-content::after {
-            right: -10px;
-            transform: rotate(45deg);
-            box-shadow: 2px -2px 0 var(--primary-color);
-        }
-        
-        .timeline-item:nth-child(even) .timeline-content::after {
-            left: -10px;
-            transform: rotate(225deg);
-            box-shadow: -2px 2px 0 var(--primary-color);
-        }
-        
-        .timeline-date {
-            font-weight: 600;
-            color: var(--primary-color);
-            margin-bottom: 12px;
-            font-size: 18px;
-        }
-        
-        .roadmap-stage {
-            background-color: rgba(98, 0, 238, 0.05);
-            padding: 16px;
-            border-radius: 8px;
-            margin-top: 8px;
-        }
-
-        /* НОВЫЕ СТИЛИ ДЛЯ УЛУЧШЕННОЙ ВЕРСИИ */
-        .emoji-header {
-            display: inline-block;
-            margin-right: 12px;
-            font-size: 32px;
-            vertical-align: middle;
-        }
-        
-        .specific-example {
-            background-color: rgba(98, 0, 238, 0.05);
-            border-radius: 12px;
-            padding: 20px;
-            margin: 16px 0;
-            border-left: 4px solid var(--primary-color);
-        }
-        
-        .specific-example-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 12px;
-        }
-        
-        .specific-example-title {
-            font-weight: 600;
-            color: var(--primary-color);
-            font-size: 18px;
-        }
-        
-        .specific-example-time {
-            color: #5f6368;
-            font-size: 14px;
-            margin-left: auto;
-        }
-        
-        .message-bubble {
-            background-color: white;
-            border-radius: 18px;
-            padding: 12px 16px;
-            margin: 8px 0;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-            max-width: 80%;
-        }
-        
-        .message-bubble.right {
-            margin-left: auto;
-            background-color: var(--primary-light);
-            color: white;
-        }
-        
-        .before-after {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
-            margin: 24px 0;
-        }
-        
-        .before, .after {
-            padding: 20px;
-            border-radius: var(--border-radius);
-        }
-        
-        .before {
-            background-color: rgba(255, 87, 34, 0.1);
-            border: 1px solid rgba(255, 87, 34, 0.3);
-        }
-        
-        .after {
-            background-color: rgba(76, 175, 80, 0.1);
-            border: 1px solid rgba(76, 175, 80, 0.3);
-        }
-        
-        .before h4, .after h4 {
-            text-align: center;
-            margin-bottom: 16px;
-            font-size: 20px;
-        }
-        
-        .before h4 {
-            color: #ff5722;
-        }
-        
-        .after h4 {
-            color: #4caf50;
-        }
-        
-        .quote-block {
-            background: linear-gradient(135deg, rgba(98, 0, 238, 0.08), rgba(3, 218, 198, 0.08));
-            border-radius: var(--border-radius);
-            padding: 32px;
-            margin: 32px 0;
-            font-style: italic;
-            position: relative;
-            border-left: 4px solid var(--primary-color);
-        }
-        
-        .quote-block::before {
-            content: '"';
-            position: absolute;
-            top: 16px;
-            left: 16px;
-            font-size: 64px;
-            color: rgba(98, 0, 238, 0.2);
-            font-family: Georgia, serif;
-        }
-        
-        .quote-author {
-            text-align: right;
-            margin-top: 16px;
-            font-weight: 600;
-            color: var(--primary-color);
-        }
-        
-        .specific-numbers {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            gap: 16px;
-            margin: 32px 0;
-        }
-        
-        .specific-number {
-            text-align: center;
-            min-width: 120px;
-            padding: 16px;
-            background-color: white;
-            border-radius: 12px;
-            box-shadow: var(--shadow-1);
-        }
-        
-        .specific-number .value {
-            font-size: 28px;
-            font-weight: 700;
-            color: var(--primary-color);
-            margin-bottom: 4px;
-        }
-        
-        .specific-number .label {
-            font-size: 14px;
-            color: #5f6368;
-        }
-        
-        .day-in-life {
-            background-color: rgba(255, 235, 59, 0.1);
-            border-radius: var(--border-radius);
-            padding: 24px;
-            margin: 32px 0;
-            border: 1px solid rgba(255, 193, 7, 0.3);
-        }
-        
-        .day-in-life h4 {
-            color: #ff9800;
-            margin-bottom: 16px;
-            font-size: 22px;
-        }
-        
-        .day-schedule {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-        
-        .day-event {
-            display: flex;
-            gap: 16px;
-            align-items: flex-start;
-        }
-        
-        .day-time {
-            min-width: 60px;
-            font-weight: 600;
-            color: var(--primary-color);
-        }
-        
-        .day-description {
-            flex-grow: 1;
-        }
-        
-        .step-by-step-guide {
-            background-color: white;
-            border-radius: var(--border-radius);
-            padding: 24px;
-            margin: 32px 0;
-            box-shadow: var(--shadow-1);
-            border: 1px solid rgba(0,0,0,0.05);
-        }
-        
-        .step-by-step-guide h4 {
-            color: var(--primary-color);
-            margin-bottom: 16px;
-            font-size: 22px;
-            border-bottom: 2px solid var(--primary-color);
-            padding-bottom: 8px;
-        }
-        
-        .guide-step {
-            margin-bottom: 24px;
-            padding-bottom: 16px;
-            border-bottom: 1px dashed #e0e0e0;
-        }
-        
-        .guide-step:last-child {
-            border-bottom: none;
-        }
-        
-        .guide-step-title {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: var(--on-surface);
-        }
-        
-        .guide-step-number {
-            width: 28px;
-            height: 28px;
-            background-color: var(--primary-color);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-        }
-        
-        .highlighted-text {
-            background-color: rgba(255, 235, 59, 0.3);
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-weight: 500;
-        }
-        
-        .pain-point-detail {
-            background-color: rgba(244, 67, 54, 0.1);
-            border-radius: var(--border-radius);
-            padding: 20px;
-            margin: 16px 0;
-            border-left: 4px solid #f44336;
-        }
-        
-        .pain-point-detail h5 {
-            color: #f44336;
-            margin-bottom: 8px;
-            font-size: 18px;
-        }
-        
-        .solution-detail {
-            background-color: rgba(76, 175, 80, 0.1);
-            border-radius: var(--border-radius);
-            padding: 20px;
-            margin: 16px 0;
-            border-left: 4px solid #4caf50;
-        }
-        
-        .solution-detail h5 {
-            color: #4caf50;
-            margin-bottom: 8px;
-            font-size: 18px;
-        }
-        
-        .what-you-get {
-            background: linear-gradient(135deg, rgba(98, 0, 238, 0.05), rgba(3, 218, 198, 0.05));
-            border-radius: var(--border-radius);
-            padding: 32px;
-            margin: 32px 0;
-        }
-        
-        .what-you-get h4 {
-            text-align: center;
-            margin-bottom: 24px;
-            color: var(--primary-color);
-            font-size: 24px;
-        }
-        
-        .get-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 16px;
-            margin-bottom: 20px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid rgba(0,0,0,0.1);
-        }
-        
-        .get-item:last-child {
-            border-bottom: none;
-        }
-        
-        .get-icon {
-            width: 40px;
-            height: 40px;
-            background-color: var(--primary-color);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-        
-        .get-content h5 {
-            margin-bottom: 4px;
-            color: var(--on-surface);
-        }
-        
-        @media (max-width: 768px) {
-            .before-after {
-                grid-template-columns: 1fr;
-            }
-            
-            .specific-numbers {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .specific-number {
-                width: 100%;
-                max-width: 250px;
-            }
-        }
-    </style>
+    <title>Прогресс - Бот для обучения</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="container header-container">
-            <a href="#" class="logo">
-                <div class="logo-icon">P</div>
-                <div class="logo-text">Прогресс</div>
-            </a>
-            <button class="mobile-menu-button">
-                <span class="material-icons">menu</span>
-            </button>
-            <nav>
-                <ul class="nav-menu">
-                    <li><a href="#problem">Проблема</a></li>
-                    <li><a href="#solution">Решение</a></li>
-                    <li><a href="#features">Функционал</a></li>
-                    <li><a href="#results">Результаты</a></li>
-                    <li><a href="#pricing">Тарифы</a></li>
-                </ul>
-            </nav>
+    <div class="telegram-app">
+        <!-- Боковая панель -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fab fa-telegram"></i>
+                    <span>Прогресс</span>
+                </div>
+                <button class="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            
+            <div class="sidebar-search">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Поиск...">
+                </div>
+            </div>
+            
+            <div class="sidebar-menu">
+                <a href="index.html" class="menu-item active">
+                    <i class="fas fa-home"></i>
+                    <span>Главная</span>
+                </a>
+                <a href="tutor.html" class="menu-item">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                    <span>Для репетиторов</span>
+                </a>
+                <a href="student.html" class="menu-item">
+                    <i class="fas fa-user-graduate"></i>
+                    <span>Для учеников</span>
+                </a>
+                <a href="features.html" class="menu-item">
+                    <i class="fas fa-star"></i>
+                    <span>Функционал</span>
+                </a>
+                <a href="contacts.html" class="menu-item">
+                    <i class="fas fa-phone"></i>
+                    <span>Контакты</span>
+                </a>
+            </div>
+            
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="avatar">П</div>
+                    <div class="user-details">
+                        <span class="user-name">Проект "Прогресс"</span>
+                        <span class="user-status">онлайн</span>
+                    </div>
+                </div>
+            </div>
         </div>
-    </header>
-
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1>Система управления учебным процессом <span class="gradient-text">прямо в Telegram</span></h1>
-                <div class="hero-subtitle">
-                    Как я перестал терять время на администрирование и начал зарабатывать на 35% больше
+        
+        <!-- Основной контент -->
+        <div class="main-content">
+            <div class="content-header">
+                <h1><i class="fas fa-robot"></i> Бот "Прогресс"</h1>
+                <div class="theme-toggle">
+                    <i class="fas fa-moon"></i>
                 </div>
-                <p>2 года назад я потерял 3 месяца работы из-за хаоса в переписках с 18 учениками в разных мессенджерах. Я создал «Прогресс» — не просто бота, а свою личную систему управления, которую теперь делюсь с коллегами.</p>
-                
-                <div class="personal-intro">
-                    <p>Привет! Меня зовут Алексей, я репетитор по Python, Golang и подготовке к ОГЭ/ЕГЭ по физике и информатике с 7-летним стажем. Я создал «Прогресс», чтобы решить свои проблемы с организацией учебного процесса.</p>
-                    <p class="author">— Алексей, основатель проекта</p>
-                </div>
-                
-                <div class="highlight-badge">
-                    ✅ Экономия 2+ часов ежедневно • ROI 157% за 2 года • 14-16 месяцев до окупаемости
-                </div>
-                
-                <div class="hero-buttons">
-                    <a href="#pricing" class="btn btn-primary">
-                        <span class="material-icons">school</span>
-                        Начать бесплатно
-                    </a>
-                    <a href="#demo" class="btn btn-demo">
-                        <span class="material-icons">play_circle</span>
-                        Посмотреть демо
-                    </a>
-                </div>
-                
-                <div class="hero-statistics">
-                    <div class="stat-item">
-                        <div class="stat-number">57%</div>
-                        <div class="stat-label">репетиторов тратят до 2 часов ежедневно на администрирование</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">73%</div>
-                        <div class="stat-label">используют 3+ мессенджера для работы</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">82%</div>
-                        <div class="stat-label">не ведут статистику прогресса учеников</div>
-                    </div>
-                </div>
-                
-                <div class="hero-image">
-                    <div class="phone-mockup floating">
-                        <div class="phone-screen">
-                            <div class="phone-header">
-                                <div class="phone-avatar">P</div>
-                                <div class="phone-time">15:42</div>
+            </div>
+            
+            <div class="chat-container">
+                <!-- Сообщения от бота -->
+                <div class="message-container">
+                    <!-- Приветственное сообщение -->
+                    <div class="message bot-message">
+                        <div class="message-avatar">П</div>
+                        <div class="message-content">
+                            <div class="message-sender">Бот "Прогресс"</div>
+                            <div class="message-text">
+                                <p>👋 <strong>Добро пожаловать в систему управления учебным процессом «Прогресс»!</strong></p>
+                                <p>Я — специализированный Telegram-бот, созданный для решения реальных проблем репетиторов и учеников.</p>
+                                <p>🎯 <strong>Наша миссия:</strong> Превратить хаотичную переписку в структурированную систему обучения с автоматической аналитикой.</p>
                             </div>
-                            <div class="phone-body">
-                                <h3 style="margin-bottom: 16px; font-weight: 500; text-align: center;">Мои ученики</h3>
-                                <div class="phone-menu">
-                                    <div class="phone-card">
-                                        <div class="phone-icon">
-                                            <span class="material-icons">menu_book</span>
-                                        </div>
-                                        <div class="phone-label">Занятия</div>
-                                    </div>
-                                    <div class="phone-card">
-                                        <div class="phone-icon">
-                                            <span class="material-icons">assignment</span>
-                                        </div>
-                                        <div class="phone-label">Задания</div>
-                                    </div>
-                                    <div class="phone-card">
-                                        <div class="phone-icon">
-                                            <span class="material-icons">bar_chart</span>
-                                        </div>
-                                        <div class="phone-label">Статистика</div>
-                                    </div>
-                                    <div class="phone-card">
-                                        <div class="phone-icon">
-                                            <span class="material-icons">folder</span>
-                                        </div>
-                                        <div class="phone-label">Банк тем</div>
-                                    </div>
+                            <div class="message-time" id="time1">14:30</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Сообщение о проблемах рынка -->
+                    <div class="message bot-message">
+                        <div class="message-avatar">П</div>
+                        <div class="message-content">
+                            <div class="message-sender">Бот "Прогресс"</div>
+                            <div class="message-text">
+                                <h4>📊 Решаем реальные проблемы репетиторов:</h4>
+                                <ul class="features-list">
+                                    <li><i class="fas fa-times-circle" style="color: #ff3b30;"></i> <strong>73%</strong> репетиторов используют 3+ мессенджера для работы</li>
+                                    <li><i class="fas fa-times-circle" style="color: #ff3b30;"></i> <strong>68%</strong> учеников "теряют" домашние задания</li>
+                                    <li><i class="fas fa-times-circle" style="color: #ff3b30;"></i> <strong>82%</strong> репетиторов не ведут статистику прогресса</li>
+                                    <li><i class="fas fa-times-circle" style="color: #ff3b30;"></i> <strong>57%</strong> тратят до 2 часов ежедневно на администрирование</li>
+                                </ul>
+                            </div>
+                            <div class="message-time" id="time2">14:31</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Сообщение о решении -->
+                    <div class="message bot-message">
+                        <div class="message-avatar">П</div>
+                        <div class="message-content">
+                            <div class="message-sender">Бот "Прогресс"</div>
+                            <div class="message-text">
+                                <h4>✨ Как мы это решаем?</h4>
+                                <p><strong>Единая Telegram-платформа</strong> для всего учебного процесса:</p>
+                                <div class="inline-buttons" style="margin: 10px 0;">
+                                    <span class="inline-button primary" style="pointer-events: none;">👨‍🏫 Управление учениками</span>
+                                    <span class="inline-button" style="pointer-events: none;">📝 Создание заданий</span>
+                                    <span class="inline-button" style="pointer-events: none;">📊 Аналитика прогресса</span>
+                                    <span class="inline-button" style="pointer-events: none;">🗂 Банк материалов</span>
                                 </div>
                             </div>
-                            <div class="phone-footer">
-                                <span class="material-icons">home</span>
-                                <span class="material-icons">search</span>
-                                <span class="material-icons">add</span>
-                                <span class="material-icons">notifications</span>
-                                <span class="material-icons">person</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="phone-mockup right floating">
-                        <div class="phone-screen">
-                            <div class="phone-header">
-                                <div class="phone-avatar">S</div>
-                                <div class="phone-time">15:45</div>
-                            </div>
-                            <div class="phone-body">
-                                <h3 style="margin-bottom: 16px; font-weight: 500; text-align: center;">Мои задания</h3>
-                                <div class="phone-menu">
-                                    <div class="phone-card">
-                                        <div class="phone-icon" style="color: #ff9800;">
-                                            <span class="material-icons">assignment_late</span>
-                                        </div>
-                                        <div class="phone-label">Активные</div>
-                                    </div>
-                                    <div class="phone-card">
-                                        <div class="phone-icon" style="color: #4caf50;">
-                                            <span class="material-icons">check_circle</span>
-                                        </div>
-                                        <div class="phone-label">Выполненные</div>
-                                    </div>
-                                    <div class="phone-card">
-                                        <div class="phone-icon" style="color: #2196f3;">
-                                            <span class="material-icons">show_chart</span>
-                                        </div>
-                                        <div class="phone-label">Прогресс</div>
-                                    </div>
-                                    <div class="phone-card">
-                                        <div class="phone-icon" style="color: #9c27b0;">
-                                            <span class="material-icons">library_books</span>
-                                        </div>
-                                        <div class="phone-label">Материалы</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="phone-footer">
-                                <span class="material-icons">home</span>
-                                <span class="material-icons">search</span>
-                                <span class="material-icons">add</span>
-                                <span class="material-icons">notifications</span>
-                                <span class="material-icons">person</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Problem Section -->
-    <section id="problem" class="section-bg">
-        <div class="container">
-            <div class="section-header">
-                <h2><span class="emoji-header">😫</span> Реальная проблема, которая стоит вам денег и нервов</h2>
-                <p>Конкретные ситуации, с которыми сталкиваются 73% репетиторов каждый день</p>
-            </div>
-            
-            <div class="real-problem">
-                <p>Представьте эту ситуацию: Вы только что закончили занятие с Иваном по Python, задали домашку на тему ООП. Вы отправляете задание в Telegram, но Иван отвечает через 3 дня: "Простите, не увидел сообщение, оно затерялось в переписке". Вы пересылаете задание, ставите напоминание в телефоне, но забываете проверить выполнение. Через неделю родители Ивана спрашивают: "Почему у сына нет прогресса?".</p>
-            </div>
-            
-            <div class="problem-stats">
-                <div class="stat-card">
-                    <h4>Потеря времени</h4>
-                    <div class="number">2 часа</div>
-                    <p>ежедневно тратят репетиторы на административные задачи</p>
-                </div>
-                <div class="stat-card">
-                    <h4>Финансовые потери</h4>
-                    <div class="number">67 500 ₽</div>
-                    <p>в месяц не зарабатывают из-за хаотичной организации процесса</p>
-                </div>
-                <div class="stat-card">
-                    <h4>Выгорание</h4>
-                    <div class="number">8 репет.</div>
-                    <p>из моего окружения ушли из профессии за последний год из-за выгорания</p>
-                </div>
-            </div>
-            
-            <!-- ДОБАВЛЕН НОВЫЙ РАЗДЕЛ: Конкретные примеры потерь -->
-            <div class="specific-example">
-                <div class="specific-example-header">
-                    <div class="specific-example-title">Вчера в моей практике:</div>
-                    <div class="specific-example-time">21 ноября 2025</div>
-                </div>
-                
-                <div class="day-schedule">
-                    <div class="day-event">
-                        <div class="day-time">17:30</div>
-                        <div class="day-description">
-                            <p><strong>Занятие с Машей (8 класс, ОГЭ по информатике)</strong></p>
-                            <p>Задал домашку: задачи по теме "Алгоритмы". Отправил в WhatsApp, потому что вчера она писала мне там.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="day-event">
-                        <div class="day-time">18:45</div>
-                        <div class="day-description">
-                            <p><strong>Маша в Telegram:</strong> "А где задание?"</p>
-                            <p>Оказалось, она удалила WhatsApp. Пересылаю задание в Telegram. Трачу 15 минут на поиск файла с задачами.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="day-event">
-                        <div class="day-time">19:30</div>
-                        <div class="day-description">
-                            <p><strong>Родитель Маши в VK:</strong> "Вы скинули задание? Маша не может найти"</p>
-                            <p>Отвечаю: "Да, в Telegram". Родитель: "А у нас нет Telegram, только VK и WhatsApp". Пересылаю в VK.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="day-event">
-                        <div class="day-time">21:00</div>
-                        <div class="day-description">
-                            <p><strong>Итог вечера:</strong></p>
-                            <ul style="margin-left: 20px; margin-top: 8px;">
-                                <li>40 минут на пересылку одного задания</li>
-                                <li>Задание теперь в 3 мессенджерах, но не в одном месте</li>
-                                <li>Нет гарантии, что Маша его выполнит вовремя</li>
-                                <li>Чувство раздражения и усталости</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="cost-calculation">
-                <h3>Математика ваших потерь</h3>
-                <ul class="cost-items">
-                    <li><span class="stats-highlight">2 часа ежедневно</span> на поиск материалов, напоминания, планирование (данные опроса 247 репетиторов)</li>
-                    <li>При среднем чеке 1500 ₽ за занятие это <span class="stats-highlight">67 500 ₽ в месяц</span>, которые вы НЕ зарабатываете</li>
-                    <li><span class="stats-highlight">38-40 часов в месяц</span> на администрирование вместо преподавания</li>
-                    <li><span class="stats-highlight">Психологическая цена:</span> стресс от хаоса, невозможность отключиться от работы, выгорание</li>
-                </ul>
-            </div>
-            
-            <div class="before-after">
-                <div class="before">
-                    <h4>До "Прогресс"</h4>
-                    <div class="specific-numbers">
-                        <div class="specific-number">
-                            <div class="value">7</div>
-                            <div class="label">чатов на одного ученика</div>
-                        </div>
-                        <div class="specific-number">
-                            <div class="value">35%</div>
-                            <div class="label">потерянных заданий</div>
-                        </div>
-                        <div class="specific-number">
-                            <div class="value">18 мин</div>
-                            <div class="label">на поиск одного файла</div>
+                            <div class="message-time" id="time3">14:32</div>
                         </div>
                     </div>
                 </div>
                 
-                <div class="after">
-                    <h4>После "Прогресс"</h4>
-                    <div class="specific-numbers">
-                        <div class="specific-number">
-                            <div class="value">1</div>
-                            <div class="label">чат на всех учеников</div>
+                <!-- Карточки с функциями -->
+                <div class="features-grid">
+                    <a href="tutor.html" class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chalkboard-teacher"></i>
                         </div>
-                        <div class="specific-number">
-                            <div class="value">4%</div>
-                            <div class="label">потерянных заданий</div>
-                        </div>
-                        <div class="specific-number">
-                            <div class="value">12 сек</div>
-                            <div class="label">на поиск одного файла</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="real-story">
-                <p>"Я вела 4 группы в разных чатах, постоянно теряла файлы с заданиями. Однажды я перепутала варианты контрольной для двух групп, и родители устроили скандал. После этого я неделю боялась выходить на связь с учениками".</p>
-                <p class="author">— Марина, репетитор по математике из Екатеринбурга</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Solution Section -->
-    <section id="solution">
-        <div class="container">
-            <div class="section-header">
-                <h2><span class="emoji-header">🚀</span> Как работает «Прогресс»: моя личная система, отлаженная за 2 года</h2>
-                <p>Конкретные решения для каждой из проблем, основанное на реальном опыте преподавания</p>
-            </div>
-            
-            <!-- Шаг за шагом: Как я решил каждую проблему -->
-            <div class="step-by-step-guide">
-                <h4>Как я создавал систему для себя:</h4>
-                
-                <div class="guide-step">
-                    <div class="guide-step-title">
-                        <div class="guide-step-number">1</div>
-                        <div>Проблема: Потеря заданий в мессенджерах</div>
-                    </div>
-                    <div class="guide-step-content">
-                        <p><span class="highlighted-text">Было:</span> 18 учеников × 3 мессенджера = 54 чата. Каждое задание терялось в среднем в 2 из 3 чатов.</p>
-                        <p><span class="highlighted-text">Решение:</span> Система токенов. Когда ученик регистрируется, он получает доступ ко всем материалам в одном месте.</p>
-                        
-                        <div class="specific-example" style="margin-top: 16px;">
-                            <div class="specific-example-title">Пример из моей практики:</div>
-                            <div class="message-bubble">Привет! Вот твой токен для подключения: ABCD-EFGH</div>
-                            <div class="message-bubble right">Спасибо! Я подключился через бота</div>
-                            <div style="text-align: center; margin: 12px 0; font-size: 14px; color: #5f6368;">
-                                ⏱️ Процесс занял 32 секунды
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="guide-step">
-                    <div class="guide-step-title">
-                        <div class="guide-step-number">2</div>
-                        <div>Проблема: Ручные напоминания</div>
-                    </div>
-                    <div class="guide-step-content">
-                        <p><span class="highlighted-text">Было:</span> 15-20 напоминаний в день вручную. Один ученик забывал о дедлайне — я тратил 10-15 минут на разборки.</p>
-                        <p><span class="highlighted-text">Решение:</span> Каскад напоминаний: за 24ч, 3ч, 15 мин. Настроил один раз — работает всегда.</p>
-                        
-                        <div class="reminder-cascade">
-                            <div class="reminder-item">
-                                <div class="reminder-time">24ч</div>
-                                <div class="reminder-label">"Напоминаю, завтра в 21:00 дедлайн"</div>
-                            </div>
-                            <div class="reminder-item">
-                                <div class="reminder-time">3ч</div>
-                                <div class="reminder-label">"До дедлайна осталось 3 часа"</div>
-                            </div>
-                            <div class="reminder-item">
-                                <div class="reminder-time">15м</div>
-                                <div class="reminder-label">"Последний шанс! Через 15 минут"</div>
-                            </div>
-                        </div>
-                        
-                        <p style="margin-top: 16px;"><span class="highlighted-text">Результат:</span> Количество просроченных заданий упало с 35% до 4%.</p>
-                    </div>
-                </div>
-                
-                <div class="guide-step">
-                    <div class="guide-step-title">
-                        <div class="guide-step-number">3</div>
-                        <div>Проблема: Родители спрашивают прогресс</div>
-                    </div>
-                    <div class="guide-step-content">
-                        <p><span class="highlighted-text">Было:</span> "Как успехи моего ребенка?" → 30-40 минут поиска информации, составления отчета.</p>
-                        <p><span class="highlighted-text">Решение:</span> Автоматические отчеты. Нажал кнопку — получил PDF с графиками.</p>
-                        
-                        <div class="feature-example" style="margin-top: 16px;">
-                            <p><strong>Отчет для Ивана (Python, ООП):</strong></p>
-                            <ul style="margin-left: 24px; margin-top: 12px; line-height: 1.7;">
-                                <li>✅ Всего заданий: 24 (выполнено 20, в работе 4)</li>
-                                <li>✅ Успеваемость: 85.7% (рост на 12% за месяц)</li>
-                                <li>✅ Лучшие темы: Основы Python (95%), ООП (85%)</li>
-                                <li>✅ Слабые места: Алгоритмы (65%), Базы данных (58%)</li>
-                                <li>✅ Прогноз на следующий месяц: 88-92% успеваемости</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="scenario-card">
-                <div class="scenario-title">
-                    <span class="material-icons">key</span>
-                    Система одноразовых токенов: безопасность и порядок
-                </div>
-                <div class="scenario-content">
-                    <p>Когда ко мне приходит новый ученик, я не прошу его номер телефона или email. Вместо этого я генерирую уникальный токен вида ABCD-EFGH, действительный 1 час. Этот токен отправляю родителям/ученику один раз.</p>
-                    
-                    <div class="system-token">
-                        <p style="text-align: center; margin-bottom: 12px;">Пример токена для нового ученика:</p>
-                        <div class="token-example">ABCD-EFGH</div>
-                        <p style="text-align: center; font-size: 14px; color: #5f6368;">Действителен 1 час • Автоматическое уведомление при регистрации</p>
-                    </div>
-                    
-                    <p><span class="stats-highlight">Конкретный пример:</span> Недавно ко мне пришла Аня, 15 лет, готовится к ЕГЭ по информатике. Ее мама прислала токен, Аня зарегистрировалась за 2 минуты. Теперь у меня есть отдельный раздел для Ани с историей всех заданий, материалами, статистикой. Никакого поиска в сотнях сообщений!</p>
-                    
-                    <div class="scenario-benefit">
-                        ✅ Результат: Полный порядок в учениках, никаких потерь контактов, безопасность данных
-                    </div>
-                </div>
-            </div>
-            
-            <div class="scenario-card">
-                <div class="scenario-title">
-                    <span class="material-icons">notifications</span>
-                    Автоматические напоминания: больше никаких ручных уведомлений
-                </div>
-                <div class="scenario-content">
-                    <p>Раньше я тратил по 40 минут в день на отправку напоминаний. Теперь я настраиваю каскад напоминаний при создании задания:</p>
-                    
-                    <div class="feature-example">
-                        <p><span style="font-weight: 500;">Создание задания для Ивана (Python, ООП):</span></p>
-                        <ul style="margin-left: 24px; margin-top: 12px; line-height: 1.7;">
-                            <li>✅ Дедлайн: 18 декабря 2025, 21:00</li>
-                            <li>✅ Напоминания: за 24 часа, за 3 часа, за 15 минут</li>
-                            <li>✅ Прикреплен файл: oop_task.pdf</li>
-                            <li>✅ Автоматическое уведомление при сдаче работы</li>
+                        <h3>👨‍🏫 Для репетиторов</h3>
+                        <p><strong>Полный контроль над учебным процессом:</strong></p>
+                        <ul class="mini-features">
+                            <li>• Управление учениками через токены</li>
+                            <li>• Создание заданий с дедлайнами</li>
+                            <li>• Детальная аналитика прогресса</li>
+                            <li>• Банк учебных материалов</li>
+                            <li>• Автоматические напоминания</li>
+                            <li>• Календарь занятий</li>
                         </ul>
-                    </div>
+                        <div class="feature-badge">Экономия до 40% времени</div>
+                    </a>
                     
-                    <div class="specific-example" style="margin-top: 16px;">
-                        <div class="specific-example-header">
-                            <div class="specific-example-title">Жизненный цикл одного задания:</div>
+                    <a href="student.html" class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-user-graduate"></i>
                         </div>
-                        
-                        <div class="day-schedule">
-                            <div class="day-event">
-                                <div class="day-time">15:00</div>
-                                <div class="day-description">
-                                    <p><strong>Создание задания</strong></p>
-                                    <p>Нажал "Создать задание", выбрал Ивана, прикрепил файл, поставил дедлайн.</p>
-                                </div>
-                            </div>
-                            
-                            <div class="day-event">
-                                <div class="day-time">15:01</div>
-                                <div class="day-description">
-                                    <p><strong>Автоматическая отправка</strong></p>
-                                    <p>Бот сам отправил задание Ивану. Я уже забыл про это задание.</p>
-                                </div>
-                            </div>
-                            
-                            <div class="day-event">
-                                <div class="day-time">17 дек, 21:00</div>
-                                <div class="day-description">
-                                    <p><strong>Первое напоминание (за 24ч)</strong></p>
-                                    <p>Бот напомнил Ивану: "Завтра дедлайн!" Я об этом не думал.</p>
-                                </div>
-                            </div>
-                            
-                            <div class="day-event">
-                                <div class="day-time">18 дек, 18:00</div>
-                                <div class="day-description">
-                                    <p><strong>Второе напоминание (за 3ч)</strong></p>
-                                    <p>Бот: "Осталось 3 часа!". Иван начал делать задание.</p>
-                                </div>
-                            </div>
-                            
-                            <div class="day-event">
-                                <div class="day-time">18 дек, 20:45</div>
-                                <div class="day-description">
-                                    <p><strong>Третье напоминание (за 15м)</strong></p>
-                                    <p>Бот: "Срочно! 15 минут до дедлайна!". Иван сдал работу.</p>
-                                </div>
-                            </div>
-                            
-                            <div class="day-event">
-                                <div class="day-time">18 дек, 20:46</div>
-                                <div class="day-description">
-                                    <p><strong>Уведомление мне</strong></p>
-                                    <p>Бот: "Иван сдал работу за 14 минут до дедлайна". Я проверяю.</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div style="text-align: center; margin-top: 16px; padding: 12px; background-color: rgba(76, 175, 80, 0.1); border-radius: 8px;">
-                            <p><strong>Мое участие:</strong> 2 минуты на создание задания + 3 минуты на проверку = 5 минут всего</p>
-                        </div>
-                    </div>
-                    
-                    <p><span class="stats-highlight">Личный опыт:</span> Когда я внедрил эту систему для своих 12 учеников, количество просроченных заданий сократилось с 35% до 4% за месяц. Я вернул себе 1.5 часа ежедневно, которые тратил на постоянные напоминания.</p>
-                    
-                    <div class="scenario-benefit">
-                        ✅ Результат: Экономия 1.5 часа ежедневно, повышение дисциплины учеников
-                    </div>
-                </div>
-            </div>
-            
-            <div class="scenario-card">
-                <div class="scenario-title">
-                    <span class="material-icons">analytics</span>
-                    Аналитика прогресса: от гадания к точным прогнозам
-                </div>
-                <div class="scenario-content">
-                    <p>Раньше я говорил родителям: "Ваш ребенок хорошо учится", не имея конкретных данных. Теперь у меня есть тепловая карта активности ученика:</p>
-                    
-                    <div class="heat-map">
-                        <p style="font-weight: 500; margin-bottom: 12px;">ТЕПЛОВАЯ КАРТА АКТИВНОСТИ ИВАНА (Python)</p>
-                        <pre style="background-color: #f5f5f7; padding: 16px; border-radius: 8px; text-align: left;">
-Пн Вт Ср Чт Пт Сб Вс
-Утро  ░░░░░░░░░░░░░░░░░░░░
-День  ░░░░░░░░░░░░░██████░░
-Вечер ░░░░░░░░░░░░░░░░░░███</pre>
-                    </div>
-                    
-                    <p>Эта карта показала, что Иван наиболее продуктивен по вторникам и четвергам вечером. Я перенес его занятия на эти дни:</p>
-                    
-                    <div class="schedule-change">
-                        <p><span style="font-weight: 500;">Было:</span> понедельник и среда, 18:00</p>
-                        <p><span style="font-weight: 500;">Стало:</span> вторник и четверг, 19:30</p>
-                        <p class="results">📈 Результат: Успеваемость Ивана выросла на 22% за месяц</p>
-                    </div>
-                    
-                    <div class="case-study">
-                        <h4>Другой пример с конкретными цифрами:</h4>
-                        <ul style="margin-left: 24px; margin-top: 12px; line-height: 1.7;">
-                            <li>У Светы были проблемы с алгоритмами (успеваемость 45%)</li>
-                            <li>Радар знаний показал слабые места: рекурсия (30%), динамическое программирование (25%)</li>
-                            <li>Я создал персональную программу усиления этих тем</li>
-                            <li>Через месяц: рекурсия — 75%, динамическое программирование — 70%</li>
+                        <h3>👨‍🎓 Для учеников</h3>
+                        <p><strong>Все для комфортного обучения:</strong></p>
+                        <ul class="mini-features">
+                            <li>• Удобная сдача работ</li>
+                            <li>• Структурированные материалы</li>
+                            <li>• Прозрачная статистика</li>
+                            <li>• Автоматические уведомления</li>
+                            <li>• Обратная связь от репетитора</li>
+                            <li>• Цели и рекомендации</li>
                         </ul>
-                    </div>
+                        <div class="feature-badge">+40% к мотивации</div>
+                    </a>
                     
-                    <div class="specific-example" style="margin-top: 16px;">
-                        <div class="specific-example-header">
-                            <div class="specific-example-title">Как я использую аналитику на практике:</div>
+                    <a href="features.html" class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
                         </div>
-                        
-                        <div class="before-after">
-                            <div class="before">
-                                <h4>Раньше</h4>
-                                <p>"Мама Пети, у него все хорошо, старается"</p>
-                                <p style="font-size: 14px; margin-top: 8px; color: #666;">(на самом деле успеваемость 58%, но я не знал)</p>
+                        <h3>📊 Экономический эффект</h3>
+                        <p><strong>Инвестиции в эффективность:</strong></p>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value">299 ₽</div>
+                                <div class="stat-label">в месяц</div>
                             </div>
-                            
-                            <div class="after">
-                                <h4>Сейчас</h4>
-                                <p>"У Пети успеваемость 85%, сильные темы: циклы (92%), условия (88%). Слабая тема: функции (65%). Рекомендую дополнительные задания по функциям."</p>
-                                <p style="font-size: 14px; margin-top: 8px; color: #666;">(родитель впечатлен, Петя получает нужную помощь)</p>
+                            <div class="stat-item">
+                                <div class="stat-value">157%</div>
+                                <div class="stat-label">ROI за 2 года</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">14-16 мес.</div>
+                                <div class="stat-label">окупаемость</div>
                             </div>
                         </div>
-                    </div>
-                    
-                    <div class="scenario-benefit">
-                        ✅ Результат: Глубокое понимание ученика, персонализированный подход, рост эффективности обучения
-                    </div>
-                </div>
-            </div>
-            
-            <!-- ДОБАВЛЕН НОВЫЙ РАЗДЕЛ: Что вы получите -->
-            <div class="what-you-get">
-                <h4>Что вы получите с первого дня использования</h4>
-                
-                <div class="get-item">
-                    <div class="get-icon">
-                        <span class="material-icons">timer</span>
-                    </div>
-                    <div class="get-content">
-                        <h5>Вернете 2 часа в день</h5>
-                        <p>Автоматизация рутины освободит вам время для дополнительных учеников или отдыха.</p>
-                    </div>
-                </div>
-                
-                <div class="get-item">
-                    <div class="get-icon">
-                        <span class="material-icons">attach_money</span>
-                    </div>
-                    <div class="get-content">
-                        <h5>Увеличите доход на 35%</h5>
-                        <p>За счет освободившегося времени сможете взять на 2-3 ученика больше при том же графике.</p>
-                    </div>
-                </div>
-                
-                <div class="get-item">
-                    <div class="get-icon">
-                        <span class="material-icons">psychology</span>
-                    </div>
-                    <div class="get-content">
-                        <h5>Уберете стресс и выгорание</h5>
-                        <p>Больше никакого хаоса, поиска файлов и ночных напоминаний. Ваша нервная система скажет спасибо.</p>
-                    </div>
-                </div>
-                
-                <div class="get-item">
-                    <div class="get-icon">
-                        <span class="material-icons">school</span>
-                    </div>
-                    <div class="get-content">
-                        <h5>Повысите качество преподавания</h5>
-                        <p>Сможете сосредоточиться на творческой части работы, а не на администрировании.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Features Section -->
-    <section id="features" class="section-bg">
-        <div class="container">
-            <div class="section-header">
-                <h2><span class="emoji-header">🔧</span> Детальный функционал: что я использую ежедневно в работе</h2>
-                <p>Конкретные функции бота, которые экономят мне время и повышают качество обучения</p>
-            </div>
-            
-            <div class="day-in-life">
-                <h4>Мой день с "Прогресс" (реальный пример)</h4>
-                
-                <div class="day-schedule">
-                    <div class="day-event">
-                        <div class="day-time">09:00</div>
-                        <div class="day-description">
-                            <p><strong>Просматриваю уведомления</strong></p>
-                            <p>За ночь 3 ученика сдали работы. Бот показывает мне их одним списком. Я отмечаю "Проверить позже".</p>
-                        </div>
-                    </div>
-                    
-                    <div class="day-event">
-                        <div class="day-time">10:00</div>
-                        <div class="day-description">
-                            <p><strong>Создаю задания на день</strong></p>
-                            <p>Выбираю 5 учеников, которым нужно отправить домашку. Создаю задания одним пакетом. Бот сам разошлет их в нужное время.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="day-event">
-                        <div class="day-time">14:00</div>
-                        <div class="day-description">
-                            <p><strong>Проверяю работы</strong></p>
-                            <p>Открываю список "На проверке". 5 работ. Проверяю, ставлю оценки, пишу комментарии. Бот отправляет обратную связь ученикам.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="day-event">
-                        <div class="day-time">16:00</div>
-                        <div class="day-description">
-                            <p><strong>Готовлюсь к занятиям</strong></p>
-                            <p>Открываю "Банк тем", нахожу материалы по теме завтрашнего занятия. Прикрепляю их к занятию в календаре.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="day-event">
-                        <div class="day-time">18:00</div>
-                        <div class="day-description">
-                            <p><strong>Анализирую прогресс</strong></p>
-                            <p>Смотрю тепловые карты активности учеников. Замечаю, что у двух учеников спад активности. Пишу им поддержку.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="day-event">
-                        <div class="day-time">20:00</div>
-                        <div class="day-description">
-                            <p><strong>Вечер свободен</strong></p>
-                            <p>Больше не трачу время на поиск заданий и напоминания. Бот работает за меня.</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div style="text-align: center; margin-top: 16px; padding: 12px; background-color: rgba(98, 0, 238, 0.1); border-radius: 8px;">
-                    <p><strong>Раньше это занимало 5-6 часов. Сейчас — 1,5 часа.</strong></p>
-                </div>
-            </div>
-            
-            <div class="features-tabs">
-                <button class="tab-btn active" data-tab="tutors">Для репетиторов</button>
-                <button class="tab-btn" data-tab="students">Для учеников</button>
-                <button class="tab-btn" data-tab="workflow">Рабочие процессы</button>
-            </div>
-            <div class="features-container">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <span class="material-icons">people</span>
-                    </div>
-                    <h3>Управление учениками</h3>
-                    <p>Конкретная реализация: Я никогда не теряю контакты учеников и всегда вижу их статус в одном месте.</p>
-                    
-                    <div class="feature-detail">
-                        <h4>Как я это использую:</h4>
-                        <div class="feature-step">
-                            <div class="step-number">1</div>
-                            <div>Генерирую токен для нового ученика при первой встрече</div>
-                        </div>
-                        <div class="feature-step">
-                            <div class="step-number">2</div>
-                            <div>Ученик регистрируется и появляется в моем списке</div>
-                        </div>
-                        <div class="feature-step">
-                            <div class="step-number">3</div>
-                            <div>Я добавляю комментарий "Готовится к олимпиаде по информатике"</div>
-                        </div>
-                        <div class="feature-step">
-                            <div class="step-number">4</div>
-                            <div>Сразу вижу все контакты и статистику по ученику</div>
-                        </div>
-                    </div>
-                    
-                    <div class="pain-point-detail">
-                        <h5>Проблема, которую решает:</h5>
-                        <p>"Я не мог запомнить, кто в каком мессенджере, какие контакты у родителей, кто платит, а кто нет. Теперь все в одном месте."</p>
-                    </div>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <span class="material-icons">calendar_today</span>
-                    </div>
-                    <h3>Планирование занятий</h3>
-                    <p>Конкретная реализация: Мой календарь всегда актуален, я вижу посещаемость и могу анализировать эффективность обучения.</p>
-                    
-                    <div class="feature-detail">
-                        <h4>Пример из практики:</h4>
-                        <p>Ученица Анна часто пропускала занятия по пятницам. Анализ посещаемости показал, что по понедельникам и средам она приходит всегда. Я перенес занятия на эти дни, и теперь пропусков нет.</p>
-                        <p class="scenario-benefit" style="margin-top: 12px;">✅ Результат: 100% посещаемость, лучше качество обучения</p>
-                    </div>
-                    
-                    <div class="solution-detail">
-                        <h5>Как это помогает:</h5>
-                        <p>"Раньше я вел записи в бумажном блокноте и постоянно терял их. Теперь все занятия записываются автоматически, и я вижу статистику посещаемости."</p>
-                    </div>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <span class="material-icons">folder</span>
-                    </div>
-                    <h3>Банк учебных материалов</h3>
-                    <p>Конкретная реализация: Все мои материалы структурированы по темам и предметам, их легко найти и отправить ученику.</p>
-                    
-                    <div class="feature-grid">
-                        <div class="feature-item">
-                            <p><span class="material-icons" style="vertical-align: middle; color: var(--primary-color); font-size: 18px;">📁</span> <span style="font-weight: 500;">Папки по темам</span><br><span style="font-size: 14px; color: #5f6368;">Python основы, ООП, Алгоритмы</span></p>
-                        </div>
-                        <div class="feature-item">
-                            <p><span class="material-icons" style="vertical-align: middle; color: var(--primary-color); font-size: 18px;">📎</span> <span style="font-weight: 500;">Типы файлов</span><br><span style="font-size: 14px; color: #5f6368;">PDF, DOC, фото кода, скриншоты</span></p>
-                        </div>
-                        <div class="feature-item">
-                            <p><span class="material-icons" style="vertical-align: middle; color: var(--primary-color); font-size: 18px;">👁</span> <span style="font-weight: 500;">Контроль видимости</span><br><span style="font-size: 14px; color: #5f6368;">Что видит каждый ученик</span></p>
-                        </div>
-                    </div>
-                    
-                    <div class="specific-example" style="margin-top: 16px;">
-                        <div class="specific-example-title">Как я это использую:</div>
-                        <p><span class="highlighted-text">Вчера:</span> Ученик попросил материалы по ООП. Раньше я бы искал 15-20 минут. Сейчас: открыл "Банк тем" → "Python" → "ООП" → отправил всю папку одним кликом.</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="quote-block">
-                "Когда я начал использовать «Прогресс», первое, что я заметил — я перестал бояться воскресенья. Раньше каждый воскресный вечер был кошмаром: я вспоминал, кому что задал, кому нужно напомнить, чьи работы проверить. Теперь бот делает это за меня. Воскресенье снова стало днем отдыха."
-                <div class="quote-author">— Алексей, основатель проекта</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Results Section -->
-    <section id="results">
-        <div class="container">
-            <div class="section-header">
-                <h2><span class="emoji-header">📊</span> Конкретные результаты за 2 года использования</h2>
-                <p>Измеримые улучшения в работе репетитора и успехи учеников</p>
-            </div>
-            
-            <div class="key-metrics">
-                <div class="metric-card">
-                    <div class="metric-value">+35%</div>
-                    <div class="metric-label">рост дохода при том же рабочем времени</div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-value">2 ч/день</div>
-                    <div class="metric-label">экономии времени на администрирование</div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-value">40%</div>
-                    <div class="metric-label">снижение пропущенных заданий</div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-value">85%</div>
-                    <div class="metric-label">учеников повысили успеваемость</div>
-                </div>
-            </div>
-            
-            <div class="detailed-case">
-                <h3>Кейс: Михаил, 16 лет, подготовка к ЕГЭ по информатике</h3>
-                <p><span style="font-weight: 500; color: var(--primary-color);">Исходные данные:</span> Начальный уровень — 42 балла на пробном ЕГЭ. Проблемы: не сдавал домашние задания, терял материалы, низкая мотивация.</p>
-                
-                <div class="case-timeline">
-                    <div class="timeline-item">
-                        <div class="timeline-date">Октябрь 2024</div>
-                        <p>Подключение к системе, настройка личного кабинета, загрузка материалов</p>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">Ноябрь 2024</div>
-                        <p>Введение дисциплины через автоматические напоминания, начало ведения статистики</p>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">Январь 2025</div>
-                        <p>Анализ тепловой карты показал: лучшее время для занятий — вторник и четверг вечером</p>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">Апрель 2025</div>
-                        <p>Промежуточный результат: 68 баллов на пробном ЕГЭ (рост на 26 баллов)</p>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">Июнь 2025</div>
-                        <p><span style="font-weight: 700; color: #4caf50;">Итоговый результат: 87 баллов на реальном ЕГЭ</span></p>
-                    </div>
-                </div>
-                
-                <p style="margin-top: 24px;"><span style="font-weight: 500;">Что помогло достичь результата:</span></p>
-                <ul style="margin-left: 24px; margin-top: 12px; line-height: 1.7;">
-                    <li>Структурированный доступ к материалам в одном месте</li>
-                    <li>Автоматические напоминания о дедлайнах заданий</li>
-                    <li>Визуальная статистика прогресса, повышающая мотивацию</li>
-                    <li>Персонализированный график занятий на основе анализа активности</li>
-                    <li>Бесперебойная коммуникация без потери сообщений</li>
-                </ul>
-            </div>
-            
-            <div class="feature-comparison">
-                <h3>Сравнение: До и после внедрения системы «Прогресс»</h3>
-                <div class="comparison-grid">
-                    <div class="comparison-item traditional">
-                        <h4>До системы</h4>
-                        <div class="comparison-value">3 часа</div>
-                        <div class="comparison-label">на администрирование</div>
-                    </div>
-                    <div class="comparison-item pro">
-                        <h4>После системы</h4>
-                        <div class="comparison-value">45 минут</div>
-                        <div class="comparison-label">на администрирование</div>
-                    </div>
-                    <div class="comparison-item traditional">
-                        <h4>До системы</h4>
-                        <div class="comparison-value">12</div>
-                        <div class="comparison-label">максимум учеников</div>
-                    </div>
-                    <div class="comparison-item pro">
-                        <h4>После системы</h4>
-                        <div class="comparison-value">18</div>
-                        <div class="comparison-label">максимум учеников</div>
-                    </div>
-                </div>
-            </div>
-            
-            <blockquote style="background-color: rgba(0, 0, 0, 0.03); border-radius: var(--border-radius); padding: 32px; margin: 40px 0; border-left: 4px solid var(--primary-color); font-style: italic; line-height: 1.7;">
-                "За 2 года использования системы мои доходы выросли на 35%, а количество учеников увеличилось с 12 до 18 при том же рабочем времени. Но самое главное — я вернул себе баланс между работой и личной жизнью. Теперь я не проверяю сообщения по ночам и в выходные, потому что все процессы автоматизированы и под контролем."
-                <p style="margin-top: 16px; text-align: right; font-weight: 500; color: var(--primary-color);">— Алексей, основатель проекта</p>
-            </blockquote>
-        </div>
-    </section>
-
-    <!-- ROI Section -->
-    <section class="section-bg">
-        <div class="container">
-            <div class="section-header">
-                <h2><span class="emoji-header">💰</span> Экономическая выгода: точные цифры и расчеты</h2>
-                <p>Инвестиция в автоматизацию окупается уже через 14-16 месяцев при текущих темпах рынка</p>
-            </div>
-            
-            <div class="roi-calculation">
-                <h3>Расчет окупаемости для частного репетитора</h3>
-                <div class="roi-details">
-                    <div class="roi-detail">
-                        <p>Стартовые инвестиции</p>
-                        <div class="value">450 000 ₽</div>
-                        <p style="font-size: 14px; color: #5f6368;">разработка и запуск системы</p>
-                    </div>
-                    <div class="roi-detail">
-                        <p>Точка безубыточности</p>
-                        <div class="value">151 реп.</div>
-                        <p style="font-size: 14px; color: #5f6368;">платящих подписку 299 ₽/мес</p>
-                    </div>
-                    <div class="roi-detail">
-                        <p>Срок окупаемости</p>
-                        <div class="value">14-16 мес.</div>
-                        <p style="font-size: 14px; color: #5f6368;">консервативный прогноз</p>
-                    </div>
-                    <div class="roi-detail">
-                        <p>ROI за 2 года</p>
-                        <div class="value">157%</div>
-                        <p style="font-size: 14px; color: #5f6368;">чистая прибыль 532 000 ₽</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="roi-container">
-                <div class="roi-card">
-                    <div class="roi-icon">
-                        <span class="material-icons">savings</span>
-                    </div>
-                    <div class="roi-number">2 часа</div>
-                    <div class="roi-label">ежедневной экономии времени</div>
-                    <p>Освободите до 2 часов ежедневно от рутинных задач для дополнительных учеников или личного времени</p>
-                </div>
-                <div class="roi-card">
-                    <div class="roi-icon">
-                        <span class="material-icons">monetization_on</span>
-                    </div>
-                    <div class="roi-number">+30%</div>
-                    <div class="roi-label">к количеству учеников</div>
-                    <p>За счет оптимизации времени вы сможете брать на 30% больше учеников при том же рабочем графике</p>
-                </div>
-                <div class="roi-card">
-                    <div class="roi-icon">
-                        <span class="material-icons">show_chart</span>
-                    </div>
-                    <div class="roi-number">157%</div>
-                    <div class="roi-label">ROI за 2 года</div>
-                    <p>Инвестиция 450,000 ₽ окупится через 14-16 месяцев при консервативном прогнозе роста</p>
-                </div>
-                <div class="roi-card">
-                    <div class="roi-icon">
-                        <span class="material-icons">trending_up</span>
-                    </div>
-                    <div class="roi-number">40%</div>
-                    <div class="roi-label">роста эффективности обучения</div>
-                    <p>Визуальная аналитика помогает своевременно выявлять слабые места и корректировать программу</p>
-                </div>
-            </div>
-            
-            <div class="roadmap">
-                <h3>План развития и монетизации системы</h3>
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <div class="timeline-content">
-                            <div class="timeline-date">Месяцы 1-3</div>
-                            <h4>MVP и валидация</h4>
-                            <p>Запуск базовой версии с управлением учениками, заданиями и напоминаниями</p>
-                            <div class="roadmap-stage">KPI: 50 бета-тестеров из сообщества репетиторов</div>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-content">
-                            <div class="timeline-date">Месяцы 4-6</div>
-                            <h4>Монетизация</h4>
-                            <p>Запуск premium-подписки с расширенной аналитикой и интеграцией с образовательными платформами</p>
-                            <div class="roadmap-stage">KPI: 100 активных репетиторов, стабильный денежный поток</div>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-content">
-                            <div class="timeline-date">Месяцы 7-12</div>
-                            <h4>Масштабирование</h4>
-                            <p>Интеграция с "Учи.ру" и "РешуЕГЭ", разработка мобильного приложения для учеников</p>
-                            <div class="roadmap-stage">KPI: 500 активных пользователей, достижение точки безубыточности</div>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-content">
-                            <div class="timeline-date">12+ месяцев</div>
-                            <h4>Диверсификация</h4>
-                            <p>Выход на рынки Казахстана и Беларуси, запуск англоязычной версии для русскоязычной диаспоры</p>
-                            <div class="roadmap-stage">KPI: 2,500 платящих пользователей, 5% рынка РФ</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials Section -->
-    <section class="section-bg">
-        <div class="container">
-            <div class="section-header">
-                <h2><span class="emoji-header">🎯</span> Реальные истории успеха</h2>
-                <p>Как репетиторы и ученики изменили свою жизнь с помощью системы «Прогресс»</p>
-            </div>
-            <div class="testimonial-grid">
-                <div class="testimonial-card">
-                    <p class="testimonial-text">Раньше я тратил по 3 часа в день только на организацию занятий, проверку заданий и поиск материалов. Теперь все это происходит автоматически, и я могу уделять больше внимания каждому ученику. Количество моих учеников выросло на 40%, а доход соответственно увеличился.</p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">А</div>
-                        <div class="author-info">
-                            <h4>Александр Петров</h4>
-                            <p>Репетитор по математике и физике, стаж 8 лет</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <p class="testimonial-text">Я учусь с репетитором по Python уже год, но только с появлением этого бота я начал видеть свой прогресс. Тепловые карты показали, что я лучше всего усваиваю материал во вторник и четверг вечером. А еще я перестал пропускать задания благодаря напоминаниям!</p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">М</div>
-                        <div class="author-info">
-                            <h4>Мария Иванова</h4>
-                            <p>Ученица 10 класса, изучает Python</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <p class="testimonial-text">Как родитель, я очень ценю прозрачность этого сервиса. Теперь я вижу, какие задания дает репетитор моему ребенку, как он справляется и в каких темах нужно дополнительно позаниматься. Это полностью изменило наш подход к дополнительному образованию.</p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">Е</div>
-                        <div class="author-info">
-                            <h4>Екатерина Смирнова</h4>
-                            <p>Родитель ученика, изучающего информатику</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Pricing Section -->
-    <section id="pricing">
-        <div class="container">
-            <div class="section-header">
-                <h2><span class="emoji-header">💎</span> Тарифные планы: начните бесплатно и переходите на Premium по мере роста</h2>
-                <p>Доступные варианты для репетиторов с различной загрузкой. Все тарифы включают полную техническую поддержку.</p>
-            </div>
-            <div class="pricing-container">
-                <div class="pricing-card">
-                    <div class="pricing-header">
-                        <div class="pricing-name">Бесплатный</div>
-                        <div class="pricing-price">0<span> ₽/месяц</span></div>
-                    </div>
-                    <ul class="pricing-features">
-                        <li>До 5 учеников</li>
-                        <li>Базовая аналитика</li>
-                        <li>Банк материалов (до 10 файлов)</li>
-                        <li>1 предмет обучения</li>
-                        <li class="featured">Автоматические напоминания</li>
-                        <li>Поддержка через сообщество</li>
-                    </ul>
-                    <a href="#" class="btn btn-secondary">
-                        Начать бесплатно
+                        <div class="feature-badge">Бизнес-модель Freemium</div>
                     </a>
                 </div>
-                <div class="pricing-card featured pulse">
-                    <div class="badge">Самый популярный</div>
-                    <div class="pricing-header">
-                        <div class="pricing-name">Премиум</div>
-                        <div class="pricing-price">299<span> ₽/месяц</span></div>
+                
+                <!-- Сообщение о преимуществах -->
+                <div class="message bot-message">
+                    <div class="message-avatar">П</div>
+                    <div class="message-content">
+                        <div class="message-sender">Бот "Прогресс"</div>
+                        <div class="message-text">
+                            <h4>🚀 Преимущества системы:</h4>
+                            <div class="advantages-grid">
+                                <div class="advantage-item">
+                                    <i class="fas fa-clock" style="color: #007aff;"></i>
+                                    <div>
+                                        <strong>Экономия времени</strong>
+                                        <p>Автоматизация рутины экономит до 2 часов ежедневно</p>
+                                    </div>
+                                </div>
+                                <div class="advantage-item">
+                                    <i class="fas fa-chart-bar" style="color: #34c759;"></i>
+                                    <div>
+                                        <strong>Детальная аналитика</strong>
+                                        <p>Визуализация прогресса, тепловые карты, прогнозы</p>
+                                    </div>
+                                </div>
+                                <div class="advantage-item">
+                                    <i class="fas fa-lock" style="color: #ff9500;"></i>
+                                    <div>
+                                        <strong>Безопасность</strong>
+                                        <p>Шифрование данных, токен-доступ, контроль видимости</p>
+                                    </div>
+                                </div>
+                                <div class="advantage-item">
+                                    <i class="fas fa-mobile-alt" style="color: #5856d6;"></i>
+                                    <div>
+                                        <strong>Мобильность</strong>
+                                        <p>Работа в Telegram на любом устройстве</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="message-time" id="time4">14:33</div>
                     </div>
-                    <ul class="pricing-features">
-                        <li>Неограниченное количество учеников</li>
-                        <li class="featured">Расширенная аналитика</li>
-                        <li class="featured">Неограниченный банк материалов</li>
-                        <li class="featured">Любое количество предметов</li>
-                        <li class="featured">Приоритетные напоминания</li>
-                        <li class="featured">Экспорт отчетов в PDF и Excel</li>
-                        <li class="featured">Приоритетная техподдержка</li>
-                    </ul>
-                    <a href="#" class="btn btn-primary">
-                        Подключить премиум
+                </div>
+                
+                <!-- Сообщение о рынке -->
+                <div class="message bot-message">
+                    <div class="message-avatar">П</div>
+                        <div class="message-content">
+                        <div class="message-sender">Бот "Прогресс"</div>
+                        <div class="message-text">
+                            <h4>📈 Рыночные перспективы:</h4>
+                            <div class="market-stats">
+                                <div class="market-stat">
+                                    <div class="stat-number">11 млрд ₽</div>
+                                    <div class="stat-description">Объем рынка диалогового ИИ в РФ к 2025</div>
+                                </div>
+                                <div class="market-stat">
+                                    <div class="stat-number">+30%</div>
+                                    <div class="stat-description">Рост рынка в 2025 году</div>
+                                </div>
+                                <div class="market-stat">
+                                    <div class="stat-number">1 млрд</div>
+                                    <div class="stat-description">Пользователей Telegram</div>
+                                </div>
+                            </div>
+                            <p style="margin-top: 15px; font-size: 14px; color: #8e8e93;">
+                                <i class="fas fa-info-circle"></i> <strong>Рыночный разрыв:</strong> В России отсутствует специализированный Telegram-бот для управления индивидуальными занятиями репетиторов
+                            </p>
+                        </div>
+                        <div class="message-time" id="time5">14:34</div>
+                    </div>
+                </div>
+                
+                <!-- Кнопки действий -->
+                <div class="action-buttons">
+                    <a href="https://t.me/avickprogress_bot" target="_blank" class="btn-telegram">
+                        <i class="fab fa-telegram"></i> 🚀 Начать использовать бот
+                    </a>
+                    <a href="features.html" class="btn-outline">
+                        <i class="fas fa-play-circle"></i> Посмотреть функционал
+                    </a>
+                    <a href="tutor.html" class="btn-outline">
+                        <i class="fas fa-chalkboard-teacher"></i> Для репетиторов
+                    </a>
+                    <a href="student.html" class="btn-outline">
+                        <i class="fas fa-chalkboard-teacher"></i> Для учеников
                     </a>
                 </div>
-                <div class="pricing-card">
-                    <div class="pricing-header">
-                        <div class="pricing-name">Школьный</div>
-                        <div class="pricing-price">999<span> ₽/месяц</span></div>
-                    </div>
-                    <ul class="pricing-features">
-                        <li>До 50 учеников</li>
-                        <li>Групповые занятия</li>
-                        <li>Аналитика по группам</li>
-                        <li>Общий банк материалов</li>
-                        <li>Распределение учеников по уровням</li>
-                        <li>Дедлайны для групп</li>
-                        <li class="featured">Выделенный менеджер</li>
-                    </ul>
-                    <a href="#" class="btn btn-secondary">
-                        Для учебных центров
-                    </a>
-                </div>
-            </div>
-            
-            <!-- ДОБАВЛЕН НОВЫЙ РАЗДЕЛ: Почему 299 ₽ это выгодно -->
-            <div class="quote-block" style="margin-top: 40px;">
-                <h4 style="text-align: center; margin-bottom: 16px;">299 ₽ в месяц — это выгодная инвестиция</h4>
-                <div class="specific-numbers">
-                    <div class="specific-number">
-                        <div class="value">299 ₽</div>
-                        <div class="label">стоимость Premium</div>
-                    </div>
-                    <div class="specific-number">
-                        <div class="value">14 900 ₽</div>
-                        <div class="label">средний доход от одного ученика</div>
-                    </div>
-                    <div class="specific-number">
-                        <div class="value">50 раз</div>
-                        <div class="label">окупаемость за месяц</div>
+                
+                <!-- Сообщение с призывом -->
+                <div class="message bot-message">
+                    <div class="message-avatar">П</div>
+                    <div class="message-content">
+                        <div class="message-sender">Бот "Прогресс"</div>
+                        <div class="message-text">
+                            <h4>💡 Совет от разработчиков:</h4>
+                            <p><strong>«Бот создан для того, чтобы репетиторы тратили меньше времени на администрирование и больше — на качественное обучение»</strong></p>
+                            <p>Все функции разработаны на основе реального опыта репетиторов и их потребностей.</p>
+                            <div class="inline-buttons" style="margin-top: 15px;">
+                                <a href="contacts.html" class="inline-button">
+                                    <i class="fas fa-question-circle"></i> Задать вопрос
+                                </a>
+                                <a href="features.html" class="inline-button primary">
+                                    <i class="fas fa-rocket"></i> Начать регистрацию
+                                </a>
+                            </div>
+                        </div>
+                        <div class="message-time" id="time6">14:35</div>
                     </div>
                 </div>
-                <p style="text-align: center; margin-top: 16px;">За 299 ₽ вы получаете систему, которая позволяет взять дополнительного ученика и заработать 14 900 ₽. Это инвестиция, которая окупается 50 раз за месяц.</p>
             </div>
         </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta">
-        <div class="container">
-            <div class="cta-content">
-                <h2>Готовы оптимизировать учебный процесс и увеличить доход на 35%?</h2>
-                <p>Начните экономить время уже сегодня и сосредоточьтесь на самом важном — на обучении и развитии ваших учеников. Присоединяйтесь к 1,247+ репетиторам, которые уже повысили свою эффективность с «Прогрессом».</p>
-                <div class="cta-buttons">
-                    <a href="#pricing" class="btn btn-light">
-                        <span class="material-icons">school</span>
-                        Создать аккаунт бесплатно
-                    </a>
-                    <a href="#demo" class="btn btn-outline">
-                        <span class="material-icons">play_circle</span>
-                        Посмотреть подробное демо
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-column">
-                    <div class="logo">
-                        <div class="logo-icon">P</div>
-                        <div class="logo-text">Прогресс</div>
-                    </div>
-                    <p>Система управления учебным процессом для репетиторов и их учеников. Автоматизация рутины и повышение эффективности обучения.</p>
-                    <div class="social-links">
-                        <a href="#" class="social-link">
-                            <span class="material-icons">telegram</span>
-                        </a>
-                        <a href="#" class="social-link">
-                            <span class="material-icons">facebook</span>
-                        </a>
-                        <a href="#" class="social-link">
-                            <span class="material-icons">twitter</span>
-                        </a>
-                        <a href="#" class="social-link">
-                            <span class="material-icons">youtube</span>
-                        </a>
-                    </div>
-                </div>
-                <div class="footer-column">
-                    <h3>Для репетиторов</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Управление учениками</a></li>
-                        <li><a href="#">Планирование занятий</a></li>
-                        <li><a href="#">Банк учебных материалов</a></li>
-                        <li><a href="#">Создание заданий</a></li>
-                        <li><a href="#">Аналитика и статистика</a></li>
-                        <li><a href="#">Монетизация знаний</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Для учеников</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Просмотр заданий</a></li>
-                        <li><a href="#">Сдача работ</a></li>
-                        <li><a href="#">Доступ к материалам</a></li>
-                        <li><a href="#">Персональная статистика</a></li>
-                        <li><a href="#">Отслеживание прогресса</a></li>
-                        <li><a href="#">Мотивационные инструменты</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Контакты</h3>
-                    <ul class="footer-links">
-                        <li><span class="material-icons" style="vertical-align: middle; margin-right: 8px;">email</span> support@progress-edu.ru</li>
-                        <li><span class="material-icons" style="vertical-align: middle; margin-right: 8px;">phone</span> +7 (495) 123-45-67</li>
-                        <li><span class="material-icons" style="vertical-align: middle; margin-right: 8px;">location_on</span> Москва, ул. Новаторов, 10</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="copyright">
-                <p>© 2025 Система управления учебным процессом «Прогресс». Все права защищены.</p>
-            </div>
-        </div>
-    </footer>
+    </div>
 
     <script>
-        // Animation on scroll
+        // Инициализация приложения
         document.addEventListener('DOMContentLoaded', function() {
-            // Header scroll behavior
-            const header = document.querySelector('header');
-            let lastScrollTop = 0;
+            // Устанавливаем текущее время для всех сообщений
+            const now = new Date();
+            const currentTime = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
             
-            window.addEventListener('scroll', function() {
-                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            // Устанавливаем время для всех сообщений с разницей в 1 минуту
+            const timeElements = document.querySelectorAll('.message-time');
+            timeElements.forEach((time, index) => {
+                const timeOffset = new Date(now.getTime() + index * 60000);
+                const formattedTime = `${timeOffset.getHours().toString().padStart(2, '0')}:${timeOffset.getMinutes().toString().padStart(2, '0')}`;
+                time.textContent = formattedTime;
+            });
+            
+            // Анимация появления сообщений
+            const messages = document.querySelectorAll('.message');
+            messages.forEach((message, index) => {
+                message.style.opacity = '0';
+                message.style.transform = 'translateY(10px)';
                 
-                if (scrollTop > lastScrollTop && scrollTop > 100) {
-                    header.style.transform = 'translateY(-100%)';
+                setTimeout(() => {
+                    message.style.transition = 'opacity 0.4s, transform 0.4s';
+                    message.style.opacity = '1';
+                    message.style.transform = 'translateY(0)';
+                }, index * 200);
+            });
+            
+            // Анимация появления карточек
+            const featureCards = document.querySelectorAll('.feature-card');
+            featureCards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(15px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'opacity 0.4s, transform 0.4s';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 600 + (index * 200));
+            });
+            
+            // Переключатель темы
+            const themeToggle = document.querySelector('.theme-toggle');
+            themeToggle.addEventListener('click', function() {
+                const body = document.body;
+                
+                if (body.classList.contains('light-theme')) {
+                    body.classList.remove('light-theme');
+                    themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                    showNotification('Темная тема активирована');
                 } else {
-                    header.style.transform = 'translateY(0)';
+                    body.classList.add('light-theme');
+                    themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                    showNotification('Светлая тема активирована');
                 }
+            });
+            
+            // Мобильное меню
+            const menuToggle = document.querySelector('.menu-toggle');
+            const sidebar = document.querySelector('.sidebar');
+            
+            if (menuToggle) {
+                menuToggle.addEventListener('click', function() {
+                    sidebar.classList.toggle('mobile-open');
+                });
+            }
+            
+            // Функция показа уведомлений
+            function showNotification(message) {
+                const notification = document.createElement('div');
+                notification.className = 'telegram-notification';
+                notification.innerHTML = `
+                    <div class="notification-content">
+                        <i class="fab fa-telegram"></i>
+                        <span>${message}</span>
+                    </div>
+                `;
                 
-                lastScrollTop = scrollTop;
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: rgba(28, 28, 30, 0.95);
+                    color: #e5e5e5;
+                    padding: 12px 18px;
+                    border-radius: 12px;
+                    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+                    border-left: 4px solid #007aff;
+                    z-index: 10000;
+                    transform: translateX(120%);
+                    transition: transform 0.3s ease;
+                    font-size: 14px;
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                `;
                 
-                // Animate elements on scroll
-                const animateElements = document.querySelectorAll('.fade-in, .animate-on-scroll');
-                animateElements.forEach(element => {
-                    const elementPosition = element.getBoundingClientRect().top;
-                    const screenPosition = window.innerHeight / 1.3;
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.style.transform = 'translateX(0)';
+                }, 10);
+                
+                setTimeout(() => {
+                    notification.style.transform = 'translateX(120%)';
                     
-                    if (elementPosition < screenPosition) {
-                        element.classList.add('appear');
-                    }
+                    setTimeout(() => {
+                        if (notification.parentNode) {
+                            notification.parentNode.removeChild(notification);
+                        }
+                    }, 300);
+                }, 2500);
+            }
+            
+            // Интерактивные эффекты для карточек
+            featureCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-4px) scale(1.02)';
+                    this.style.boxShadow = '0 12px 32px rgba(0, 0, 0, 0.35)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                    this.style.boxShadow = '';
                 });
             });
             
-            // Tab switching
-            const tabButtons = document.querySelectorAll('.tab-btn');
-            if (tabButtons.length > 0) {
-                tabButtons.forEach(button => {
-                    button.addEventListener('click', function() {
-                        // Remove active class from all buttons
-                        tabButtons.forEach(btn => btn.classList.remove('active'));
-                        
-                        // Add active class to clicked button
-                        this.classList.add('active');
-                        
-                        // In a full implementation, we would show/hide tab content here
-                        // For this demo, we'll just show an alert
-                        const tabId = this.getAttribute('data-tab');
-                        console.log('Tab selected:', tabId);
-                    });
+            // Интерактивные эффекты для кнопок
+            const buttons = document.querySelectorAll('.btn-telegram, .btn-outline, .inline-button');
+            buttons.forEach(button => {
+                button.addEventListener('mousedown', function() {
+                    this.style.transform = 'scale(0.98)';
                 });
-            }
-            
-            // Mobile menu
-            const mobileMenuButton = document.querySelector('.mobile-menu-button');
-            const navMenu = document.querySelector('.nav-menu');
-            
-            if (mobileMenuButton && navMenu) {
-                mobileMenuButton.addEventListener('click', function() {
-                    navMenu.classList.toggle('show');
+                
+                button.addEventListener('mouseup', function() {
+                    this.style.transform = '';
                 });
-            }
+                
+                button.addEventListener('mouseleave', function() {
+                    this.style.transform = '';
+                });
+            });
             
-            // Smooth scrolling for anchor links
+            // Автоматическое обновление времени статуса
+            setInterval(() => {
+                const statusElement = document.querySelector('.user-status');
+                if (statusElement) {
+                    if (statusElement.textContent === 'онлайн') {
+                        statusElement.textContent = 'в сети';
+                    } else {
+                        statusElement.textContent = 'онлайн';
+                    }
+                }
+            }, 5000);
+            
+            // Плавная прокрутка для ссылок с якорями
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function(e) {
                     e.preventDefault();
-                    
                     const targetId = this.getAttribute('href');
-                    if(targetId === '#') return;
-                    
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        window.scrollTo({
-                            top: targetElement.offsetTop - 80,
-                            behavior: 'smooth'
-                        });
-                        
-                        // Close mobile menu if open
-                        if (navMenu) {
-                            navMenu.classList.remove('show');
+                    if (targetId !== '#') {
+                        const targetElement = document.querySelector(targetId);
+                        if (targetElement) {
+                            targetElement.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'start'
+                            });
                         }
                     }
                 });
             });
+            
+            // Задержка для имитации загрузки при нажатии на кнопку бота
+            const startBotBtn = document.querySelector('.btn-telegram[href*="t.me"]');
+            if (startBotBtn) {
+                startBotBtn.addEventListener('click', function(e) {
+                    if (!this.href.includes('t.me')) {
+                        e.preventDefault();
+                        showNotification('Переход к боту в Telegram...');
+                        
+                        const originalHTML = this.innerHTML;
+                        this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Запуск бота...';
+                        this.style.pointerEvents = 'none';
+                        
+                        setTimeout(() => {
+                            this.innerHTML = originalHTML;
+                            this.style.pointerEvents = '';
+                            showNotification('Бот готов к работе!');
+                        }, 1500);
+                    }
+                });
+            }
+            
+            // Анимация статистики
+            const statNumbers = document.querySelectorAll('.stat-number');
+            statNumbers.forEach(stat => {
+                const originalText = stat.textContent;
+                stat.textContent = '0';
+                
+                setTimeout(() => {
+                    let counter = 0;
+                    const target = originalText;
+                    const increment = parseInt(target.replace(/[^0-9]/g, '')) / 30;
+                    
+                    const updateCount = () => {
+                        counter += increment;
+                        if (counter >= parseInt(target.replace(/[^0-9]/g, ''))) {
+                            stat.textContent = originalText;
+                        } else {
+                            stat.textContent = Math.floor(counter).toLocaleString() + (target.includes('₽') ? ' ₽' : '');
+                            setTimeout(updateCount, 50);
+                        }
+                    };
+                    
+                    updateCount();
+                }, 1000);
+            });
+            
+            // Параллакс эффект для карточек
+            document.addEventListener('mousemove', function(e) {
+                const cards = document.querySelectorAll('.feature-card');
+                const mouseX = e.clientX / window.innerWidth;
+                const mouseY = e.clientY / window.innerHeight;
+                
+                cards.forEach((card, index) => {
+                    const speed = 0.5;
+                    const x = (mouseX * speed * 20) - (speed * 10);
+                    const y = (mouseY * speed * 20) - (speed * 10);
+                    
+                    card.style.transform = `translate(${x}px, ${y}px)`;
+                });
+            });
         });
     </script>
+
+    <style>
+        /* Дополнительные стили для главной страницы */
+        .mini-features {
+            list-style: none;
+            padding-left: 0;
+            margin: 10px 0;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+        
+        .mini-features li {
+            margin-bottom: 5px;
+            padding-left: 15px;
+            position: relative;
+        }
+        
+        .mini-features li:before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--text-accent);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 8px;
+            background: rgba(118, 118, 128, 0.08);
+            border-radius: 10px;
+        }
+        
+        .stat-value {
+            font-weight: 700;
+            font-size: 16px;
+            color: var(--text-accent);
+        }
+        
+        .stat-label {
+            font-size: 10px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+        
+        .advantages-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .advantage-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        
+        .advantage-item i {
+            font-size: 20px;
+            margin-top: 3px;
+        }
+        
+        .advantage-item div {
+            flex: 1;
+        }
+        
+        .advantage-item strong {
+            display: block;
+            font-size: 13px;
+            margin-bottom: 3px;
+        }
+        
+        .advantage-item p {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+        
+        .market-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 15px 0;
+        }
+        
+        .market-stat {
+            text-align: center;
+            padding: 12px;
+            background: linear-gradient(135deg, rgba(0, 122, 255, 0.1), rgba(88, 86, 214, 0.05));
+            border-radius: 12px;
+            border: 1px solid rgba(0, 122, 255, 0.2);
+        }
+        
+        .market-stat .stat-number {
+            font-size: 18px;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 5px;
+        }
+        
+        .market-stat .stat-description {
+            font-size: 10px;
+            color: var(--text-secondary);
+            line-height: 1.3;
+        }
+        
+        @media (max-width: 768px) {
+            .advantages-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .market-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
 </body>
 </html>

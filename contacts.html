@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Контакты - Прогресс</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="telegram-app">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fab fa-telegram"></i>
+                    <span>Прогресс</span>
+                </div>
+                <button class="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            
+            <div class="sidebar-search">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Поиск...">
+                </div>
+            </div>
+            
+            <div class="sidebar-menu">
+                <a href="index.html" class="menu-item">
+                    <i class="fas fa-home"></i>
+                    <span>Главная</span>
+                </a>
+                <a href="tutor.html" class="menu-item">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                    <span>Для репетиторов</span>
+                </a>
+                <a href="student.html" class="menu-item">
+                    <i class="fas fa-user-graduate"></i>
+                    <span>Для учеников</span>
+                </a>
+                <a href="features.html" class="menu-item">
+                    <i class="fas fa-star"></i>
+                    <span>Функционал</span>
+                </a>
+                <a href="contacts.html" class="menu-item active">
+                    <i class="fas fa-phone"></i>
+                    <span>Контакты</span>
+                </a>
+            </div>
+            
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="avatar">П</div>
+                    <div class="user-details">
+                        <span class="user-name">Проект "Прогресс"</span>
+                        <span class="user-status">онлайн</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div class="content-header">
+                <h1><i class="fas fa-phone"></i> Контакты</h1>
+                <div class="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </div>
+            </div>
+            
+            <div class="chat-container">
+                <!-- Чат с ботом -->
+                <div class="telegram-chat" id="chatContainer">
+                    <!-- Сообщение от бота при входе -->
+                    <div class="message bot-message" id="welcomeMessage">
+                        <div class="message-avatar">П</div>
+                        <div class="message-content">
+                            <div class="message-sender">Бот "Прогресс"</div>
+                            <div class="message-text">
+                                <p>👋 <strong>Свяжитесь с нами!</strong></p>
+                                <p>Мы всегда рады помочь и ответить на ваши вопросы.</p>
+                            </div>
+                            <div class="message-time" id="welcomeTime"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Сообщение с контактной информацией -->
+                    <div class="message bot-message">
+                        <div class="message-avatar">П</div>
+                        <div class="message-content">
+                            <div class="message-sender">Бот "Прогресс"</div>
+                            <div class="message-text">
+                                <h4>📞 Контактная информация:</h4>
+                                
+                                <div class="contact-cards">
+                                    <div class="contact-card">
+                                        <div class="contact-icon">
+                                            <i class="fab fa-telegram"></i>
+                                        </div>
+                                        <div class="contact-info">
+                                            <h5>Telegram Bot</h5>
+                                            <p>Основной бот для работы</p>
+                                            <a href="https://t.me/avickprogress_bot" target="_blank" class="contact-link">
+                                                @avickprogress_bot
+                                            </a>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="contact-card">
+                                        <div class="contact-icon">
+                                            <i class="fas fa-headset"></i>
+                                        </div>
+                                        <div class="contact-info">
+                                            <h5>Техническая поддержка</h5>
+                                            <p>Помощь и консультации</p>
+                                            <a href="https://t.me/progress_start" target="_blank" class="contact-link">
+                                                @progress_start
+                                            </a>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="contact-card">
+                                        <div class="contact-icon">
+                                            <i class="fas fa-envelope"></i>
+                                        </div>
+                                        <div class="contact-info">
+                                            <h5>Электронная почта</h5>
+                                            <p>Для деловых предложений</p>
+                                            <a href="mailto:vikulov2811@gmail.com" class="contact-link">
+                                                vikulov2811@gmail.com
+                                            </a>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="contact-card">
+                                        <div class="contact-icon">
+                                            <i class="fas fa-globe"></i>
+                                        </div>
+                                        <div class="contact-info">
+                                            <h5>Документация</h5>
+                                            <p>Подробные инструкции</p>
+                                            <a href="https://progress-tutor.ru/docs" target="_blank" class="contact-link">
+                                                progress-tutor.ru/docs
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <h4 style="margin-top: 30px;">🕒 Часы работы поддержки:</h4>
+                                <ul class="work-hours">
+                                    <li>Понедельник - Пятница: 09:00 - 21:00 (МСК)</li>
+                                    <li>Суббота: 10:00 - 18:00 (МСК)</li>
+                                    <li>Воскресенье: 12:00 - 16:00 (МСК)</li>
+                                </ul>
+                            </div>
+                            <div class="message-time">15:10</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Сообщение с FAQ -->
+                    <div class="message bot-message">
+                        <div class="message-avatar">П</div>
+                        <div class="message-content">
+                            <div class="message-sender">Бот "Прогресс"</div>
+                            <div class="message-text">
+                                <h4>❓ Часто задаваемые вопросы:</h4>
+                                
+                                <div class="faq-accordion">
+                                    <div class="faq-item">
+                                        <button class="faq-question" onclick="toggleFaq(this)">
+                                            Как начать работу с ботом?
+                                            <i class="fas fa-chevron-down"></i>
+                                        </button>
+                                        <div class="faq-answer">
+                                            <p>1. Найдите бота @ProgressTutorBot в Telegram</p>
+                                            <p>2. Нажмите "Start" или отправьте команду /start</p>
+                                            <p>3. Выберите свою роль (репетитор/ученик)</p>
+                                            <p>4. Следуйте инструкциям на экране</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="faq-item">
+                                        <button class="faq-question" onclick="toggleFaq(this)">
+                                            Сколько стоит использование бота?
+                                            <i class="fas fa-chevron-down"></i>
+                                        </button>
+                                        <div class="faq-answer">
+                                            <p>Бот работает по модели Freemium:</p>
+                                            <p>• <strong>Бесплатно:</strong> до 5 учеников, базовая аналитика</p>
+                                            <p>• <strong>Premium (299 ₽/месяц):</strong> неограниченное количество учеников, расширенная аналитика</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="faq-item">
+                                        <button class="faq-question" onclick="toggleFaq(this)">
+                                            Как добавить ученика?
+                                            <i class="fas fa-chevron-down"></i>
+                                        </button>
+                                        <div class="faq-answer">
+                                            <p>1. В меню репетитора нажмите "➕ Добавить ученика"</p>
+                                            <p>2. Введите имя ученика</p>
+                                            <p>3. Выберите дисциплину</p>
+                                            <p>4. Получите токен и отправьте его ученику</p>
+                                            <p>5. Ученик вводит токен в своём меню</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="faq-item">
+                                        <button class="faq-question" onclick="toggleFaq(this)">
+                                            Где посмотреть статистику?
+                                            <i class="fas fa-chevron-down"></i>
+                                        </button>
+                                        <div class="faq-answer">
+                                            <p><strong>Для репетиторов:</strong> Раздел "📊 Статистика" в главном меню</p>
+                                            <p><strong>Для учеников:</strong> Раздел "📈 Мой прогресс" в главном меню</p>
+                                            <p>Статистика обновляется в реальном времени и доступна для экспорта.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="inline-buttons" style="margin-top: 20px;">
+                                    <a href="https://t.me/avickprogress_bot" target="_blank" class="inline-button primary">
+                                        <i class="fab fa-telegram"></i> Перейти к боту
+                                    </a>
+                                    <a href="features.html" class="inline-button">
+                                        <i class="fas fa-info-circle"></i> Функционал
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="message-time">15:12</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Сообщение с формой обратной связи -->
+                    <div class="message bot-message">
+                        <div class="message-avatar">П</div>
+                        <div class="message-content">
+                            <div class="message-sender">Бот "Прогресс"</div>
+                            <div class="message-text">
+                                <h4>📝 Обратная связь:</h4>
+                                <p>Есть вопросы или предложения? Напишите нам!</p>
+                                
+                                <div class="feedback-form">
+                                    <div class="form-group">
+                                        <label for="feedbackName">Ваше имя:</label>
+                                        <input type="text" id="feedbackName" placeholder="Как к вам обращаться?">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="feedbackEmail">Email для ответа:</label>
+                                        <input type="email" id="feedbackEmail" placeholder="example@mail.ru">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="feedbackMessage">Сообщение:</label>
+                                        <textarea id="feedbackMessage" rows="4" placeholder="Опишите ваш вопрос или предложение..."></textarea>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="feedbackType">Тип обращения:</label>
+                                        <select id="feedbackType">
+                                            <option value="question">Вопрос по использованию</option>
+                                            <option value="bug">Сообщить об ошибке</option>
+                                            <option value="suggestion">Предложение по улучшению</option>
+                                            <option value="partnership">Сотрудничество</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <button class="inline-button primary" onclick="submitFeedback()">
+                                        <i class="fas fa-paper-plane"></i> Отправить сообщение
+                                    </button>
+                                    
+                                    <p class="form-note">
+                                        <i class="fas fa-info-circle"></i> Мы отвечаем в течение 24 часов в рабочее время.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="message-time">15:15</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===== ОСНОВНЫЕ ФУНКЦИИ =====
+        function getCurrentTime() {
+            const now = new Date();
+            return `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+        }
+
+        // Инициализация времени
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('welcomeTime').textContent = getCurrentTime();
+            
+            const welcomeMessage = document.getElementById('welcomeMessage');
+            setTimeout(() => {
+                welcomeMessage.style.opacity = '1';
+                welcomeMessage.style.transform = 'translateY(0)';
+            }, 300);
+            
+            // Анимация появления сообщений
+            const messages = document.querySelectorAll('.message');
+            messages.forEach((message, index) => {
+                if (index > 0) {
+                    message.style.opacity = '0';
+                    message.style.transform = 'translateY(10px)';
+                    
+                    setTimeout(() => {
+                        message.style.transition = 'opacity 0.4s, transform 0.4s';
+                        message.style.opacity = '1';
+                        message.style.transform = 'translateY(0)';
+                    }, (index + 1) * 300);
+                }
+            });
+        });
+
+        // Функция для переключения FAQ
+        function toggleFaq(button) {
+            const faqItem = button.parentElement;
+            const answer = faqItem.querySelector('.faq-answer');
+            const icon = button.querySelector('i');
+            
+            if (answer.style.maxHeight) {
+                answer.style.maxHeight = null;
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                answer.style.maxHeight = answer.scrollHeight + 'px';
+                icon.style.transform = 'rotate(180deg)';
+            }
+        }
+
+        // Функция отправки обратной связи
+        function submitFeedback() {
+            const name = document.getElementById('feedbackName').value.trim();
+            const email = document.getElementById('feedbackEmail').value.trim();
+            const message = document.getElementById('feedbackMessage').value.trim();
+            const type = document.getElementById('feedbackType').value;
+            
+            if (!name || !email || !message) {
+                alert('Пожалуйста, заполните все обязательные поля');
+                return;
+            }
+            
+            if (!validateEmail(email)) {
+                alert('Пожалуйста, введите корректный email');
+                return;
+            }
+            const menuToggle = document.querySelector('.menu-toggle');
+            const sidebar = document.querySelector('.sidebar');
+            
+            if (menuToggle) {
+                menuToggle.addEventListener('click', function() {
+                    sidebar.classList.toggle('mobile-open');
+                });
+            }
+            // Симуляция отправки
+            const submitBtn = document.querySelector('.feedback-form .inline-button');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Отправка...';
+            submitBtn.disabled = true;
+            
+            setTimeout(() => {
+                submitBtn.innerHTML = '<i class="fas fa-check"></i> Отправлено!';
+                
+                // Показать сообщение об успехе
+                const messageContainer = document.querySelector('#chatContainer');
+                const successMessage = document.createElement('div');
+                successMessage.className = 'message bot-message';
+                successMessage.innerHTML = `
+                    <div class="message-avatar">П</div>
+                    <div class="message-content">
+                        <div class="message-sender">Бот "Прогресс"</div>
+                        <div class="message-text">
+                            ✅ <strong>Сообщение отправлено!</strong><br><br>
+                            Спасибо за ваше обращение. Мы ответим вам в течение 24 часов.<br><br>
+                            <div class="feedback-summary">
+                                <strong>Тип обращения:</strong> ${getFeedbackType(type)}<br>
+                                <strong>От:</strong> ${name}<br>
+                                <strong>Email для ответа:</strong> ${email}
+                            </div>
+                        </div>
+                        <div class="message-time">${getCurrentTime()}</div>
+                    </div>
+                `;
+                
+                messageContainer.appendChild(successMessage);
+                
+                // Прокрутка к новому сообщению
+                setTimeout(() => {
+                    successMessage.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
+                
+                // Очистить форму
+                document.getElementById('feedbackName').value = '';
+                document.getElementById('feedbackEmail').value = '';
+                document.getElementById('feedbackMessage').value = '';
+                
+                // Восстановить кнопку
+                setTimeout(() => {
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                }, 2000);
+                
+            }, 1500);
+        }
+
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        function getFeedbackType(type) {
+            const types = {
+                'question': 'Вопрос по использованию',
+                'bug': 'Сообщить об ошибке',
+                'suggestion': 'Предложение по улучшению',
+                'partnership': 'Сотрудничество'
+            };
+            return types[type] || 'Другое';
+        }
+
+        // Переключение темы
+        const themeToggle = document.querySelector('.theme-toggle');
+        themeToggle.addEventListener('click', function() {
+            const body = document.body;
+            
+            if (body.classList.contains('light-theme')) {
+                body.classList.remove('light-theme');
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                showNotification('Темная тема активирована');
+            } else {
+                body.classList.add('light-theme');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                showNotification('Светлая тема активирована');
+            }
+        });
+
+        // Мобильное меню
+        const menuToggle = document.querySelector('.menu-toggle');
+        const sidebar = document.querySelector('.sidebar');
+        
+        if (menuToggle) {
+            menuToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('mobile-open');
+            });
+        }
+
+        // Функция показа уведомлений
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'telegram-notification';
+            notification.innerHTML = `
+                <div class="notification-content">
+                    <i class="fab fa-telegram"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+            
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: rgba(28, 28, 30, 0.95);
+                color: #e5e5e5;
+                padding: 12px 18px;
+                border-radius: 12px;
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+                border-left: 4px solid #007aff;
+                z-index: 10000;
+                transform: translateX(120%);
+                transition: transform 0.3s ease;
+                font-size: 14px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 10);
+            
+            setTimeout(() => {
+                notification.style.transform = 'translateX(120%)';
+                
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 2500);
+        }
+    </script>
+
+    <style>
+        /* Стили для страницы контактов */
+        .contact-cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .contact-card {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border: 1px solid var(--border-light);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .contact-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            border-color: var(--text-accent);
+        }
+        
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #007aff, #5856d6);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+        }
+        
+        .contact-info {
+            flex: 1;
+        }
+        
+        .contact-info h5 {
+            margin: 0 0 5px 0;
+            font-size: 16px;
+            color: var(--text-primary);
+        }
+        
+        .contact-info p {
+            margin: 0 0 8px 0;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+        
+        .contact-link {
+            color: var(--text-accent);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .contact-link:hover {
+            text-decoration: underline;
+        }
+        
+        .work-hours {
+            list-style: none;
+            padding-left: 0;
+            margin: 15px 0;
+        }
+        
+        .work-hours li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(118, 118, 128, 0.1);
+            font-size: 14px;
+        }
+        
+        .work-hours li:last-child {
+            border-bottom: none;
+        }
+        
+        .work-hours li:before {
+            content: '🕒';
+            margin-right: 10px;
+        }
+        
+        /* Стили для FAQ */
+        .faq-accordion {
+            margin: 20px 0;
+        }
+        
+        .faq-item {
+            margin-bottom: 10px;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid var(--border-light);
+        }
+        
+        .faq-question {
+            width: 100%;
+            padding: 15px;
+            background: var(--bg-card);
+            border: none;
+            text-align: left;
+            color: var(--text-primary);
+            font-size: 15px;
+            font-weight: 500;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .faq-question:hover {
+            background: rgba(118, 118, 128, 0.08);
+        }
+        
+        .faq-question i {
+            transition: transform 0.3s ease;
+        }
+        
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: rgba(118, 118, 128, 0.05);
+        }
+        
+        .faq-answer p {
+            margin: 0;
+            padding: 12px 15px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            border-top: 1px solid rgba(118, 118, 128, 0.1);
+        }
+        
+        .faq-answer p:first-child {
+            border-top: none;
+        }
+        
+        /* Стили для формы обратной связи */
+        .feedback-form {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid var(--border-light);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-primary);
+            font-size: 14px;
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px 14px;
+            background: rgba(118, 118, 128, 0.12);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 14px;
+            font-family: inherit;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--text-accent);
+            box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.15);
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .form-note {
+            margin-top: 15px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+        
+        .form-note i {
+            margin-right: 5px;
+            color: var(--text-accent);
+        }
+        
+        .feedback-summary {
+            background: rgba(52, 199, 89, 0.08);
+            padding: 12px;
+            border-radius: 10px;
+            border-left: 3px solid #34c759;
+            font-size: 13px;
+            margin: 10px 0;
+        }
+        
+        @media (max-width: 768px) {
+            .contact-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-card {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .contact-info {
+                text-align: center;
+            }
+            
+            .faq-question {
+                font-size: 14px;
+                padding: 12px;
+            }
+            
+            .feedback-form {
+                padding: 15px;
+            }
+            
+            .form-group {
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</body>
+</html>

@@ -3,662 +3,823 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Прогресс - Бот для обучения</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Прогресс — Интеллектуальная экосистема для репетиторов и учеников</title>
+    
+    <!-- Подключение шрифтов -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Фавикон -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>">
+    
+    <!-- iOS мета-теги -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#0d0d12">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Прогресс — Экосистема умного репетиторства">
+    <meta property="og:description" content="Производительность репетиторов +40% через автоматизацию рутины в Telegram">
+    <meta property="og:image" content="https://yourdomain.com/og-image.jpg">
+    <meta property="og:type" content="website">
+    
+    <!-- Подключение CSS файла -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="telegram-app">
-        <!-- Боковая панель -->
-        <div class="sidebar">
-            <div class="sidebar-header">
-                <div class="logo">
-                    <i class="fab fa-telegram"></i>
-                    <span>Прогресс</span>
-                </div>
-                <button class="menu-toggle">
-                    <i class="fas fa-bars"></i>
-                </button>
-            </div>
-            
-            <div class="sidebar-search">
-                <div class="search-box">
-                    <i class="fas fa-search"></i>
-                    <input type="text" placeholder="Поиск...">
-                </div>
-            </div>
-            
-            <div class="sidebar-menu">
-                <a href="index.html" class="menu-item active">
-                    <i class="fas fa-home"></i>
-                    <span>Главная</span>
-                </a>
-                <a href="tutor.html" class="menu-item">
-                    <i class="fas fa-chalkboard-teacher"></i>
-                    <span>Для репетиторов</span>
-                </a>
-                <a href="student.html" class="menu-item">
-                    <i class="fas fa-user-graduate"></i>
-                    <span>Для учеников</span>
-                </a>
-                <a href="features.html" class="menu-item">
-                    <i class="fas fa-star"></i>
-                    <span>Функционал</span>
-                </a>
-                <a href="contacts.html" class="menu-item">
-                    <i class="fas fa-phone"></i>
-                    <span>Контакты</span>
-                </a>
-            </div>
-            
-            <div class="sidebar-footer">
-                <div class="user-info">
-                    <div class="avatar">П</div>
-                    <div class="user-details">
-                        <span class="user-name">Проект "Прогресс"</span>
-                        <span class="user-status">онлайн</span>
-                    </div>
-                </div>
-            </div>
+    <!-- Навигация -->
+    <nav>
+        <div class="logo">
+            <i class="fa-solid fa-rocket"></i> Progress<span>.</span>
         </div>
-        
-        <!-- Основной контент -->
-        <div class="main-content">
-            <div class="content-header">
-                <h1><i class="fas fa-robot"></i> Бот "Прогресс"</h1>
-                <div class="theme-toggle">
-                    <i class="fas fa-moon"></i>
-                </div>
-            </div>
-            
-            <div class="chat-container">
-                <!-- Сообщения от бота -->
-                <div class="message-container">
-                    <!-- Приветственное сообщение -->
-                    <div class="message bot-message">
-                        <div class="message-avatar">П</div>
-                        <div class="message-content">
-                            <div class="message-sender">Бот "Прогресс"</div>
-                            <div class="message-text">
-                                <p>👋 <strong>Добро пожаловать в систему управления учебным процессом «Прогресс»!</strong></p>
-                                <p>Я — специализированный Telegram-бот, созданный для решения реальных проблем репетиторов и учеников.</p>
-                                <p>🎯 <strong>Наша миссия:</strong> Превратить хаотичную переписку в структурированную систему обучения с автоматической аналитикой.</p>
-                            </div>
-                            <div class="message-time" id="time1">14:30</div>
-                        </div>
-                    </div>
-                    
-                    <!-- Сообщение о проблемах рынка -->
-                    <div class="message bot-message">
-                        <div class="message-avatar">П</div>
-                        <div class="message-content">
-                            <div class="message-sender">Бот "Прогресс"</div>
-                            <div class="message-text">
-                                <h4>📊 Решаем реальные проблемы репетиторов:</h4>
-                                <ul class="features-list">
-                                    <li><i class="fas fa-times-circle" style="color: #ff3b30;"></i> <strong>73%</strong> репетиторов используют 3+ мессенджера для работы</li>
-                                    <li><i class="fas fa-times-circle" style="color: #ff3b30;"></i> <strong>68%</strong> учеников "теряют" домашние задания</li>
-                                    <li><i class="fas fa-times-circle" style="color: #ff3b30;"></i> <strong>82%</strong> репетиторов не ведут статистику прогресса</li>
-                                    <li><i class="fas fa-times-circle" style="color: #ff3b30;"></i> <strong>57%</strong> тратят до 2 часов ежедневно на администрирование</li>
-                                </ul>
-                            </div>
-                            <div class="message-time" id="time2">14:31</div>
-                        </div>
-                    </div>
-                    
-                    <!-- Сообщение о решении -->
-                    <div class="message bot-message">
-                        <div class="message-avatar">П</div>
-                        <div class="message-content">
-                            <div class="message-sender">Бот "Прогресс"</div>
-                            <div class="message-text">
-                                <h4>✨ Как мы это решаем?</h4>
-                                <p><strong>Единая Telegram-платформа</strong> для всего учебного процесса:</p>
-                                <div class="inline-buttons" style="margin: 10px 0;">
-                                    <span class="inline-button primary" style="pointer-events: none;">👨‍🏫 Управление учениками</span>
-                                    <span class="inline-button" style="pointer-events: none;">📝 Создание заданий</span>
-                                    <span class="inline-button" style="pointer-events: none;">📊 Аналитика прогресса</span>
-                                    <span class="inline-button" style="pointer-events: none;">🗂 Банк материалов</span>
-                                </div>
-                            </div>
-                            <div class="message-time" id="time3">14:32</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Карточки с функциями -->
-                <div class="features-grid">
-                    <a href="tutor.html" class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-chalkboard-teacher"></i>
-                        </div>
-                        <h3>👨‍🏫 Для репетиторов</h3>
-                        <p><strong>Полный контроль над учебным процессом:</strong></p>
-                        <ul class="mini-features">
-                            <li>• Управление учениками через токены</li>
-                            <li>• Создание заданий с дедлайнами</li>
-                            <li>• Детальная аналитика прогресса</li>
-                            <li>• Банк учебных материалов</li>
-                            <li>• Автоматические напоминания</li>
-                            <li>• Календарь занятий</li>
-                        </ul>
-                        <div class="feature-badge">Экономия до 40% времени</div>
-                    </a>
-                    
-                    <a href="student.html" class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-user-graduate"></i>
-                        </div>
-                        <h3>👨‍🎓 Для учеников</h3>
-                        <p><strong>Все для комфортного обучения:</strong></p>
-                        <ul class="mini-features">
-                            <li>• Удобная сдача работ</li>
-                            <li>• Структурированные материалы</li>
-                            <li>• Прозрачная статистика</li>
-                            <li>• Автоматические уведомления</li>
-                            <li>• Обратная связь от репетитора</li>
-                            <li>• Цели и рекомендации</li>
-                        </ul>
-                        <div class="feature-badge">+40% к мотивации</div>
-                    </a>
-                    
-                    <a href="features.html" class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-chart-line"></i>
-                        </div>
-                        <h3>📊 Экономический эффект</h3>
-                        <p><strong>Инвестиции в эффективность:</strong></p>
-                        <div class="stats-grid">
-                            <div class="stat-item">
-                                <div class="stat-value">299 ₽</div>
-                                <div class="stat-label">в месяц</div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-value">157%</div>
-                                <div class="stat-label">ROI за 2 года</div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-value">14-16 мес.</div>
-                                <div class="stat-label">окупаемость</div>
-                            </div>
-                        </div>
-                        <div class="feature-badge">Бизнес-модель Freemium</div>
-                    </a>
-                </div>
-                
-                <!-- Сообщение о преимуществах -->
-                <div class="message bot-message">
-                    <div class="message-avatar">П</div>
-                    <div class="message-content">
-                        <div class="message-sender">Бот "Прогресс"</div>
-                        <div class="message-text">
-                            <h4>🚀 Преимущества системы:</h4>
-                            <div class="advantages-grid">
-                                <div class="advantage-item">
-                                    <i class="fas fa-clock" style="color: #007aff;"></i>
-                                    <div>
-                                        <strong>Экономия времени</strong>
-                                        <p>Автоматизация рутины экономит до 2 часов ежедневно</p>
-                                    </div>
-                                </div>
-                                <div class="advantage-item">
-                                    <i class="fas fa-chart-bar" style="color: #34c759;"></i>
-                                    <div>
-                                        <strong>Детальная аналитика</strong>
-                                        <p>Визуализация прогресса, тепловые карты, прогнозы</p>
-                                    </div>
-                                </div>
-                                <div class="advantage-item">
-                                    <i class="fas fa-lock" style="color: #ff9500;"></i>
-                                    <div>
-                                        <strong>Безопасность</strong>
-                                        <p>Шифрование данных, токен-доступ, контроль видимости</p>
-                                    </div>
-                                </div>
-                                <div class="advantage-item">
-                                    <i class="fas fa-mobile-alt" style="color: #5856d6;"></i>
-                                    <div>
-                                        <strong>Мобильность</strong>
-                                        <p>Работа в Telegram на любом устройстве</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="message-time" id="time4">14:33</div>
-                    </div>
-                </div>
-                
-                <!-- Сообщение о рынке -->
-                <div class="message bot-message">
-                    <div class="message-avatar">П</div>
-                        <div class="message-content">
-                        <div class="message-sender">Бот "Прогресс"</div>
-                        <div class="message-text">
-                            <h4>📈 Рыночные перспективы:</h4>
-                            <div class="market-stats">
-                                <div class="market-stat">
-                                    <div class="stat-number">11 млрд ₽</div>
-                                    <div class="stat-description">Объем рынка диалогового ИИ в РФ к 2025</div>
-                                </div>
-                                <div class="market-stat">
-                                    <div class="stat-number">+30%</div>
-                                    <div class="stat-description">Рост рынка в 2025 году</div>
-                                </div>
-                                <div class="market-stat">
-                                    <div class="stat-number">1 млрд</div>
-                                    <div class="stat-description">Пользователей Telegram</div>
-                                </div>
-                            </div>
-                            <p style="margin-top: 15px; font-size: 14px; color: #8e8e93;">
-                                <i class="fas fa-info-circle"></i> <strong>Рыночный разрыв:</strong> В России отсутствует специализированный Telegram-бот для управления индивидуальными занятиями репетиторов
-                            </p>
-                        </div>
-                        <div class="message-time" id="time5">14:34</div>
-                    </div>
-                </div>
-                
-                <!-- Кнопки действий -->
-                <div class="action-buttons">
-                    <a href="https://t.me/avickprogress_bot" target="_blank" class="btn-telegram">
-                        <i class="fab fa-telegram"></i> 🚀 Начать использовать бот
-                    </a>
-                    <a href="features.html" class="btn-outline">
-                        <i class="fas fa-play-circle"></i> Посмотреть функционал
-                    </a>
-                    <a href="tutor.html" class="btn-outline">
-                        <i class="fas fa-chalkboard-teacher"></i> Для репетиторов
-                    </a>
-                    <a href="student.html" class="btn-outline">
-                        <i class="fas fa-chalkboard-teacher"></i> Для учеников
-                    </a>
-                </div>
-                
-                <!-- Сообщение с призывом -->
-                <div class="message bot-message">
-                    <div class="message-avatar">П</div>
-                    <div class="message-content">
-                        <div class="message-sender">Бот "Прогресс"</div>
-                        <div class="message-text">
-                            <h4>💡 Совет от разработчиков:</h4>
-                            <p><strong>«Бот создан для того, чтобы репетиторы тратили меньше времени на администрирование и больше — на качественное обучение»</strong></p>
-                            <p>Все функции разработаны на основе реального опыта репетиторов и их потребностей.</p>
-                            <div class="inline-buttons" style="margin-top: 15px;">
-                                <a href="contacts.html" class="inline-button">
-                                    <i class="fas fa-question-circle"></i> Задать вопрос
-                                </a>
-                                <a href="features.html" class="inline-button primary">
-                                    <i class="fas fa-rocket"></i> Начать регистрацию
-                                </a>
-                            </div>
-                        </div>
-                        <div class="message-time" id="time6">14:35</div>
-                    </div>
-                </div>
-            </div>
+        <div class="nav-links">
+            <a href="#ecosystem">Экосистема</a>
+            <a href="#find">PROGRESS+</a>
+            <a href="#manage">PROGRESS Bot</a>
+            <a href="#analytics">Аналитика</a>
+            <a href="#results">Результаты</a>
+            <a href="https://t.me/avickprogress_bot" class="btn-nav" target="_blank">
+                <i class="fa-brands fa-telegram"></i> Начать
+            </a>
         </div>
-    </div>
+    </nav>
 
-    <script>
-        // Инициализация приложения
-        document.addEventListener('DOMContentLoaded', function() {
-            // Устанавливаем текущее время для всех сообщений
-            const now = new Date();
-            const currentTime = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-badge glass-hover">
+                <i class="fa-solid fa-bolt"></i> MVP запущен • Бета-доступ
+            </div>
             
-            // Устанавливаем время для всех сообщений с разницей в 1 минуту
-            const timeElements = document.querySelectorAll('.message-time');
-            timeElements.forEach((time, index) => {
-                const timeOffset = new Date(now.getTime() + index * 60000);
-                const formattedTime = `${timeOffset.getHours().toString().padStart(2, '0')}:${timeOffset.getMinutes().toString().padStart(2, '0')}`;
-                time.textContent = formattedTime;
-            });
+            <h1>Превращаем хаос в<br><span class="gradient-text">структурированный прогресс</span></h1>
             
-            // Анимация появления сообщений
-            const messages = document.querySelectorAll('.message');
-            messages.forEach((message, index) => {
-                message.style.opacity = '0';
-                message.style.transform = 'translateY(10px)';
-                
-                setTimeout(() => {
-                    message.style.transition = 'opacity 0.4s, transform 0.4s';
-                    message.style.opacity = '1';
-                    message.style.transform = 'translateY(0)';
-                }, index * 200);
-            });
+            <p class="hero-subtitle">
+                Экосистема, которая возвращает репетиторам 2 часа ежедневно через автоматизацию рутины 
+                и увеличивает эффективность обучения учеников на 40%.
+            </p>
             
-            // Анимация появления карточек
-            const featureCards = document.querySelectorAll('.feature-card');
-            featureCards.forEach((card, index) => {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(15px)';
-                
-                setTimeout(() => {
-                    card.style.transition = 'opacity 0.4s, transform 0.4s';
-                    card.style.opacity = '1';
-                    card.style.transform = 'translateY(0)';
-                }, 600 + (index * 200));
-            });
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <div class="hero-stat-number">73%</div>
+                    <div class="hero-stat-text">репетиторов теряют время<br>в хаосе переписок</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-number">65%</div>
+                    <div class="hero-stat-text">административных задач<br>автоматизируются</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-number">+40%</div>
+                    <div class="hero-stat-text">к эффективности обучения<br>через аналитику</div>
+                </div>
+            </div>
             
-            // Переключатель темы
-            const themeToggle = document.querySelector('.theme-toggle');
-            themeToggle.addEventListener('click', function() {
-                const body = document.body;
-                
-                if (body.classList.contains('light-theme')) {
-                    body.classList.remove('light-theme');
-                    themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-                    showNotification('Темная тема активирована');
-                } else {
-                    body.classList.add('light-theme');
-                    themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-                    showNotification('Светлая тема активирована');
-                }
-            });
+            <div class="hero-cta">
+                <a href="https://t.me/avickprogress_bot" class="btn-main" target="_blank">
+                    <i class="fa-brands fa-telegram"></i> Для репетиторов
+                    <span class="btn-subtext">@avickprogress_bot • Управление обучением</span>
+                </a>
+                <a href="https://t.me/avickprogressplusBOT" class="btn-secondary" target="_blank">
+                    <i class="fa-solid fa-magnifying-glass-chart"></i> Для учеников
+                    <span class="btn-subtext">@avickprogressplusBOT • Поиск репетиторов</span>
+                </a>
+            </div>
             
-            // Мобильное меню
-            const menuToggle = document.querySelector('.menu-toggle');
-            const sidebar = document.querySelector('.sidebar');
+            <div class="hero-note">
+                <i class="fa-solid fa-circle-info"></i>
+                <span>Работает полностью в Telegram • Регистрация за 2 минуты • Бесплатно до октября 2026</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Проблема -->
+    <section>
+        <div class="container">
+            <h2 class="section-title">Репетиторство сегодня:<br><span class="gradient-text">преподавание vs администрирование</span></h2>
             
-            if (menuToggle) {
-                menuToggle.addEventListener('click', function() {
-                    sidebar.classList.toggle('mobile-open');
-                });
-            }
-            
-            // Функция показа уведомлений
-            function showNotification(message) {
-                const notification = document.createElement('div');
-                notification.className = 'telegram-notification';
-                notification.innerHTML = `
-                    <div class="notification-content">
-                        <i class="fab fa-telegram"></i>
-                        <span>${message}</span>
+            <div class="problem-grid">
+                <div class="problem-card glass-hover">
+                    <div class="problem-icon">
+                        <i class="fa-solid fa-message"></i>
                     </div>
-                `;
+                    <h3>Фрагментация</h3>
+                    <p><strong>73% репетиторов</strong> используют 3+ мессенджера одновременно.<br>Задания теряются в чатах, файлы — в разных папках.</p>
+                </div>
                 
-                notification.style.cssText = `
-                    position: fixed;
-                    top: 20px;
-                    right: 20px;
-                    background: rgba(28, 28, 30, 0.95);
-                    color: #e5e5e5;
-                    padding: 12px 18px;
-                    border-radius: 12px;
-                    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-                    border-left: 4px solid #007aff;
-                    z-index: 10000;
-                    transform: translateX(120%);
-                    transition: transform 0.3s ease;
-                    font-size: 14px;
-                    display: flex;
-                    align-items: center;
-                    gap: 10px;
-                `;
+                <div class="problem-card glass-hover">
+                    <div class="problem-icon">
+                        <i class="fa-solid fa-clock"></i>
+                    </div>
+                    <h3>Рутина</h3>
+                    <p><strong>57% времени</strong> уходит на напоминания, сбор заданий и отчёты вместо преподавания.<br>Средняя потеря — 2 часа ежедневно.</p>
+                </div>
                 
-                document.body.appendChild(notification);
+                <div class="problem-card glass-hover">
+                    <div class="problem-icon">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                    <h3>Непрозрачность</h3>
+                    <p><strong>82% репетиторов</strong> не ведут статистику прогресса.<br>Родители не видят результатов, ученики — своих улучшений.</p>
+                </div>
+            </div>
+            
+            <div class="cta-box" style="margin-top: 60px;">
+                <h3>Решение: Единая экосистема в Telegram</h3>
+                <p>Объединяем управление учениками, заданиями, материалами и аналитикой в одном месте,<br>где данные автоматически превращаются в измеримые результаты.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Экосистема -->
+    <section id="ecosystem">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">Экосистема</span>
+                <h2 class="section-title">PROGRESS:<br><span class="gradient-text">закрытый цикл обучения</span></h2>
+                <p class="section-subtitle">
+                    Два взаимосвязанных бота, которые превращают хаотичное обучение<br>
+                    в структурированный процесс с измеримыми результатами.
+                </p>
+            </div>
+            
+            <div class="ecosystem-cards">
+                <div class="ecosystem-card glass-hover">
+                    <div class="ecosystem-icon" style="background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);">
+                        <i class="fa-solid fa-magnifying-glass-chart"></i>
+                    </div>
+                    <h3>PROGRESS+</h3>
+                    <p class="ecosystem-subtitle">Умный поиск репетиторов</p>
+                    <ul class="ecosystem-features">
+                        <li><i class="fa-solid fa-check"></i> Объективные рейтинги на основе данных</li>
+                        <li><i class="fa-solid fa-check"></i> SMART-категории, Z-оценки</li>
+                        <li><i class="fa-solid fa-check"></i> Встроенная диагностика учеников</li>
+                    </ul>
+                    <div class="ecosystem-audience">
+                        <span class="audience-badge">Для учеников</span>
+                        <span class="audience-badge">Для родителей</span>
+                    </div>
+                </div>
                 
-                setTimeout(() => {
-                    notification.style.transform = 'translateX(0)';
-                }, 10);
-                
-                setTimeout(() => {
-                    notification.style.transform = 'translateX(120%)';
+                <div class="ecosystem-card glass-hover">
+                    <div class="ecosystem-icon" style="background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);">
+                        <i class="fa-solid fa-robot"></i>
+                    </div>
+                    <h3>PROGRESS Bot</h3>
+                    <p class="ecosystem-subtitle">Управление учебным процессом</p>
+                    <ul class="ecosystem-features">
+                        <li><i class="fa-solid fa-check"></i> Конструктор курсов и тем</li>
+                        <li><i class="fa-solid fa-check"></i> Автоматические напоминания</li>
+                        <li><i class="fa-solid fa-check"></i> Радар эффективности</li>
+                    </ul>
+                    <div class="ecosystem-audience">
+                        <span class="audience-badge">Для репетиторов</span>
+                        <span class="audience-badge">Для преподавателей</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="ecosystem-benefits">
+                <div class="benefit-item">
+                    <i class="fa-solid fa-sync-alt"></i>
+                    <h4>Полная синхронизация</h4>
+                    <p>Данные между ботами синхронизируются в реальном времени</p>
+                </div>
+                <div class="benefit-item">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <h4>Растущая эффективность</h4>
+                    <p>Рейтинги автоматически обновляются на основе статистики</p>
+                </div>
+                <div class="benefit-item">
+                    <i class="fa-solid fa-bolt"></i>
+                    <h4>Экономия времени</h4>
+                    <p>До 2 часов ежедневно за счёт автоматизации</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROGRESS+ -->
+    <section id="find" class="section-alt">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">PROGRESS+</span>
+                <h2 class="section-title">Найдите репетитора<br><span class="gradient-text">на языке данных</span></h2>
+                <p class="section-subtitle">
+                    Мы заменили субъективные отзывы на объективные метрики.<br>
+                    Алгоритм анализирует реальную эффективность, а не количество лет в резюме.
+                </p>
+            </div>
+            
+            <div class="feature-showcase">
+                <div class="showcase-content">
+                    <div class="showcase-feature">
+                        <div class="feature-icon">
+                            <i class="fa-solid fa-gem"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h3>SMART-категории</h3>
+                            <p>Рейтинг на основе процентилей и Z-оценок</p>
+                            <div class="categories-grid">
+                                <div class="category-item">
+                                    <div class="category-badge diamond">Алмазный</div>
+                                    <div class="category-desc">Топ-2% репетиторов</div>
+                                </div>
+                                <div class="category-item">
+                                    <div class="category-badge top-expert">Топ-эксперт</div>
+                                    <div class="category-desc">Топ-10% репетиторов</div>
+                                </div>
+                                <div class="category-item">
+                                    <div class="category-badge expert">Эксперт</div>
+                                    <div class="category-desc">Топ-30% репетиторов</div>
+                                </div>
+                                <div class="category-item">
+                                    <div class="category-badge rising-star">Восходящая звезда</div>
+                                    <div class="category-desc">Новички в топ-30%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     
-                    setTimeout(() => {
-                        if (notification.parentNode) {
-                            notification.parentNode.removeChild(notification);
-                        }
-                    }, 300);
-                }, 2500);
-            }
-            
-            // Интерактивные эффекты для карточек
-            featureCards.forEach(card => {
-                card.addEventListener('mouseenter', function() {
-                    this.style.transform = 'translateY(-4px) scale(1.02)';
-                    this.style.boxShadow = '0 12px 32px rgba(0, 0, 0, 0.35)';
-                });
+                    <div class="showcase-feature">
+                        <div class="feature-icon">
+                            <i class="fa-solid fa-filter"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h3>Умные фильтры</h3>
+                            <p>Поиск по реальным метрикам эффективности</p>
+                            <div class="metrics-list">
+                                <div class="metric-item">
+                                    <span class="metric-name">Выполнение заданий</span>
+                                    <span class="metric-value">85%+</span>
+                                </div>
+                                <div class="metric-item">
+                                    <span class="metric-name">Среднее время проверки</span>
+                                    <span class="metric-value">< 24 часов</span>
+                                </div>
+                                <div class="metric-item">
+                                    <span class="metric-name">Дифференцирующая способность</span>
+                                    <span class="metric-value">Высокая</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="showcase-feature">
+                        <div class="feature-icon">
+                            <i class="fa-solid fa-graduation-cap"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h3>Встроенная диагностика</h3>
+                            <p>Определите, что именно нужно ученику</p>
+                            <div class="categories-list">
+                                <div class="category-tag">Тест «Найти предмет»</div>
+                                <div class="category-tag">Готовность к ОГЭ/ЕГЭ</div>
+                                <div class="category-tag">Профориентация</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 
-                card.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateY(0) scale(1)';
-                    this.style.boxShadow = '';
+                <div class="showcase-visual">
+                    <div class="visual-card glass-hover">
+                        <div class="visual-header">
+                            <div class="visual-avatar">
+                                <i class="fa-solid fa-user-tie"></i>
+                            </div>
+                            <div class="visual-info">
+                                <h4>Александр Петров</h4>
+                                <p class="visual-subject">Физика • Математика</p>
+                            </div>
+                        </div>
+                        
+                        <div class="visual-stats">
+                            <div class="stat">
+                                <div class="stat-value">94%</div>
+                                <div class="stat-label">Выполнение</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">18ч</div>
+                                <div class="stat-label">Проверка</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">47</div>
+                                <div class="stat-label">Материалы</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">+2.4</div>
+                                <div class="stat-label">Z-оценка</div>
+                            </div>
+                        </div>
+                        
+                        <div class="filters-grid">
+                            <div class="filter-item">
+                                <span class="filter-name">Успеваемость по темам</span>
+                                <span class="filter-value">92%</span>
+                            </div>
+                            <div class="filter-item">
+                                <span class="filter-name">Положительная динамика</span>
+                                <span class="filter-value">↑ 18%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="cta-box">
+                <h3>Попробуйте умный поиск</h3>
+                <p>Найдите репетитора по реальным показателям эффективности</p>
+                <a href="https://t.me/avickprogressplusBOT" class="btn-main" target="_blank">
+                    <i class="fa-brands fa-telegram"></i> Открыть PROGRESS+
+                    <span class="btn-subtext">@avickprogressplusBOT • Бесплатно</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROGRESS Bot -->
+    <section id="manage">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">PROGRESS Bot</span>
+                <h2 class="section-title">Верните себе<br><span class="gradient-text">2 часа ежедневно</span></h2>
+                <p class="section-subtitle">
+                    Полноценная система управления обучением в Telegram.<br>
+                    Структурируйте материалы, задания и аналитику в одном месте.
+                </p>
+            </div>
+            
+            <div class="tabs">
+                <div class="tab-header">
+                    <button class="tab-button active" data-tab="tutor">
+                        <i class="fa-solid fa-chalkboard-teacher"></i> Для репетиторов
+                    </button>
+                    <button class="tab-button" data-tab="student">
+                        <i class="fa-solid fa-graduation-cap"></i> Для учеников
+                    </button>
+                    <button class="tab-button" data-tab="parents">
+                        <i class="fa-solid fa-users"></i> Для родителей
+                    </button>
+                </div>
+                
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tutor">
+                        <div class="features-grid">
+                            <div class="feature-card glass-hover">
+                                <div class="feature-icon">
+                                    <i class="fa-solid fa-folder-tree"></i>
+                                </div>
+                                <h3>Конструктор курсов</h3>
+                                <p>Создавайте структурированные темы с папками: Теория, Практика, Шаблоны</p>
+                            </div>
+                            
+                            <div class="feature-card glass-hover">
+                                <div class="feature-icon">
+                                    <i class="fa-solid fa-user-shield"></i>
+                                </div>
+                                <h3>Система токенов</h3>
+                                <p>Одноразовые токены для безопасного подключения учеников</p>
+                                <div class="token-example">
+                                    <div class="token-code">G7H9-K2P1</div>
+                                    <div class="token-info">Действует 1 час • Привязывает к дисциплине</div>
+                                </div>
+                            </div>
+                            
+                            <div class="feature-card glass-hover">
+                                <div class="feature-icon">
+                                    <i class="fa-solid fa-clock-rotate-left"></i>
+                                </div>
+                                <h3>Автоматические напоминания</h3>
+                                <p>Трехуровневые уведомления: 24ч / 3ч / 15м до дедлайна</p>
+                            </div>
+                            
+                            <div class="feature-card glass-hover">
+                                <div class="feature-icon">
+                                    <i class="fa-solid fa-chart-simple"></i>
+                                </div>
+                                <h3>Глубокая аналитика</h3>
+                                <p>Радар эффективности, тепловые карты, сравнение периодов</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-pane" id="student">
+                        <div class="features-grid">
+                            <div class="feature-card glass-hover">
+                                <div class="feature-icon">
+                                    <i class="fa-solid fa-list-check"></i>
+                                </div>
+                                <h3>Все задания в одном месте</h3>
+                                <p>Фильтры: Активные, Просроченные, Выполненные</p>
+                            </div>
+                            
+                            <div class="feature-card glass-hover">
+                                <div class="feature-icon">
+                                    <i class="fa-solid fa-graduation-cap"></i>
+                                </div>
+                                <h3>Централизованные материалы</h3>
+                                <p>Все файлы, ссылки и тексты структурированы по темам</p>
+                            </div>
+                            
+                            <div class="feature-card glass-hover">
+                                <div class="feature-icon">
+                                    <i class="fa-solid fa-bell"></i>
+                                </div>
+                                <h3>Автоматические напоминания</h3>
+                                <p>Бот напомнит о дедлайне заранее</p>
+                            </div>
+                            
+                            <div class="feature-card glass-hover">
+                                <div class="feature-icon">
+                                    <i class="fa-solid fa-chart-line"></i>
+                                </div>
+                                <h3>Личный прогресс</h3>
+                                <p>Смотрите статистику выполнения и рекомендации</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="demo-section">
+                <h3>Как это работает:</h3>
+                <div class="demo-steps">
+                    <div class="demo-step">
+                        <div class="step-number">1</div>
+                        <h4>Регистрация</h4>
+                        <p>Репетитор выбирает дисциплины, ученик вводит токен</p>
+                    </div>
+                    <div class="demo-arrow">
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </div>
+                    <div class="demo-step">
+                        <div class="step-number">2</div>
+                        <h4>Создание заданий</h4>
+                        <p>Выбор темы, установка дедлайна, прикрепление материалов</p>
+                    </div>
+                    <div class="demo-arrow">
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </div>
+                    <div class="demo-step">
+                        <div class="step-number">3</div>
+                        <h4>Обучение и контроль</h4>
+                        <p>Сдача работ, проверка, аналитика прогресса</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Аналитика -->
+    <section id="analytics" class="section-alt">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Глубокая аналитика,<br><span class="gradient-text">которая говорит на языке фактов</span></h2>
+                <p class="section-subtitle">
+                    Покажите родителям не эмоции, а данные.<br>
+                    Наша система автоматически собирает и визуализирует ключевые метрики.
+                </p>
+            </div>
+            
+            <div class="analytics-grid">
+                <div class="analytics-card glass-hover">
+                    <div class="analytics-icon">
+                        <i class="fa-solid fa-radar"></i>
+                    </div>
+                    <h3>Радар эффективности</h3>
+                    <p>6 ключевых показателей каждого ученика в одном графике</p>
+                    <div class="radar-metrics">
+                        <span class="radar-metric">Успеваемость</span>
+                        <span class="radar-metric">Посещаемость</span>
+                        <span class="radar-metric">Оперативность</span>
+                        <span class="radar-metric">Стабильность</span>
+                    </div>
+                </div>
+                
+                <div class="analytics-card glass-hover">
+                    <div class="analytics-icon">
+                        <i class="fa-solid fa-calendar-heart"></i>
+                    </div>
+                    <h3>Тепловая карта активности</h3>
+                    <p>Определите самые продуктивные дни и часы для занятий</p>
+                    <div class="heatmap-preview">
+                        <div class="heatmap-row">
+                            <span class="heatmap-day">Пн</span>
+                            <div class="heatmap-cells">
+                                <div class="heatmap-cell low"></div>
+                                <div class="heatmap-cell medium"></div>
+                                <div class="heatmap-cell high"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="analytics-card glass-hover">
+                    <div class="analytics-icon">
+                        <i class="fa-solid fa-chart-column"></i>
+                    </div>
+                    <h3>Сравнение периодов</h3>
+                    <p>Увидьте прогресс в динамике</p>
+                    <div class="comparison">
+                        <div class="comparison-period">
+                            <span class="period-name">Январь</span>
+                            <div class="period-bar" style="width: 75%;"></div>
+                            <span class="period-value">75%</span>
+                        </div>
+                        <div class="comparison-period">
+                            <span class="period-name">Февраль</span>
+                            <div class="period-bar" style="width: 88%;"></div>
+                            <span class="period-value">88%</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="analytics-card glass-hover">
+                    <div class="analytics-icon">
+                        <i class="fa-solid fa-crystal-ball"></i>
+                    </div>
+                    <h3>Прогнозирование результатов</h3>
+                    <p>На основе текущих темпов система предсказывает вероятности</p>
+                </div>
+            </div>
+            
+            <div class="report-demo glass-hover">
+                <div class="report-header">
+                    <h4><i class="fa-solid fa-file-contract"></i> Пример отчета для родителей</h4>
+                    <span class="report-date">Сформирован 15.03.2025</span>
+                </div>
+                <div class="report-body">
+                    <div class="report-stats">
+                        <div class="report-stat">
+                            <div class="report-value">24</div>
+                            <div class="report-label">Всего занятий</div>
+                        </div>
+                        <div class="report-stat">
+                            <div class="report-value">92%</div>
+                            <div class="report-label">Посещаемость</div>
+                        </div>
+                        <div class="report-stat">
+                            <div class="report-value">88%</div>
+                            <div class="report-label">Выполнение заданий</div>
+                        </div>
+                        <div class="report-stat">
+                            <div class="report-value">2.3 дня</div>
+                            <div class="report-label">Среднее время выполнения</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="report-footer">
+                    <p class="report-note">
+                        <i class="fa-solid fa-lightbulb"></i>
+                        Рекомендуем уделить больше внимания теме "Законы Ньютона" (успеваемость 70%)
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Результаты и экономика -->
+    <section id="results">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Измеримые <span class="gradient-text">результаты</span></h2>
+                <p class="section-subtitle">
+                    На основе анализа 90+ источников и глубинного изучения рынка<br>
+                    мы спрогнозировали реальную экономику проекта.
+                </p>
+            </div>
+            
+            <div class="results-grid">
+                <div class="result-card glass-hover">
+                    <div class="result-icon">
+                        <i class="fa-solid fa-clock"></i>
+                    </div>
+                    <h3>Экономия времени</h3>
+                    <p>Сокращение времени на администрирование с <strong>2 часов ежедневно</strong> до <strong>30 минут в неделю</strong></p>
+                    <div class="result-metric">
+                        <span class="metric-value">+65%</span>
+                        <span class="metric-label">эффективности</span>
+                    </div>
+                </div>
+                
+                <div class="result-card glass-hover">
+                    <div class="result-icon">
+                        <i class="fa-solid fa-chart-line-up"></i>
+                    </div>
+                    <h3>Рост успеваемости</h3>
+                    <p>Повышение выполнения домашних заданий с <strong>65% до 85%</strong></p>
+                    <div class="result-metric">
+                        <span class="metric-value">+40%</span>
+                        <span class="metric-label">мотивации учеников</span>
+                    </div>
+                </div>
+                
+                <div class="result-card glass-hover">
+                    <div class="result-icon">
+                        <i class="fa-solid fa-user-plus"></i>
+                    </div>
+                    <h3>Увеличение нагрузки</h3>
+                    <p>Возможность увеличить количество учеников на <strong>40%</strong></p>
+                    <div class="result-metric">
+                        <span class="metric-value">+1 ученик</span>
+                        <span class="metric-label">в день за счёт экономии времени</span>
+                    </div>
+                </div>
+                
+                <div class="result-card glass-hover">
+                    <div class="result-icon">
+                        <i class="fa-solid fa-sack-dollar"></i>
+                    </div>
+                    <h3>Экономическая модель</h3>
+                    <p>Точка безубыточности: <strong>150 платящих репетиторов</strong> (299 ₽/месяц)</p>
+                    <div class="result-metric">
+                        <span class="metric-value">118%</span>
+                        <span class="metric-label">ROI за 2 года</span>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+
+    <!-- Финальный CTA -->
+    <section class="final-cta">
+        <div class="container">
+            <div class="cta-content glass-hover">
+                <h2>Начните использовать будущее репетиторства уже сегодня</h2>
+                <p>Присоединяйтесь к первым репетиторам, которые уже тестируют систему в рамках закрытой бета-версии.</p>
+                
+                <div class="cta-features">
+                    <div class="cta-feature">
+                        <i class="fa-solid fa-check"></i>
+                        <span>Полный доступ ко всем функциям бесплатно до января 2026</span>
+                    </div>
+                    <div class="cta-feature">
+                        <i class="fa-solid fa-check"></i>
+                        <span>Персональная поддержка и обучение от команды проекта</span>
+                    </div>
+                    <div class="cta-feature">
+                        <i class="fa-solid fa-check"></i>
+                        <span>Возможность влиять на развитие продукта</span>
+                    </div>
+                </div>
+                
+                <div class="cta-buttons">
+                    <a href="https://t.me/avickprogress_bot" class="btn-main" target="_blank">
+                        <i class="fa-brands fa-telegram"></i> Я репетитор
+                        <span class="btn-subtext">Открыть @avickprogress_bot</span>
+                    </a>
+                    <a href="https://t.me/avickprogressplusBOT" class="btn-secondary" target="_blank">
+                        <i class="fa-solid fa-magnifying-glass-chart"></i> Я ученик/родитель
+                        <span class="btn-subtext">Открыть @avickprogressplusBOT</span>
+                    </a>
+                </div>
+                
+                <p class="cta-note">Регистрация занимает 2 минуты. Никаких платежей до января 2026.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <h4>Progress</h4>
+                    <p style="color: var(--text-secondary); margin-bottom: 20px;">
+                        Интеллектуальная экосистема для репетиторов и учеников
+                    </p>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">PostgreSQL</span>
+                        <span class="tech-tag">Telegram API</span>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Продукт</h4>
+                    <ul>
+                        <li><a href="#ecosystem">Экосистема Progress</a></li>
+                        <li><a href="#find">PROGRESS+ (Поиск)</a></li>
+                        <li><a href="#manage">PROGRESS Bot (Управление)</a></li>
+                        <li><a href="#analytics">Аналитика</a></li>
+                        <li><a href="#results">Результаты</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Ресурсы</h4>
+                    <ul>
+                        <li><a href="#">Документация</a></li>
+                        <li><a href="#">Исследования</a></li>
+                        <li><a href="#">Блог</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Контакты</h4>
+                    <div class="footer-contact">
+                        <div class="contact-item">
+                            <i class="fa-brands fa-telegram"></i>
+                            <span><a href="https://t.me/avickprogress_bot" target="_blank">@avickprogress_bot</a></span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fa-brands fa-telegram"></i>
+                            <span><a href="https://t.me/avickprogressplusBOT" target="_blank">@avickprogressplusBOT</a></span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fa-solid fa-envelope"></i>
+                            <span>contact@progress.education</span>
+                        </div>
+                    </div>
+                    
+                    <div class="social-icons">
+                        <a href="https://t.me/avickprogress_bot" class="social-icon" target="_blank">
+                            <i class="fa-brands fa-telegram"></i>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <i class="fa-brands fa-vk"></i>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <i class="fa-brands fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="footer-links">
+                    <a href="#">Политика конфиденциальности</a>
+                    <a href="#">Условия использования</a>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2025 Система управления учебным процессом «Прогресс». Все права защищены.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Скрипт для табов и плавной прокрутки -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Табы
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabPanes = document.querySelectorAll('.tab-pane');
+            
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const tabId = button.getAttribute('data-tab');
+                    
+                    // Убираем активный класс у всех кнопок и панелей
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabPanes.forEach(pane => pane.classList.remove('active'));
+                    
+                    // Добавляем активный класс текущей кнопке и панели
+                    button.classList.add('active');
+                    const activePane = document.getElementById(tabId);
+                    if (activePane) activePane.classList.add('active');
                 });
             });
             
-            // Интерактивные эффекты для кнопок
-            const buttons = document.querySelectorAll('.btn-telegram, .btn-outline, .inline-button');
-            buttons.forEach(button => {
-                button.addEventListener('mousedown', function() {
-                    this.style.transform = 'scale(0.98)';
-                });
-                
-                button.addEventListener('mouseup', function() {
-                    this.style.transform = '';
-                });
-                
-                button.addEventListener('mouseleave', function() {
-                    this.style.transform = '';
-                });
-            });
-            
-            // Автоматическое обновление времени статуса
-            setInterval(() => {
-                const statusElement = document.querySelector('.user-status');
-                if (statusElement) {
-                    if (statusElement.textContent === 'онлайн') {
-                        statusElement.textContent = 'в сети';
-                    } else {
-                        statusElement.textContent = 'онлайн';
-                    }
-                }
-            }, 5000);
-            
-            // Плавная прокрутка для ссылок с якорями
+            // Плавная прокрутка для якорных ссылок
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function(e) {
                     e.preventDefault();
+                    
                     const targetId = this.getAttribute('href');
-                    if (targetId !== '#') {
-                        const targetElement = document.querySelector(targetId);
-                        if (targetElement) {
-                            targetElement.scrollIntoView({
-                                behavior: 'smooth',
-                                block: 'start'
-                            });
-                        }
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        const navHeight = document.querySelector('nav').offsetHeight;
+                        const targetPosition = targetElement.offsetTop - navHeight - 20;
+                        
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
                     }
                 });
             });
             
-            // Задержка для имитации загрузки при нажатии на кнопку бота
-            const startBotBtn = document.querySelector('.btn-telegram[href*="t.me"]');
-            if (startBotBtn) {
-                startBotBtn.addEventListener('click', function(e) {
-                    if (!this.href.includes('t.me')) {
-                        e.preventDefault();
-                        showNotification('Переход к боту в Telegram...');
-                        
-                        const originalHTML = this.innerHTML;
-                        this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Запуск бота...';
-                        this.style.pointerEvents = 'none';
-                        
-                        setTimeout(() => {
-                            this.innerHTML = originalHTML;
-                            this.style.pointerEvents = '';
-                            showNotification('Бот готов к работе!');
-                        }, 1500);
+            // Анимация появления элементов при скролле
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animated');
                     }
                 });
-            }
+            }, observerOptions);
             
-            // Анимация статистики
-            const statNumbers = document.querySelectorAll('.stat-number');
-            statNumbers.forEach(stat => {
-                const originalText = stat.textContent;
-                stat.textContent = '0';
-                
-                setTimeout(() => {
-                    let counter = 0;
-                    const target = originalText;
-                    const increment = parseInt(target.replace(/[^0-9]/g, '')) / 30;
-                    
-                    const updateCount = () => {
-                        counter += increment;
-                        if (counter >= parseInt(target.replace(/[^0-9]/g, ''))) {
-                            stat.textContent = originalText;
-                        } else {
-                            stat.textContent = Math.floor(counter).toLocaleString() + (target.includes('₽') ? ' ₽' : '');
-                            setTimeout(updateCount, 50);
-                        }
-                    };
-                    
-                    updateCount();
-                }, 1000);
-            });
-            
-            // Параллакс эффект для карточек
-            document.addEventListener('mousemove', function(e) {
-                const cards = document.querySelectorAll('.feature-card');
-                const mouseX = e.clientX / window.innerWidth;
-                const mouseY = e.clientY / window.innerHeight;
-                
-                cards.forEach((card, index) => {
-                    const speed = 0.5;
-                    const x = (mouseX * speed * 20) - (speed * 10);
-                    const y = (mouseY * speed * 20) - (speed * 10);
-                    
-                    card.style.transform = `translate(${x}px, ${y}px)`;
-                });
+            // Наблюдаем за карточками и секциями
+            document.querySelectorAll('.ecosystem-card, .feature-card, .result-card').forEach(card => {
+                observer.observe(card);
             });
         });
     </script>
-
-    <style>
-        /* Дополнительные стили для главной страницы */
-        .mini-features {
-            list-style: none;
-            padding-left: 0;
-            margin: 10px 0;
-            font-size: 12px;
-            color: var(--text-secondary);
-        }
-        
-        .mini-features li {
-            margin-bottom: 5px;
-            padding-left: 15px;
-            position: relative;
-        }
-        
-        .mini-features li:before {
-            content: '•';
-            position: absolute;
-            left: 0;
-            color: var(--text-accent);
-        }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin: 15px 0;
-        }
-        
-        .stat-item {
-            text-align: center;
-            padding: 8px;
-            background: rgba(118, 118, 128, 0.08);
-            border-radius: 10px;
-        }
-        
-        .stat-value {
-            font-weight: 700;
-            font-size: 16px;
-            color: var(--text-accent);
-        }
-        
-        .stat-label {
-            font-size: 10px;
-            color: var(--text-secondary);
-            margin-top: 2px;
-        }
-        
-        .advantages-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-top: 15px;
-        }
-        
-        .advantage-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-        }
-        
-        .advantage-item i {
-            font-size: 20px;
-            margin-top: 3px;
-        }
-        
-        .advantage-item div {
-            flex: 1;
-        }
-        
-        .advantage-item strong {
-            display: block;
-            font-size: 13px;
-            margin-bottom: 3px;
-        }
-        
-        .advantage-item p {
-            font-size: 11px;
-            color: var(--text-secondary);
-            margin: 0;
-        }
-        
-        .market-stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin: 15px 0;
-        }
-        
-        .market-stat {
-            text-align: center;
-            padding: 12px;
-            background: linear-gradient(135deg, rgba(0, 122, 255, 0.1), rgba(88, 86, 214, 0.05));
-            border-radius: 12px;
-            border: 1px solid rgba(0, 122, 255, 0.2);
-        }
-        
-        .market-stat .stat-number {
-            font-size: 18px;
-            font-weight: 700;
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 5px;
-        }
-        
-        .market-stat .stat-description {
-            font-size: 10px;
-            color: var(--text-secondary);
-            line-height: 1.3;
-        }
-        
-        @media (max-width: 768px) {
-            .advantages-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .market-stats {
-                grid-template-columns: 1fr;
-            }
-            
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-    </style>
 </body>
 </html>

@@ -251,7 +251,6 @@ section {
     justify-content: center;
     gap: 40px;
     margin-bottom: 50px;
-    flex-wrap: wrap;
 }
 
 .hero-stat {
@@ -279,7 +278,6 @@ section {
     gap: 20px;
     justify-content: center;
     align-items: center;
-    flex-wrap: wrap;
     margin-bottom: 40px;
 }
 
@@ -359,7 +357,6 @@ section {
     align-items: center;
     gap: 40px;
     margin: 60px 0;
-    flex-wrap: wrap;
 }
 
 .ecosystem-card {
@@ -423,7 +420,6 @@ section {
     display: flex;
     justify-content: center;
     gap: 10px;
-    flex-wrap: wrap;
 }
 
 .audience-badge {
@@ -683,7 +679,6 @@ section {
     justify-content: center;
     gap: 10px;
     margin-bottom: 40px;
-    flex-wrap: wrap;
 }
 
 .tab-button {
@@ -762,7 +757,6 @@ section {
     justify-content: center;
     align-items: center;
     margin-top: 40px;
-    flex-wrap: wrap;
     gap: 20px;
 }
 
@@ -817,7 +811,6 @@ section {
 
 .radar-metrics {
     display: flex;
-    flex-wrap: wrap;
     gap: 10px;
     margin-top: 15px;
 }
@@ -1110,7 +1103,6 @@ section {
     display: flex;
     gap: 20px;
     justify-content: center;
-    flex-wrap: wrap;
     margin-bottom: 25px;
 }
 
@@ -1133,7 +1125,6 @@ footer {
 .footer-content {
     display: flex;
     justify-content: space-between;
-    flex-wrap: wrap;
     max-width: var(--container-width);
     margin: 0 auto 50px;
     gap: 50px;
@@ -1225,8 +1216,6 @@ footer {
     padding-top: 30px;
     border-top: var(--glass-border);
     margin-top: 50px;
-    flex-wrap: wrap;
-    gap: 20px;
 }
 
 .footer-links {
@@ -1264,167 +1253,6 @@ footer {
     -webkit-backdrop-filter: blur(15px) saturate(180%);
     border: var(--glass-highlight);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 20px rgba(99, 102, 241, 0.2);
-}
-
-/* --- Адаптив --- */
-@media (max-width: 1024px) {
-    .feature-showcase {
-        grid-template-columns: 1fr;
-        gap: 40px;
-    }
-    
-    .ecosystem-cards {
-        flex-direction: column;
-    }
-    
-    .ecosystem-card {
-        max-width: 500px;
-    }
-}
-
-@media (max-width: 900px) {
-    .hero h1 { 
-        font-size: 3rem; 
-    }
-    
-    .section-title { 
-        font-size: 2.2rem; 
-    }
-    
-    nav {
-        padding: 0 20px;
-        height: 60px;
-        width: 95%;
-        top: 10px;
-    }
-    
-    .nav-links {
-        display: none; 
-    }
-    
-    .hero-stats {
-        gap: 30px;
-    }
-    
-    .hero-stat {
-        min-width: 130px;
-    }
-    
-    .btn-nav {
-        padding: 10px 20px;
-        font-size: 0.85rem;
-    }
-}
-
-@media (max-width: 768px) {
-    section {
-        padding: 80px 20px;
-    }
-    
-    .hero h1 {
-        font-size: 2.5rem;
-    }
-    
-    .hero-subtitle {
-        font-size: 1.2rem;
-    }
-    
-    .section-title {
-        font-size: 1.8rem;
-    }
-    
-    .hero-stats {
-        gap: 20px;
-    }
-    
-    .hero-stat {
-        min-width: 120px;
-    }
-    
-    .hero-stat-number {
-        font-size: 2rem;
-    }
-    
-    .btn-main {
-        padding: 15px 30px;
-        font-size: 1rem;
-    }
-    
-    .cta-content {
-        padding: 40px 20px;
-    }
-    
-    .footer-content {
-        flex-direction: column;
-        gap: 40px;
-    }
-    
-    .footer-bottom {
-        flex-direction: column;
-        text-align: center;
-    }
-    
-    .footer-links {
-        justify-content: center;
-    }
-    
-    .demo-steps {
-        flex-direction: column;
-    }
-    
-    .demo-arrow {
-        transform: rotate(90deg);
-    }
-}
-
-@media (max-width: 480px) {
-    .hero h1 {
-        font-size: 2rem;
-    }
-    
-    .hero-subtitle {
-        font-size: 1rem;
-    }
-    
-    .section-title {
-        font-size: 1.6rem;
-    }
-    
-    .hero-stats {
-        flex-direction: column;
-        gap: 30px;
-    }
-    
-    .hero-stat {
-        min-width: 100%;
-    }
-    
-    .hero-cta {
-        flex-direction: column;
-        width: 100%;
-    }
-    
-    .btn-main, .btn-secondary {
-        width: 100%;
-        justify-content: center;
-    }
-    
-    .tab-header {
-        flex-direction: column;
-        width: 100%;
-    }
-    
-    .tab-button {
-        width: 100%;
-    }
-    
-    .visual-stats {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .categories-grid {
-        grid-template-columns: 1fr;
-    }
 }
 
 /* Новые стили для обновленного HTML */
@@ -1504,7 +1332,6 @@ footer {
 
 .categories-list {
     display: flex;
-    flex-wrap: wrap;
     gap: 10px;
     margin-top: 15px;
 }
@@ -1559,7 +1386,6 @@ footer {
 
 .tech-stack {
     display: flex;
-    flex-wrap: wrap;
     gap: 8px;
     margin-top: 15px;
 }

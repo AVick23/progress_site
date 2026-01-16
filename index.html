@@ -23,8 +23,54 @@
     <meta property="og:image" content="https://yourdomain.com/og-image.jpg">
     <meta property="og:type" content="website">
     
-    <!-- Подключение CSS файла -->
-    <link rel="stylesheet" href="style.css">
+    <!-- Определение устройства и подключение соответствующего CSS -->
+    <script>
+        (function() {
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            
+            // Проверяем, является ли устройство мобильным
+            function isMobileDevice() {
+                return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
+                       window.innerWidth <= 768;
+            }
+            
+            // Подключаем нужный CSS файл
+            link.href = isMobileDevice() ? 'mobile.css' : 'style.css';
+            document.head.appendChild(link);
+            
+            // Для мобильных устройств добавляем обработчик гамбургер-меню
+            if (isMobileDevice()) {
+                document.addEventListener('DOMContentLoaded', function() {
+                    var hamburger = document.querySelector('.hamburger');
+                    var navLinks = document.querySelector('.nav-links');
+                    
+                    if (hamburger && navLinks) {
+                        hamburger.addEventListener('click', function() {
+                            this.classList.toggle('active');
+                            navLinks.classList.toggle('active');
+                        });
+                        
+                        // Закрываем меню при клике на ссылку
+                        navLinks.querySelectorAll('a').forEach(function(link) {
+                            link.addEventListener('click', function() {
+                                hamburger.classList.remove('active');
+                                navLinks.classList.remove('active');
+                            });
+                        });
+                        
+                        // Закрываем меню при клике вне его области
+                        document.addEventListener('click', function(event) {
+                            if (!navLinks.contains(event.target) && !hamburger.contains(event.target)) {
+                                hamburger.classList.remove('active');
+                                navLinks.classList.remove('active');
+                            }
+                        });
+                    }
+                });
+            }
+        })();
+    </script>
 </head>
 <body>
     <!-- Навигация -->
@@ -32,6 +78,14 @@
         <div class="logo">
             <i class="fa-solid fa-rocket"></i> Progress<span>.</span>
         </div>
+        
+        <!-- Гамбургер-меню (будет видно только в мобильной версии) -->
+        <button class="hamburger" aria-label="Меню">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        
         <div class="nav-links">
             <a href="#ecosystem">Экосистема</a>
             <a href="#find">PROGRESS+</a>
@@ -94,7 +148,12 @@
     <!-- Проблема -->
     <section>
         <div class="container">
-            <h2 class="section-title">Репетиторство сегодня:<br><span class="gradient-text">преподавание vs администрирование</span></h2>
+            <div class="section-header">
+                <h2 class="section-title">Репетиторство сегодня:<br><span class="gradient-text">преподавание vs администрирование</span></h2>
+                <p class="section-subtitle">
+                    Большинство репетиторов тратят больше времени на администрирование, чем на преподавание
+                </p>
+            </div>
             
             <div class="problem-grid">
                 <div class="problem-card glass-hover">
@@ -102,7 +161,7 @@
                         <i class="fa-solid fa-message"></i>
                     </div>
                     <h3>Фрагментация</h3>
-                    <p><strong>73% репетиторов</strong> используют 3+ мессенджера одновременно.<br>Задания теряются в чатах, файлы — в разных папках.</p>
+                    <p><strong>73% репетиторов</strong> используют 3+ мессенджера одновременно. Задания теряются в чатах, файлы — в разных папках.</p>
                 </div>
                 
                 <div class="problem-card glass-hover">
@@ -110,7 +169,7 @@
                         <i class="fa-solid fa-clock"></i>
                     </div>
                     <h3>Рутина</h3>
-                    <p><strong>57% времени</strong> уходит на напоминания, сбор заданий и отчёты вместо преподавания.<br>Средняя потеря — 2 часа ежедневно.</p>
+                    <p><strong>57% времени</strong> уходит на напоминания, сбор заданий и отчёты вместо преподавания. Средняя потеря — 2 часа ежедневно.</p>
                 </div>
                 
                 <div class="problem-card glass-hover">
@@ -118,13 +177,13 @@
                         <i class="fa-solid fa-chart-line"></i>
                     </div>
                     <h3>Непрозрачность</h3>
-                    <p><strong>82% репетиторов</strong> не ведут статистику прогресса.<br>Родители не видят результатов, ученики — своих улучшений.</p>
+                    <p><strong>82% репетиторов</strong> не ведут статистику прогресса. Родители не видят результатов, ученики — своих улучшений.</p>
                 </div>
             </div>
             
             <div class="cta-box" style="margin-top: 60px;">
                 <h3>Решение: Единая экосистема в Telegram</h3>
-                <p>Объединяем управление учениками, заданиями, материалами и аналитикой в одном месте,<br>где данные автоматически превращаются в измеримые результаты.</p>
+                <p>Объединяем управление учениками, заданиями, материалами и аналитикой в одном месте, где данные автоматически превращаются в измеримые результаты.</p>
             </div>
         </div>
     </section>
@@ -136,7 +195,7 @@
                 <span class="section-label">Экосистема</span>
                 <h2 class="section-title">PROGRESS:<br><span class="gradient-text">закрытый цикл обучения</span></h2>
                 <p class="section-subtitle">
-                    Два взаимосвязанных бота, которые превращают хаотичное обучение<br>
+                    Два взаимосвязанных бота, которые превращают хаотичное обучение
                     в структурированный процесс с измеримыми результатами.
                 </p>
             </div>
@@ -204,7 +263,7 @@
                 <span class="section-label">PROGRESS+</span>
                 <h2 class="section-title">Найдите репетитора<br><span class="gradient-text">на языке данных</span></h2>
                 <p class="section-subtitle">
-                    Мы заменили субъективные отзывы на объективные метрики.<br>
+                    Мы заменили субъективные отзывы на объективные метрики.
                     Алгоритм анализирует реальную эффективность, а не количество лет в резюме.
                 </p>
             </div>
@@ -342,7 +401,7 @@
                 <span class="section-label">PROGRESS Bot</span>
                 <h2 class="section-title">Верните себе<br><span class="gradient-text">2 часа ежедневно</span></h2>
                 <p class="section-subtitle">
-                    Полноценная система управления обучением в Telegram.<br>
+                    Полноценная система управления обучением в Telegram.
                     Структурируйте материалы, задания и аналитику в одном месте.
                 </p>
             </div>
@@ -436,6 +495,27 @@
                             </div>
                         </div>
                     </div>
+                    
+                    <!-- Добавляем пустую панель для родителей (можно заполнить позже) -->
+                    <div class="tab-pane" id="parents">
+                        <div class="features-grid">
+                            <div class="feature-card glass-hover">
+                                <div class="feature-icon">
+                                    <i class="fa-solid fa-eye"></i>
+                                </div>
+                                <h3>Прозрачность процесса</h3>
+                                <p>Видите прогресс и успеваемость ребенка в реальном времени</p>
+                            </div>
+                            
+                            <div class="feature-card glass-hover">
+                                <div class="feature-icon">
+                                    <i class="fa-solid fa-file-invoice"></i>
+                                </div>
+                                <h3>Автоматические отчеты</h3>
+                                <p>Регулярные отчеты об успехах и рекомендациях</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             
@@ -474,7 +554,7 @@
             <div class="section-header">
                 <h2 class="section-title">Глубокая аналитика,<br><span class="gradient-text">которая говорит на языке фактов</span></h2>
                 <p class="section-subtitle">
-                    Покажите родителям не эмоции, а данные.<br>
+                    Покажите родителям не эмоции, а данные.
                     Наша система автоматически собирает и визуализирует ключевые метрики.
                 </p>
             </div>
@@ -582,7 +662,7 @@
             <div class="section-header">
                 <h2 class="section-title">Измеримые <span class="gradient-text">результаты</span></h2>
                 <p class="section-subtitle">
-                    На основе анализа 90+ источников и глубинного изучения рынка<br>
+                    На основе анализа 90+ источников и глубинного изучения рынка
                     мы спрогнозировали реальную экономику проекта.
                 </p>
             </div>
@@ -684,7 +764,7 @@
             <div class="footer-content">
                 <div class="footer-col">
                     <h4>Progress</h4>
-                    <p style="color: var(--text-secondary); margin-bottom: 20px;">
+                    <p style="color: rgba(255, 255, 255, 0.7); margin-bottom: 20px;">
                         Интеллектуальная экосистема для репетиторов и учеников
                     </p>
                     <div class="tech-stack">
@@ -818,6 +898,23 @@
             // Наблюдаем за карточками и секциями
             document.querySelectorAll('.ecosystem-card, .feature-card, .result-card').forEach(card => {
                 observer.observe(card);
+            });
+            
+            // Обработчик для изменения размера окна
+            let resizeTimeout;
+            window.addEventListener('resize', function() {
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(function() {
+                    // Перезагружаем CSS при изменении размера окна
+                    // (для случаев, когда пользователь меняет ориентацию устройства)
+                    if (window.innerWidth <= 768 && document.querySelector('link[href="style.css"]')) {
+                        // Если перешли на мобильный размер, но загружен десктопный CSS
+                        var mobileLink = document.createElement('link');
+                        mobileLink.rel = 'stylesheet';
+                        mobileLink.href = 'mobile.css';
+                        document.head.appendChild(mobileLink);
+                    }
+                }, 250);
             });
         });
     </script>

@@ -884,19 +884,6 @@
                 if (tabId) {
                     switchTab(tabId);
                     
-                    // Для мобильных устройств скроллим к началу табов
-                    if (window.innerWidth <= 768) {
-                        const tabsSection = this.closest('.tabs');
-                        if (tabsSection) {
-                            const headerHeight = document.querySelector('nav').offsetHeight;
-                            const tabsPosition = tabsSection.offsetTop - headerHeight - 20;
-                            
-                            window.scrollTo({
-                                top: tabsPosition,
-                                behavior: 'smooth'
-                            });
-                        }
-                    }
                 }
             });
             

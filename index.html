@@ -840,83 +840,176 @@
 
     <!-- Скрипт для табов и плавной прокрутки -->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Табы
-            const tabButtons = document.querySelectorAll('.tab-button');
-            const tabPanes = document.querySelectorAll('.tab-pane');
-            
-            tabButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const tabId = button.getAttribute('data-tab');
-                    
-                    // Убираем активный класс у всех кнопок и панелей
-                    tabButtons.forEach(btn => btn.classList.remove('active'));
-                    tabPanes.forEach(pane => pane.classList.remove('active'));
-                    
-                    // Добавляем активный класс текущей кнопке и панели
-                    button.classList.add('active');
-                    const activePane = document.getElementById(tabId);
-                    if (activePane) activePane.classList.add('active');
-                });
+    document.addEventListener('DOMContentLoaded', function() {
+        // ТАБЫ - улучшенная версия для мобильных
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabPanes = document.querySelectorAll('.tab-pane');
+        
+        // Функция для переключения табов
+        function switchTab(tabId) {
+            // Убираем активный класс у всех кнопок и панелей
+            tabButtons.forEach(btn => {
+                btn.classList.remove('active');
+                btn.setAttribute('aria-selected', 'false');
             });
             
-            // Плавная прокрутка для якорных ссылок
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
+            tabPanes.forEach(pane => {
+                pane.classList.remove('active');
+                pane.setAttribute('aria-hidden', 'true');
+            });
+            
+            // Добавляем активный класс текущей кнопке и панели
+            const activeButton = document.querySelector(`.tab-button[data-tab="${tabId}"]`);
+            const activePane = document.getElementById(tabId);
+            
+            if (activeButton) {
+                activeButton.classList.add('active');
+                activeButton.setAttribute('aria-selected', 'true');
+            }
+            
+            if (activePane) {
+                // Небольшая задержка для плавной анимации
+                setTimeout(() => {
+                    activePane.classList.add('active');
+                    activePane.setAttribute('aria-hidden', 'false');
+                }, 50);
+            }
+        }
+        
+        // Обработчики кликов для кнопок табов
+        tabButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                const tabId = this.getAttribute('data-tab');
+                if (tabId) {
+                    switchTab(tabId);
+                    
+                    // Для мобильных устройств скроллим к началу табов
+                    if (window.innerWidth <= 768) {
+                        const tabsSection = this.closest('.tabs');
+                        if (tabsSection) {
+                            const headerHeight = document.querySelector('nav').offsetHeight;
+                            const tabsPosition = tabsSection.offsetTop - headerHeight - 20;
+                            
+                            window.scrollTo({
+                                top: tabsPosition,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }
+                }
+            });
+            
+            // Добавляем обработчик для клавиатуры
+            button.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
-                    
-                    const targetId = this.getAttribute('href');
-                    if (targetId === '#') return;
-                    
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        const navHeight = document.querySelector('nav').offsetHeight;
-                        const targetPosition = targetElement.offsetTop - navHeight - 20;
-                        
-                        window.scrollTo({
-                            top: targetPosition,
-                            behavior: 'smooth'
-                        });
+                    const tabId = this.getAttribute('data-tab');
+                    if (tabId) {
+                        switchTab(tabId);
                     }
-                });
-            });
-            
-            // Анимация появления элементов при скролле
-            const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            };
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('animated');
+                }
+                
+                // Навигация стрелками
+                if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    const nextButton = this.nextElementSibling || tabButtons[0];
+                    if (nextButton) {
+                        const nextTabId = nextButton.getAttribute('data-tab');
+                        if (nextTabId) {
+                            switchTab(nextTabId);
+                            nextButton.focus();
+                        }
                     }
-                });
-            }, observerOptions);
-            
-            // Наблюдаем за карточками и секциями
-            document.querySelectorAll('.ecosystem-card, .feature-card, .result-card').forEach(card => {
-                observer.observe(card);
-            });
-            
-            // Обработчик для изменения размера окна
-            let resizeTimeout;
-            window.addEventListener('resize', function() {
-                clearTimeout(resizeTimeout);
-                resizeTimeout = setTimeout(function() {
-                    // Перезагружаем CSS при изменении размера окна
-                    // (для случаев, когда пользователь меняет ориентацию устройства)
-                    if (window.innerWidth <= 768 && document.querySelector('link[href="style.css"]')) {
-                        // Если перешли на мобильный размер, но загружен десктопный CSS
-                        var mobileLink = document.createElement('link');
-                        mobileLink.rel = 'stylesheet';
-                        mobileLink.href = 'mobile.css';
-                        document.head.appendChild(mobileLink);
+                }
+                
+                if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    const prevButton = this.previousElementSibling || tabButtons[tabButtons.length - 1];
+                    if (prevButton) {
+                        const prevTabId = prevButton.getAttribute('data-tab');
+                        if (prevTabId) {
+                            switchTab(prevTabId);
+                            prevButton.focus();
+                        }
                     }
-                }, 250);
+                }
             });
         });
-    </script>
+        
+        // Инициализация - показываем первый таб
+        const firstTab = document.querySelector('.tab-button.active');
+        if (firstTab) {
+            const firstTabId = firstTab.getAttribute('data-tab');
+            if (firstTabId) {
+                switchTab(firstTabId);
+            }
+        } else if (tabButtons.length > 0) {
+            // Если нет активного таба, активируем первый
+            const firstButton = tabButtons[0];
+            const firstTabId = firstButton.getAttribute('data-tab');
+            if (firstTabId) {
+                firstButton.classList.add('active');
+                switchTab(firstTabId);
+            }
+        }
+        
+        // Обработчик изменения размера окна (перезагрузка табов при переходе с мобильного на десктоп)
+        let resizeTimer;
+        window.addEventListener('resize', function() {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(function() {
+                // Переключаемся на активный таб снова для пересчета стилей
+                const activeTabButton = document.querySelector('.tab-button.active');
+                if (activeTabButton) {
+                    const activeTabId = activeTabButton.getAttribute('data-tab');
+                    if (activeTabId) {
+                        switchTab(activeTabId);
+                    }
+                }
+            }, 250);
+        });
+        
+        // Плавная прокрутка для якорных ссылок
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    const navHeight = document.querySelector('nav').offsetHeight;
+                    const targetPosition = targetElement.offsetTop - navHeight - 20;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Анимация появления элементов при скролле
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animated');
+                }
+            });
+        }, observerOptions);
+        
+        // Наблюдаем за карточками и секциями
+        document.querySelectorAll('.ecosystem-card, .feature-card, .result-card, .problem-card').forEach(card => {
+            observer.observe(card);
+        });
+    });
+</script>
 </body>
 </html>

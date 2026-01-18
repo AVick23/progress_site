@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>История Progress — Создано репетитором для репетиторов</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>">
+    
+    <style>
+        /* Базовые стили и переменные */
+        :root {
+            --bg-primary: #000000;
+            --bg-secondary: #0a0a0a;
+            --bg-tertiary: #111111;
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --text-tertiary: rgba(255, 255, 255, 0.5);
+            --accent-primary: #8b5cf6;
+            --accent-secondary: #6366f1;
+            --accent-tertiary: #a855f7;
+            --accent-green: #10b981;
+            --accent-blue: #3b82f6;
+            --accent-orange: #f59e0b;
+            --accent-red: #ef4444;
+            --gradient-primary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
+            --gradient-secondary: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
+            --gradient-green: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+            --gradient-blue: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
+            --gradient-orange: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --shadow-color: rgba(99, 102, 241, 0.1);
+            --shadow-color-strong: rgba(99, 102, 241, 0.2);
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 2rem;
+            --spacing-lg: 4rem;
+            --spacing-xl: 6rem;
+            --border-radius: 16px;
+            --border-radius-sm: 8px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-sm);
+        }
+
+        /* Типография */
+        h1 {
+            font-size: 4.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: var(--spacing-md);
+            letter-spacing: -0.02em;
+        }
+
+        h2 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: var(--spacing-md);
+            letter-spacing: -0.01em;
+        }
+
+        h3 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        h4 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        h5 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .gradient-text {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 30px var(--shadow-color-strong);
+        }
+
+        /* Секции */
+        section {
+            padding: var(--spacing-xl) 0;
+            position: relative;
+        }
+
+        .section-alt {
+            background-color: var(--bg-secondary);
+            position: relative;
+        }
+
+        .section-alt::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-primary), transparent);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: var(--spacing-lg);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .section-title {
+            font-size: 3.5rem;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .section-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Навигация */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo i {
+            color: var(--accent-primary);
+            font-size: 1.75rem;
+        }
+
+        .logo span {
+            color: var(--accent-primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-links a.active {
+            color: var(--text-primary);
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--gradient-primary);
+            border-radius: 2px;
+        }
+
+        .btn-nav {
+            padding: 0.75rem 1.5rem;
+            background: var(--gradient-primary);
+            border-radius: var(--border-radius);
+            color: white !important;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 20px var(--shadow-color);
+        }
+
+        .btn-nav:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px var(--shadow-color);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .hamburger span {
+            width: 24px;
+            height: 2px;
+            background: var(--text-primary);
+            transition: var(--transition);
+            border-radius: 2px;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+
+        /* Герой-секция */
+        .hero {
+            padding-top: 8rem;
+            padding-bottom: var(--spacing-xl);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            right: -50%;
+            bottom: -50%;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(99, 102, 241, 0.15), transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(168, 85, 247, 0.1), transparent 50%);
+            z-index: -1;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            margin-bottom: var(--spacing-lg);
+            font-size: 0.875rem;
+            font-weight: 600;
+            border-radius: 100px;
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: 0 4px 20px var(--shadow-color);
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            max-width: 800px;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        /* Карточки */
+        .glass-hover {
+            background: var(--glass-bg);
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius);
+            padding: var(--spacing-md);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-hover::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-primary), transparent);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .glass-hover:hover {
+            transform: translateY(-4px);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .glass-hover:hover::before {
+            opacity: 1;
+        }
+
+        /* История */
+        .story-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--spacing-md);
+            margin: var(--spacing-md) 0;
+        }
+
+        .story-card {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-lg);
+        }
+
+        .story-icon {
+            width: 64px;
+            height: 64px;
+            background: var(--gradient-primary);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .story-quote {
+            font-style: italic;
+            color: var(--text-primary);
+            padding: var(--spacing-md);
+            border-left: 3px solid var(--accent-primary);
+            margin: var(--spacing-md) 0;
+            background: rgba(139, 92, 246, 0.05);
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+
+        /* Фотография основателя */
+        .founder-section {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-lg);
+            margin: var(--spacing-lg) 0;
+        }
+
+        .founder-photo {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--accent-primary);
+            box-shadow: 0 0 40px var(--shadow-color-strong);
+        }
+
+        .founder-info {
+            flex: 1;
+        }
+
+        /* Мотивация */
+        .motivation-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--spacing-md);
+        }
+
+        .motivation-card {
+            text-align: center;
+            padding: var(--spacing-lg) var(--spacing-md);
+        }
+
+        .motivation-icon {
+            width: 64px;
+            height: 64px;
+            background: var(--gradient-primary);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin: 0 auto var(--spacing-sm);
+        }
+
+        /* Фокус на проблемах */
+        .problem-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--spacing-md);
+        }
+
+        .problem-card {
+            padding: var(--spacing-md);
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+
+        .problem-card:nth-child(1) {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), transparent);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .problem-card:nth-child(2) {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), transparent);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+        }
+
+        .problem-card:nth-child(3) {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), transparent);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .problem-card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Ценности */
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--spacing-md);
+        }
+
+        .value-card {
+            text-align: center;
+            padding: var(--spacing-lg) var(--spacing-md);
+        }
+
+        .value-icon {
+            width: 64px;
+            height: 64px;
+            background: var(--gradient-primary);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin: 0 auto var(--spacing-sm);
+        }
+
+        /* CTA */
+        .final-cta {
+            padding: var(--spacing-xl) 0;
+        }
+
+        .cta-content {
+            text-align: center;
+            padding: var(--spacing-xl) var(--spacing-lg);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta-content h2 {
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: var(--spacing-sm);
+            justify-content: center;
+            margin: var(--spacing-lg) 0;
+        }
+
+        /* Кнопки */
+        .btn-main, .btn-secondary {
+            padding: 1.25rem 2rem;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            display: inline-flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-main {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: 0 8px 30px var(--shadow-color);
+        }
+
+        .btn-main:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 40px var(--shadow-color-strong);
+        }
+
+        .btn-secondary {
+            background: var(--glass-bg);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-4px);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Футер */
+        footer {
+            background: var(--bg-tertiary);
+            padding: var(--spacing-xl) 0 var(--spacing-md);
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .footer-col h4 {
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-col ul li a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--text-primary);
+        }
+
+        .footer-contact {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .contact-item i {
+            color: var(--accent-primary);
+        }
+
+        .contact-item a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .contact-item a:hover {
+            color: var(--text-primary);
+        }
+
+        .copyright {
+            text-align: center;
+            color: var(--text-tertiary);
+            font-size: 0.875rem;
+            padding-top: var(--spacing-md);
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* Адаптивность */
+        @media (max-width: 1024px) {
+            h1 { font-size: 3.5rem; }
+            h2 { font-size: 2.75rem; }
+            .section-title { font-size: 2.75rem; }
+            
+            .story-grid,
+            .motivation-grid,
+            .problem-cards,
+            .values-grid,
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .founder-section {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.75rem; }
+            h2 { font-size: 2.25rem; }
+            h3 { font-size: 1.75rem; }
+            .section-title { font-size: 2.25rem; }
+            
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: rgba(10, 10, 10, 0.95);
+                backdrop-filter: blur(10px);
+                padding: var(--spacing-md);
+                flex-direction: column;
+                border-top: 1px solid var(--border-color);
+                display: none;
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .hamburger {
+                display: flex;
+            }
+            
+            .btn-main, .btn-secondary {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 2.25rem; }
+            h2 { font-size: 1.875rem; }
+            .section-title { font-size: 1.875rem; }
+            
+            section {
+                padding: var(--spacing-lg) 0;
+            }
+            
+            .hero {
+                padding-top: 6rem;
+            }
+            
+            .founder-photo {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .cta-content {
+                padding: var(--spacing-md);
+            }
+        }
+
+        /* Скроллбар */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-primary);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-secondary);
+        }
+
+        /* Анимации */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <div class="logo">
+                <i class="fa-solid fa-rocket"></i> Progress<span>.</span>
+            </div>
+            
+            <button class="hamburger" aria-label="Меню">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <div class="nav-links">
+                <a href="index.html">Главная</a>
+                <a href="progress.html">PROGRESS</a>
+                <a href="progress-plus.html">PROGRESS+</a>
+                <a href="history.html" class="active">История</a>
+                <a href="contacts.html">Контакты</a>
+                <a href="https://t.me/avickprogress_bot" class="btn-nav" target="_blank">
+                    <i class="fa-brands fa-telegram"></i> Начать
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-badge glass-hover">
+                <i class="fa-solid fa-heart"></i> Личная история
+            </div>
+            
+            <h1>Меня зовут Алексей<br>Я — репетитор по информатике<br>И я создал Progress</h1>
+            
+            <p class="hero-subtitle">
+                Не потому что хотел стать предпринимателем. Не ради денег или славы.
+                Просто однажды я понял, что хочу быть учителем, а не администратором.
+                И оказалось, что я в этом не один.
+            </p>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Как всё начиналось</h2>
+                <p class="section-subtitle">
+                    Обычный понедельник, обычный репетитор. Но именно тогда я понял, что что-то идёт не так
+                </p>
+            </div>
+
+            <div class="story-grid">
+                <div class="story-card glass-hover">
+                    <div class="story-icon">
+                        <i class="fa-solid fa-laptop-code"></i>
+                    </div>
+                    <h3>Я люблю преподавать</h3>
+                    <p>Информатика — это магия. Когда видишь, как у ученика загораются глаза от того, что он только что написал свой первый код, или решил сложную алгоритмическую задачу — это бесценно.</p>
+                    <p>Я мог бы часами объяснять рекурсию, объектно-ориентированное программирование, работу с базами данных. Это моя страсть.</p>
+                </div>
+
+                <div class="story-card glass-hover">
+                    <div class="story-icon">
+                        <i class="fa-solid fa-clock"></i>
+                    </div>
+                    <h3>Но вместо этого...</h3>
+                    <p>Я писал десятки одинаковых сообщений: "Не забудь сделать домашку", "Когда сможешь позаниматься?", "Скиньте, пожалуйста, материалы с прошлого урока".</p>
+                    <p>Я искал файлы в десятках чатов с учениками. Я пытался вспомнить, кому что задал и кто что сдал. Я был не учителем, а секретарём самому себе.</p>
+                </div>
+            </div>
+
+            <div class="story-quote">
+                "В один вечер я посчитал: из 8 часов работы, 5 ушло не на преподавание. 
+                Я не учил детей программировать — я управлял хаосом."
+            </div>
+        </div>
+    </section>
+
+    <section class="section-alt">
+        <div class="container">
+            <div class="founder-section">
+                <div>
+                    <!-- Замените на реальную фотографию -->
+                    <div class="founder-photo" style="background: linear-gradient(135deg, #6366f1, #8b5cf6); display: flex; align-items: center; justify-content: center; font-size: 4rem;">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                </div>
+                <div class="founder-info">
+                    <h2>Я понял — я не один</h2>
+                    <p>Начал общаться с другими репетиторами. Математики, физики, учителя английского, репетиторы по русскому языку.</p>
+                    <p><strong>И у всех одна и та же история.</strong></p>
+                    <p>Учитель истории тратит больше времени на то, чтобы собрать эссе учеников из разных мессенджеров, чем на их проверку.</p>
+                    <p>Репетитор по английскому ведёт пять таблиц Excel, чтобы не забыть, кто что должен сделать.</p>
+                    <p>Учитель математики создаёт папки в облаке, которые через месяц превращаются в цифровой хаос.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Проблема, которую видят только репетиторы</h2>
+                <p class="section-subtitle">
+                    То, о чём не пишут в учебниках по педагогике
+                </p>
+            </div>
+
+            <div class="problem-cards">
+                <div class="problem-card">
+                    <h3><i class="fa-solid fa-comments"></i> Фрагментация</h3>
+                    <p>У каждого ученика — свой любимый мессенджер. WhatsApp для родителей, Telegram для заданий, Viber для срочных вопросов. Задания теряются, файлы забываются, важные сообщения тонут в сотнях чатов.</p>
+                </div>
+
+                <div class="problem-card">
+                    <h3><i class="fa-solid fa-repeat"></i> Повторяющаяся рутина</h3>
+                    <p>Одно и то же: "Напомни сделать домашку", "Когда следующее занятие?", "Скиньте материалы ещё раз". Это как работать на конвейере — каждый день одни и те же действия, которые не имеют отношения к преподаванию.</p>
+                </div>
+
+                <div class="problem-card">
+                    <h3><i class="fa-solid fa-chart-bar"></i> Невидимый прогресс</h3>
+                    <p>Ученики не видят своего роста. Родители не понимают, за что платят. А ты как репетитор не можешь показать результаты системно — только на словах: "Ваш сын стал лучше решать задачи".</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-alt">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Момент истины</h2>
+                <p class="section-subtitle">
+                    Когда я понял, что должен что-то изменить
+                </p>
+            </div>
+
+            <div class="story-grid">
+                <div class="story-card glass-hover">
+                    <div class="story-icon">
+                        <i class="fa-solid fa-lightbulb"></i>
+                    </div>
+                    <h3>Первая версия для себя</h3>
+                    <p>Как репетитор по информатике, я написал себе простой скрипт на Python. Он помогал мне отслеживать задания учеников и отправлять напоминания. Это был мой личный инструмент.</p>
+                    <p>Первые две недели я просто наслаждался: на администрирование уходило не 5 часов, а 30 минут в день.</p>
+                </div>
+
+                <div class="story-card glass-hover">
+                    <div class="story-icon">
+                        <i class="fa-solid fa-share-alt"></i>
+                    </div>
+                    <h3>Показал коллегам</h3>
+                    <p>Дал попробовать своему другу — репетитору по математике. Потом — учительнице английского. Потом — ещё нескольким преподавателям.</p>
+                    <p>Их реакция была одинаковой: "Боже, как мне это было нужно!", "Ты спас мне жизнь!", "Я столько лет об этом мечтал!"</p>
+                </div>
+            </div>
+
+            <div class="story-quote">
+                "Именно тогда я понял — это не мой личный инструмент. Это решение проблемы тысяч репетиторов, которые, как и я, хотят просто учить."
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Так родился Progress</h2>
+                <p class="section-subtitle">
+                    Проект, созданный репетитором для репетиторов
+                </p>
+            </div>
+
+            <div class="motivation-grid">
+                <div class="motivation-card glass-hover">
+                    <div class="motivation-icon">
+                        <i class="fa-solid fa-handshake"></i>
+                    </div>
+                    <h3>Не для денег</h3>
+                    <p>Я создал Progress не чтобы разбогатеть. Я создал его потому, что понял: я такой не один. Тысячи репетиторов каждый день тратят свои лучшие часы не на преподавание.</p>
+                </div>
+
+                <div class="motivation-card glass-hover">
+                    <div class="motivation-icon">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                    <h3>Для сообщества</h3>
+                    <p>Progress — это наш общий инструмент. Созданный изнутри системы, понимающий реальные боли репетиторов. Не очередной "стартап от бизнесмена", а решение от практика.</p>
+                </div>
+
+                <div class="motivation-card glass-hover">
+                    <div class="motivation-icon">
+                        <i class="fa-solid fa-gift"></i>
+                    </div>
+                    <h3>Бесплатно для всех</h3>
+                    <p>Я решил сделать Progress полностью бесплатным для первых пользователей. Потому что это не продукт — это мой вклад в сообщество. Это то, что я хотел бы получить сам, когда только начинал.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-alt">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Моя философия</h2>
+                <p class="section-subtitle">
+                    Принципы, на которых построен Progress
+                </p>
+            </div>
+
+            <div class="values-grid">
+                <div class="value-card glass-hover">
+                    <div class="value-icon">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                    </div>
+                    <h3>Учитель должен учить</h3>
+                    <p>Репетитор — это не администратор, не секретарь, не менеджер проектов. Репетитор — это учитель. Его время должно быть посвящено преподаванию, а не бумажной работе.</p>
+                </div>
+
+                <div class="value-card glass-hover">
+                    <div class="value-icon">
+                        <i class="fa-solid fa-eye"></i>
+                    </div>
+                    <h3>Прогресс должен быть видимым</h3>
+                    <p>Ученик должен видеть свои успехи. Родитель — понимать, за что платит. Учитель — знать, где нужна помощь. Обучение без обратной связи — это стрельба по закрытым глазам.</p>
+                </div>
+
+                <div class="value-card glass-hover">
+                    <div class="value-icon">
+                        <i class="fa-solid fa-comments"></i>
+                    </div>
+                    <h3>Простота прежде всего</h3>
+                    <p>У репетиторов нет времени осваивать сложные системы. Progress работает там, где мы и так проводим время — в Telegram. Никаких новых приложений, паролей, обучений.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Progress сегодня</h2>
+                <p class="section-subtitle">
+                    То, что начиналось как личный скрипт, стало экосистемой
+                </p>
+            </div>
+
+            <div class="story-grid">
+                <div class="story-card glass-hover">
+                    <div class="story-icon" style="background: linear-gradient(135deg, #6366f1, #8b5cf6);">
+                        <i class="fa-solid fa-robot"></i>
+                    </div>
+                    <h3>PROGRESS Bot</h3>
+                    <p>Для репетиторов. Всё, что я хотел для себя: управление учениками через токены, конструктор курсов с папками, автоматические напоминания, проверка заданий прямо в чате, аналитика прогресса.</p>
+                    <p>То, что вернуло мне мои 5 часов в день.</p>
+                </div>
+
+                <div class="story-card glass-hover">
+                    <div class="story-icon" style="background: linear-gradient(135deg, #8b5cf6, #a855f7);">
+                        <i class="fa-solid fa-magnifying-glass-chart"></i>
+                    </div>
+                    <h3>PROGRESS+</h3>
+                    <p>Для учеников и родителей. Потому что я понял ещё одну проблему: как ученикам найти хорошего репетитора? Не по красивой анкете, а по реальным результатам.</p>
+                    <p>Объективные рейтинги на основе данных, а не отзывов. То, чего не хватало мне как ученику когда-то.</p>
+                </div>
+            </div>
+
+            <div class="story-quote">
+                "Progress — это не просто два бота. Это попытка исправить систему, которая заставляет хороших учителей быть плохими администраторами."
+            </div>
+        </div>
+    </section>
+
+    <section class="final-cta">
+        <div class="container">
+            <div class="cta-content glass-hover">
+                <h2>Я не прошу вас мне верить</h2>
+                <p>Я просто предлагаю попробовать. Без регистраций, без паролей, без обязательств.</p>
+                <p>Просто зайдите в Telegram и посмотрите, как Progress может изменить вашу работу. Так же, как он изменил мою.</p>
+                
+                <div class="cta-buttons">
+                    <a href="https://t.me/avickprogress_bot" class="btn-main" target="_blank">
+                        <i class="fa-brands fa-telegram"></i> PROGRESS для репетиторов
+                    </a>
+                    <a href="https://t.me/avickprogressplusBOT" class="btn-secondary" target="_blank">
+                        <i class="fa-brands fa-telegram"></i> PROGRESS+ для учеников
+                    </a>
+                </div>
+                
+                <div style="margin-top: 30px; font-size: 0.9rem; color: var(--text-tertiary);">
+                    <i class="fa-solid fa-circle-info"></i> Бесплатный доступ для первых пользователей. Создано репетитором для репетиторов.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <h4>История с душой</h4>
+                    <p style="color: rgba(255, 255, 255, 0.7); margin-bottom: 20px;">
+                        Проект, рождённый из личной боли и выросший в решение для сообщества
+                    </p>
+                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                        <span style="padding: 0.25rem 0.75rem; background: rgba(255, 255, 255, 0.1); border-radius: 100px; font-size: 0.75rem; font-weight: 500;">
+                            Создано репетитором
+                        </span>
+                        <span style="padding: 0.25rem 0.75rem; background: rgba(255, 255, 255, 0.1); border-radius: 100px; font-size: 0.75rem; font-weight: 500;">
+                            Для сообщества
+                        </span>
+                        <span style="padding: 0.25rem 0.75rem; background: rgba(255, 255, 255, 0.1); border-radius: 100px; font-size: 0.75rem; font-weight: 500;">
+                            Бесплатно
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Навигация</h4>
+                    <ul>
+                        <li><a href="index.html">Главная</a></li>
+                        <li><a href="progress.html">PROGRESS Bot</a></li>
+                        <li><a href="progress-plus.html">PROGRESS+</a></li>
+                        <li><a href="history.html">История</a></li>
+                        <li><a href="contacts.html">Контакты</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Для репетиторов</h4>
+                    <ul>
+                        <li><a href="progress.html#features">Функции</a></li>
+                        <li><a href="progress.html#how-it-works">Как это работает</a></li>
+                        <li><a href="progress.html#benefits">Преимущества</a></li>
+                        <li><a href="https://t.me/avickprogress_bot" target="_blank">Начать использовать</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Связь со мной</h4>
+                    <div class="footer-contact">
+                        <div class="contact-item">
+                            <i class="fa-brands fa-telegram"></i>
+                            <span><a href="https://t.me/avickprogress_bot" target="_blank">PROGRESS для репетиторов</a></span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fa-brands fa-telegram"></i>
+                            <span><a href="https://t.me/avickprogressplusBOT" target="_blank">PROGRESS+ для учеников</a></span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fa-solid fa-envelope"></i>
+                            <span>alexey@progress.education</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fa-solid fa-heart"></i>
+                            <span>Создано с любовью к преподаванию</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2024 Progress. История одного репетитора, который решил изменить ситуацию для всех.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPage = window.location.pathname.split('/').pop();
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                if (link.getAttribute('href') === currentPage) {
+                    link.classList.add('active');
+                }
+            });
+
+            // Мобильное меню
+            const hamburger = document.querySelector('.hamburger');
+            const navLinks = document.querySelector('.nav-links');
+
+            if (hamburger && navLinks) {
+                hamburger.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    navLinks.classList.toggle('active');
+                });
+
+                navLinks.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        hamburger.classList.remove('active');
+                        navLinks.classList.remove('active');
+                    });
+                });
+
+                document.addEventListener('click', (event) => {
+                    if (!navLinks.contains(event.target) && !hamburger.contains(event.target)) {
+                        hamburger.classList.remove('active');
+                        navLinks.classList.remove('active');
+                    }
+                });
+            }
+
+            // Плавное появление элементов при скролле
+            const animatedElements = document.querySelectorAll('.story-card, .motivation-card, .value-card, .problem-card');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            animatedElements.forEach(item => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(20px)';
+                item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                observer.observe(item);
+            });
+        });
+    </script>
+</body>
+</html>

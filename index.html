@@ -1,1430 +1,1789 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Прогресс — Интеллектуальная экосистема для репетиторов и учеников</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Прогресс — Интеллектуальная экосистема для репетиторов и учеников</title>
+  <meta name="description" content="Система управления обучением для репетиторов. Автоматизация, аналитика, организация — всё в Telegram.">
+  <meta name="keywords" content="репетитор, обучение, Telegram бот, прогресс, образование, автоматизация">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>">
+  
+  <style>
+    /* ============================================
+       APPLE-STYLE DESIGN SYSTEM
+       С боковой навигацией (Sidebar)
+       ============================================ */
+
+    /* ============================================
+       1. ПЕРЕМЕННЫЕ - ТЕМНАЯ ТЕМА
+       ============================================ */
+    :root {
+      --bg-primary: #000000;
+      --bg-secondary: #0a0a0a;
+      --bg-tertiary: #111111;
+      --bg-card: #1c1c1e;
+      --bg-elevated: #2c2c2e;
+      
+      --text-primary: #ffffff;
+      --text-secondary: rgba(255, 255, 255, 0.7);
+      --text-tertiary: rgba(255, 255, 255, 0.5);
+      --text-disabled: rgba(255, 255, 255, 0.3);
+      
+      --accent-primary: #0a84ff;
+      --accent-primary-hover: #409cff;
+      --accent-secondary: #5e5ce6;
+      --accent-tertiary: #bf5af2;
+      --accent-green: #30d158;
+      --accent-orange: #ff9f0a;
+      
+      --gradient-primary: linear-gradient(135deg, #0a84ff 0%, #5e5ce6 50%, #bf5af2 100%);
+      --gradient-glow: linear-gradient(135deg, rgba(10, 132, 255, 0.3), rgba(94, 92, 230, 0.3));
+      
+      --border-primary: rgba(255, 255, 255, 0.15);
+      --border-secondary: rgba(255, 255, 255, 0.1);
+      --border-tertiary: rgba(255, 255, 255, 0.05);
+      
+      --shadow-1: 0 2px 8px rgba(0, 0, 0, 0.3);
+      --shadow-2: 0 4px 16px rgba(0, 0, 0, 0.4);
+      --shadow-3: 0 8px 32px rgba(0, 0, 0, 0.5);
+      --shadow-glow: 0 8px 40px rgba(10, 132, 255, 0.25);
+      
+      --glass-bg: rgba(28, 28, 30, 0.8);
+      --glass-bg-light: rgba(255, 255, 255, 0.05);
+      --overlay-bg: rgba(0, 0, 0, 0.6);
+      
+      --text-xs: 12px;
+      --text-sm: 14px;
+      --text-base: 16px;
+      --text-lg: 18px;
+      --text-xl: 20px;
+      --text-2xl: 24px;
+      --text-3xl: 30px;
+      --text-4xl: 38px;
+      --text-5xl: 48px;
+      --text-6xl: 64px;
+      --text-7xl: 80px;
+      
+      --font-light: 300;
+      --font-regular: 400;
+      --font-medium: 500;
+      --font-semibold: 600;
+      --font-bold: 700;
+      --font-black: 900;
+      
+      --leading-tight: 1.2;
+      --leading-normal: 1.5;
+      --leading-loose: 1.75;
+      
+      --tracking-tight: -0.02em;
+      
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-8: 32px;
+      --space-10: 40px;
+      --space-12: 48px;
+      --space-16: 64px;
+      --space-20: 80px;
+      --space-24: 96px;
+      
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 20px;
+      --radius-2xl: 24px;
+      --radius-full: 9999px;
+      
+      --sidebar-width: 260px;
+      --container-max: 1200px;
+      
+      --duration-fast: 0.15s;
+      --duration-normal: 0.3s;
+      --ease-out: cubic-bezier(0, 0, 0.2, 1);
+    }
+
+    /* Светлая тема */
+    [data-theme="light"] {
+      --bg-primary: #ffffff;
+      --bg-secondary: #f5f5f7;
+      --bg-tertiary: #e5e5ea;
+      --bg-card: #ffffff;
+      --bg-elevated: #ffffff;
+      
+      --text-primary: #1d1d1f;
+      --text-secondary: rgba(0, 0, 0, 0.65);
+      --text-tertiary: rgba(0, 0, 0, 0.45);
+      
+      --accent-primary: #0071e3;
+      --accent-primary-hover: #0077ed;
+      
+      --border-primary: rgba(0, 0, 0, 0.12);
+      --border-secondary: rgba(0, 0, 0, 0.08);
+      
+      --shadow-1: 0 2px 8px rgba(0, 0, 0, 0.08);
+      --shadow-2: 0 4px 16px rgba(0, 0, 0, 0.12);
+      --shadow-3: 0 8px 32px rgba(0, 0, 0, 0.15);
+      --shadow-glow: 0 8px 40px rgba(0, 113, 227, 0.15);
+      
+      --glass-bg: rgba(255, 255, 255, 0.9);
+      --glass-bg-light: rgba(0, 0, 0, 0.03);
+      --overlay-bg: rgba(0, 0, 0, 0.4);
+    }
+
+    /* Сброс */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+      font-size: var(--text-base);
+      font-weight: var(--font-regular);
+      line-height: var(--leading-normal);
+      color: var(--text-primary);
+      background-color: var(--bg-primary);
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+    }
+
+    /* ============================================
+       2. БОКОВАЯ НАВИГАЦИЯ (SIDEBAR)
+       ============================================ */
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>">
-    
-    <style>
-        /* Базовые стили и переменные */
-        :root {
-            --bg-primary: #000000;
-            --bg-secondary: #0a0a0a;
-            --bg-tertiary: #111111;
-            --text-primary: #ffffff;
-            --text-secondary: rgba(255, 255, 255, 0.7);
-            --text-tertiary: rgba(255, 255, 255, 0.5);
-            --accent-primary: #8b5cf6;
-            --accent-secondary: #6366f1;
-            --accent-tertiary: #a855f7;
-            --gradient-primary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
-            --gradient-secondary: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
-            --border-color: rgba(255, 255, 255, 0.1);
-            --glass-bg: rgba(255, 255, 255, 0.05);
-            --shadow-color: rgba(99, 102, 241, 0.1);
-            --shadow-color-strong: rgba(99, 102, 241, 0.2);
-            --spacing-xs: 0.5rem;
-            --spacing-sm: 1rem;
-            --spacing-md: 2rem;
-            --spacing-lg: 4rem;
-            --spacing-xl: 6rem;
-            --border-radius: 16px;
-            --border-radius-sm: 8px;
-            --transition: all 0.3s ease;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 var(--spacing-sm);
-        }
-
-        /* Типография */
-        h1 {
-            font-size: 4.5rem;
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: var(--spacing-md);
-            letter-spacing: -0.02em;
-        }
-
-        h2 {
-            font-size: 3.5rem;
-            font-weight: 700;
-            line-height: 1.2;
-            margin-bottom: var(--spacing-md);
-            letter-spacing: -0.01em;
-        }
-
-        h3 {
-            font-size: 2rem;
-            font-weight: 600;
-            margin-bottom: var(--spacing-sm);
-        }
-
-        h4 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: var(--spacing-xs);
-        }
-
-        h5 {
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        p {
-            font-size: 1.125rem;
-            color: var(--text-secondary);
-            margin-bottom: var(--spacing-sm);
-        }
-
-        .gradient-text {
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0 0 30px var(--shadow-color-strong);
-        }
-
-        /* Секции */
-        section {
-            padding: var(--spacing-xl) 0;
-            position: relative;
-        }
-
-        .section-alt {
-            background-color: var(--bg-secondary);
-            position: relative;
-        }
-
-        .section-alt::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--accent-primary), transparent);
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: var(--spacing-lg);
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .section-title {
-            font-size: 3.5rem;
-            margin-bottom: var(--spacing-sm);
-        }
-
-        .section-subtitle {
-            font-size: 1.25rem;
-            color: var(--text-secondary);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .section-label {
-            display: inline-block;
-            padding: 0.5rem 1.5rem;
-            background: var(--gradient-primary);
-            border-radius: 100px;
-            font-size: 0.875rem;
-            font-weight: 600;
-            margin-bottom: var(--spacing-md);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        /* Навигация */
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: rgba(10, 10, 10, 0.8);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border-color);
-            z-index: 1000;
-            padding: 1rem 0;
-        }
-
-        nav .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .logo i {
-            color: var(--accent-primary);
-            font-size: 1.75rem;
-        }
-
-        .logo span {
-            color: var(--accent-primary);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .nav-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-weight: 500;
-            transition: var(--transition);
-            position: relative;
-        }
-
-        .nav-links a:hover {
-            color: var(--text-primary);
-        }
-
-        .nav-links a.active {
-            color: var(--text-primary);
-        }
-
-        .nav-links a.active::after {
-            content: '';
-            position: absolute;
-            bottom: -8px;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: var(--gradient-primary);
-            border-radius: 2px;
-        }
-
-        .btn-nav {
-            padding: 0.75rem 1.5rem;
-            background: var(--gradient-primary);
-            border-radius: var(--border-radius);
-            color: white !important;
-            text-decoration: none;
-            font-weight: 600;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            box-shadow: 0 4px 20px var(--shadow-color);
-        }
-
-        .btn-nav:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px var(--shadow-color);
-        }
-
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            gap: 4px;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            padding: 0.5rem;
-        }
-
-        .hamburger span {
-            width: 24px;
-            height: 2px;
-            background: var(--text-primary);
-            transition: var(--transition);
-            border-radius: 2px;
-        }
-
-        /* Герой-секция */
-        .hero {
-            padding-top: 8rem;
-            padding-bottom: var(--spacing-xl);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            right: -50%;
-            bottom: -50%;
-            background: radial-gradient(circle at 30% 30%, rgba(99, 102, 241, 0.1), transparent 70%);
-            z-index: -1;
-        }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1.5rem;
-            margin-bottom: var(--spacing-lg);
-            font-size: 0.875rem;
-            font-weight: 600;
-            border-radius: 100px;
-        }
-
-        .hero-subtitle {
-            font-size: 1.5rem;
-            max-width: 800px;
-            margin-bottom: var(--spacing-lg);
-        }
-
-        .hero-stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: var(--spacing-md);
-            margin-bottom: var(--spacing-lg);
-        }
-
-        .hero-stat {
-            text-align: center;
-        }
-
-        .hero-stat-number {
-            font-size: 3.5rem;
-            font-weight: 800;
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 0.5rem;
-            line-height: 1;
-        }
-
-        .hero-stat-text {
-            color: var(--text-secondary);
-            font-size: 0.875rem;
-            line-height: 1.4;
-        }
-
-        .hero-cta {
-            display: flex;
-            gap: var(--spacing-sm);
-            margin-bottom: var(--spacing-lg);
-        }
-
-        .hero-note {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            color: var(--text-tertiary);
-            font-size: 0.875rem;
-        }
-
-        .hero-note i {
-            color: var(--accent-primary);
-        }
-
-        /* Кнопки */
-        .btn-main, .btn-secondary {
-            padding: 1.25rem 2rem;
-            border-radius: var(--border-radius);
-            text-decoration: none;
-            font-weight: 600;
-            transition: var(--transition);
-            display: flex;
-            flex-direction: column;
-            gap: 0.25rem;
-            flex: 1;
-            max-width: 300px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn-main {
-            background: var(--gradient-primary);
-            color: white;
-            box-shadow: 0 8px 30px var(--shadow-color);
-        }
-
-        .btn-main:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 16px 40px var(--shadow-color-strong);
-        }
-
-        .btn-secondary {
-            background: var(--glass-bg);
-            color: var(--text-primary);
-            border: 1px solid var(--border-color);
-            backdrop-filter: blur(10px);
-        }
-
-        .btn-secondary:hover {
-            transform: translateY(-4px);
-            border-color: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
-        }
-
-        .btn-subtext {
-            font-size: 0.875rem;
-            opacity: 0.8;
-            font-weight: 400;
-        }
-
-        .btn-small {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--accent-primary);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.875rem;
-            transition: var(--transition);
-        }
-
-        .btn-small:hover {
-            gap: 0.75rem;
-        }
-
-        /* Карточки */
-        .glass-hover {
-            background: var(--glass-bg);
-            border: 1px solid var(--border-color);
-            backdrop-filter: blur(10px);
-            border-radius: var(--border-radius);
-            padding: var(--spacing-md);
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .glass-hover::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--accent-primary), transparent);
-            opacity: 0;
-            transition: var(--transition);
-        }
-
-        .glass-hover:hover {
-            transform: translateY(-4px);
-            border-color: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
-        }
-
-        .glass-hover:hover::before {
-            opacity: 1;
-        }
-
-        /* Сетки */
-        .problem-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: var(--spacing-md);
-        }
-
-        .problem-card {
-            display: flex;
-            flex-direction: column;
-            gap: var(--spacing-sm);
-        }
-
-        .problem-icon {
-            width: 48px;
-            height: 48px;
-            background: var(--gradient-primary);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .ecosystem-cards {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: var(--spacing-md);
-        }
-
-        .ecosystem-card {
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            gap: var(--spacing-sm);
-        }
-
-        .ecosystem-icon {
-            width: 64px;
-            height: 64px;
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            margin-bottom: var(--spacing-sm);
-        }
-
-        .ecosystem-subtitle {
-            color: var(--text-secondary);
-            font-size: 1rem;
-            font-weight: 500;
-            margin-bottom: var(--spacing-sm);
-        }
-
-        .ecosystem-audience {
-            display: flex;
-            gap: 0.5rem;
-            margin-top: auto;
-        }
-
-        .audience-badge {
-            padding: 0.25rem 0.75rem;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 100px;
-            font-size: 0.75rem;
-            font-weight: 500;
-        }
-
-        .story-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: var(--spacing-md);
-        }
-
-        .story-card {
-            display: flex;
-            flex-direction: column;
-            gap: var(--spacing-sm);
-            padding: var(--spacing-lg);
-        }
-
-        .story-icon {
-            width: 64px;
-            height: 64px;
-            background: var(--gradient-primary);
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            margin-bottom: var(--spacing-sm);
-        }
-
-        /* Табы */
-        .features-tabs {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            margin-bottom: var(--spacing-lg);
-        }
-
-        .tab-btn {
-            padding: 1rem 2rem;
-            background: transparent;
-            border: 1px solid var(--border-color);
-            border-radius: var(--border-radius);
-            color: var(--text-secondary);
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .tab-btn.active {
-            background: var(--gradient-primary);
-            color: white;
-            border-color: transparent;
-            box-shadow: 0 4px 20px var(--shadow-color);
-        }
-
-        .tab-btn:hover:not(.active) {
-            border-color: rgba(255, 255, 255, 0.2);
-            color: var(--text-primary);
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        .feature-list {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: var(--spacing-md);
-        }
-
-        .feature-item {
-            display: flex;
-            gap: var(--spacing-sm);
-            align-items: flex-start;
-        }
-
-        .feature-icon {
-            width: 40px;
-            height: 40px;
-            min-width: 40px;
-            background: var(--gradient-primary);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1rem;
-        }
-
-        /* Результаты */
-        .results-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: var(--spacing-md);
-        }
-
-        .result-card {
-            text-align: center;
-            padding: var(--spacing-lg) var(--spacing-md);
-        }
-
-        .result-icon {
-            width: 64px;
-            height: 64px;
-            background: var(--gradient-primary);
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            margin: 0 auto var(--spacing-sm);
-        }
-
-        /* CTA */
-        .final-cta {
-            padding: var(--spacing-xl) 0;
-        }
-
-        .cta-content {
-            text-align: center;
-            padding: var(--spacing-xl) var(--spacing-lg);
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .cta-content h2 {
-            margin-bottom: var(--spacing-sm);
-        }
-
-        .cta-features {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            margin: var(--spacing-lg) 0;
-            max-width: 500px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .cta-feature {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            color: var(--text-secondary);
-        }
-
-        .cta-feature i {
-            color: var(--accent-primary);
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: var(--spacing-sm);
-            justify-content: center;
-        }
-
-        /* Футер */
-        footer {
-            background: var(--bg-tertiary);
-            padding: var(--spacing-xl) 0 var(--spacing-md);
-            border-top: 1px solid var(--border-color);
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: var(--spacing-lg);
-            margin-bottom: var(--spacing-lg);
-        }
-
-        .footer-col h4 {
-            margin-bottom: var(--spacing-sm);
-        }
-
-        .footer-col ul {
-            list-style: none;
-        }
-
-        .footer-col ul li {
-            margin-bottom: 0.75rem;
-        }
-
-        .footer-col ul li a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: var(--transition);
-        }
-
-        .footer-col ul li a:hover {
-            color: var(--text-primary);
-        }
-
-        .tech-stack {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-        }
-
-        .tech-tag {
-            padding: 0.25rem 0.75rem;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 100px;
-            font-size: 0.75rem;
-            font-weight: 500;
-        }
-
-        .footer-contact {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            color: var(--text-secondary);
-        }
-
-        .contact-item i {
-            color: var(--accent-primary);
-        }
-
-        .contact-item a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: var(--transition);
-        }
-
-        .contact-item a:hover {
-            color: var(--text-primary);
-        }
-
-        .footer-bottom {
-            border-top: 1px solid var(--border-color);
-            padding-top: var(--spacing-md);
-            margin-bottom: var(--spacing-md);
-        }
-
-        .footer-links {
-            display: flex;
-            gap: var(--spacing-md);
-            justify-content: center;
-        }
-
-        .footer-links a {
-            color: var(--text-tertiary);
-            text-decoration: none;
-            font-size: 0.875rem;
-            transition: var(--transition);
-        }
-
-        .footer-links a:hover {
-            color: var(--text-secondary);
-        }
-
-        .copyright {
-            text-align: center;
-            color: var(--text-tertiary);
-            font-size: 0.875rem;
-            padding-top: var(--spacing-md);
-            border-top: 1px solid var(--border-color);
-        }
-
-        /* Адаптивность */
-        @media (max-width: 1024px) {
-            h1 { font-size: 3.5rem; }
-            h2 { font-size: 2.75rem; }
-            .section-title { font-size: 2.75rem; }
-            
-            .hero-stats,
-            .problem-grid,
-            .ecosystem-cards,
-            .story-grid,
-            .results-grid,
-            .feature-list,
-            .footer-content {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 768px) {
-            h1 { font-size: 2.75rem; }
-            h2 { font-size: 2.25rem; }
-            h3 { font-size: 1.75rem; }
-            .section-title { font-size: 2.25rem; }
-            
-            .nav-links {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: rgba(10, 10, 10, 0.95);
-                backdrop-filter: blur(10px);
-                padding: var(--spacing-md);
-                flex-direction: column;
-                border-top: 1px solid var(--border-color);
-            }
-            
-            .hamburger {
-                display: flex;
-            }
-            
-            .hero-cta {
-                flex-direction: column;
-            }
-            
-            .btn-main, .btn-secondary {
-                max-width: 100%;
-            }
-            
-            .cta-buttons {
-                flex-direction: column;
-            }
-        }
-
-        @media (max-width: 480px) {
-            h1 { font-size: 2.25rem; }
-            h2 { font-size: 1.875rem; }
-            .section-title { font-size: 1.875rem; }
-            
-            section {
-                padding: var(--spacing-lg) 0;
-            }
-            
-            .hero {
-                padding-top: 6rem;
-            }
-            
-            .hero-stat-number {
-                font-size: 2.5rem;
-            }
-            
-            .features-tabs {
-                flex-direction: column;
-            }
-        }
-
-        /* Анимации */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .glass-hover {
-            animation: fadeIn 0.6s ease-out;
-        }
-
-        /* Скроллбар */
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: var(--bg-secondary);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--accent-primary);
-            border-radius: 5px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--accent-secondary);
-        }
-    </style>
+    /* Overlay для мобильных */
+    .sidebar-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--overlay-bg);
+      z-index: 998;
+      opacity: 0;
+      transition: opacity var(--duration-normal) var(--ease-out);
+    }
+
+    .sidebar-overlay.show {
+      opacity: 1;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: var(--sidebar-width);
+      height: 100vh;
+      background-color: var(--bg-secondary);
+      border-right: 1px solid var(--border-secondary);
+      display: flex;
+      flex-direction: column;
+      position: sticky;
+      top: 0;
+      flex-shrink: 0;
+      z-index: 999;
+    }
+
+    .sidebar-header {
+      padding: var(--space-6);
+      border-bottom: 1px solid var(--border-secondary);
+    }
+
+    .sidebar-brand {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      font-size: var(--text-xl);
+      font-weight: var(--font-bold);
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+
+    .sidebar-brand .brand-icon {
+      font-size: var(--text-2xl);
+    }
+
+    .sidebar-brand .brand-dot {
+      color: var(--accent-primary);
+    }
+
+    .sidebar-nav {
+      flex: 1;
+      padding: var(--space-4);
+      overflow-y: auto;
+    }
+
+    .nav-section {
+      margin-bottom: var(--space-6);
+    }
+
+    .nav-section-title {
+      font-size: var(--text-xs);
+      font-weight: var(--font-semibold);
+      color: var(--text-tertiary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: var(--space-2) var(--space-3);
+      margin-bottom: var(--space-2);
+    }
+
+    .nav-links {
+      list-style: none;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-3) var(--space-4);
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-weight: var(--font-medium);
+      border-radius: var(--radius-md);
+      transition: all var(--duration-fast) var(--ease-out);
+      margin-bottom: var(--space-1);
+    }
+
+    .nav-link:hover {
+      color: var(--text-primary);
+      background-color: var(--glass-bg-light);
+    }
+
+    .nav-link.active {
+      color: var(--text-primary);
+      background: var(--gradient-primary);
+      box-shadow: var(--shadow-glow);
+    }
+
+    .nav-link-icon {
+      font-size: var(--text-lg);
+      width: 24px;
+      text-align: center;
+    }
+
+    .sidebar-footer {
+      padding: var(--space-4);
+      border-top: 1px solid var(--border-secondary);
+    }
+
+    .theme-toggle {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      width: 100%;
+      padding: var(--space-3) var(--space-4);
+      background: var(--glass-bg-light);
+      border: 1px solid var(--border-secondary);
+      border-radius: var(--radius-md);
+      color: var(--text-secondary);
+      font-weight: var(--font-medium);
+      font-family: inherit;
+      font-size: var(--text-base);
+      cursor: pointer;
+      transition: all var(--duration-fast) var(--ease-out);
+    }
+
+    .theme-toggle:hover {
+      color: var(--text-primary);
+      border-color: var(--border-primary);
+    }
+
+    /* ============================================
+       3. КНОПКА МЕНЮ (МОБИЛЬНАЯ)
+       ============================================ */
+    .menu-btn {
+      display: none;
+      position: fixed;
+      top: var(--space-4);
+      left: var(--space-4);
+      width: 48px;
+      height: 48px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-secondary);
+      border-radius: var(--radius-md);
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 1000;
+      color: var(--text-primary);
+      box-shadow: var(--shadow-2);
+      transition: all var(--duration-fast) var(--ease-out);
+    }
+
+    .menu-btn:hover {
+      background: var(--bg-elevated);
+      border-color: var(--border-primary);
+    }
+
+    /* ============================================
+       4. ОСНОВНОЙ КОНТЕНТ
+       ============================================ */
+    .main-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .container {
+      max-width: var(--container-max);
+      margin: 0 auto;
+      padding: 0 var(--space-6);
+    }
+
+    /* ============================================
+       5. ТИПОГРАФИКА
+       ============================================ */
+    h1, h2, h3, h4, h5, h6 {
+      font-weight: var(--font-bold);
+      line-height: var(--leading-tight);
+      letter-spacing: var(--tracking-tight);
+      color: var(--text-primary);
+    }
+
+    h1 { font-size: var(--text-6xl); font-weight: var(--font-black); }
+    h2 { font-size: var(--text-4xl); }
+    h3 { font-size: var(--text-2xl); }
+    h4 { font-size: var(--text-xl); }
+    h5 { font-size: var(--text-lg); font-weight: var(--font-semibold); }
+
+    p {
+      color: var(--text-secondary);
+      line-height: var(--leading-normal);
+    }
+
+    a {
+      color: var(--accent-primary);
+      text-decoration: none;
+      transition: color var(--duration-fast) var(--ease-out);
+    }
+
+    a:hover { color: var(--accent-primary-hover); }
+
+    strong, b {
+      font-weight: var(--font-semibold);
+      color: var(--text-primary);
+    }
+
+    .gradient-text {
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ============================================
+       6. КОМПОНЕНТЫ
+       ============================================ */
+
+    /* Кнопки */
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      padding: var(--space-3) var(--space-6);
+      border-radius: var(--radius-lg);
+      font-size: var(--text-base);
+      font-weight: var(--font-semibold);
+      font-family: inherit;
+      cursor: pointer;
+      transition: all var(--duration-normal) var(--ease-out);
+      border: none;
+      white-space: nowrap;
+    }
+
+    .button-primary {
+      background: var(--gradient-primary);
+      color: white;
+      box-shadow: var(--shadow-glow);
+    }
+
+    .button-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(10, 132, 255, 0.35);
+    }
+
+    .button-secondary {
+      background: var(--glass-bg-light);
+      color: var(--text-primary);
+      border: 1px solid var(--border-primary);
+    }
+
+    .button-secondary:hover {
+      transform: translateY(-2px);
+      background: var(--bg-card);
+    }
+
+    .button-small {
+      padding: var(--space-2) var(--space-4);
+      font-size: var(--text-sm);
+      border-radius: var(--radius-md);
+    }
+
+    .button-large {
+      padding: var(--space-4) var(--space-8);
+      font-size: var(--text-lg);
+    }
+
+    .button-block {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+      padding: var(--space-5) var(--space-6);
+      flex: 1;
+    }
+
+    .button-block .button-icon {
+      font-size: var(--text-2xl);
+      margin-bottom: var(--space-2);
+    }
+
+    .button-block .button-title {
+      font-weight: var(--font-bold);
+      margin-bottom: var(--space-1);
+    }
+
+    .button-block .button-subtext {
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+      font-weight: var(--font-regular);
+      opacity: 0.8;
+    }
+
+    /* Карточки */
+    .card {
+      background-color: var(--bg-card);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-6);
+      border: 1px solid var(--border-secondary);
+      transition: all var(--duration-normal) var(--ease-out);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent-primary), transparent);
+      opacity: 0;
+      transition: opacity var(--duration-normal) var(--ease-out);
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-3);
+      border-color: var(--border-primary);
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    /* Бейджи */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-2) var(--space-4);
+      border-radius: var(--radius-full);
+      font-size: var(--text-xs);
+      font-weight: var(--font-semibold);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .badge-primary {
+      background: var(--gradient-primary);
+      color: white;
+      box-shadow: var(--shadow-glow);
+    }
+
+    .badge-secondary {
+      background: var(--glass-bg-light);
+      color: var(--text-secondary);
+      border: 1px solid var(--border-secondary);
+    }
+
+    /* ============================================
+       7. СЕКЦИИ
+       ============================================ */
+    .section {
+      padding: var(--space-24) 0;
+      position: relative;
+    }
+
+    .section-alt {
+      background-color: var(--bg-secondary);
+      position: relative;
+    }
+
+    .section-alt::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent-primary), transparent);
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: var(--space-16);
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .section-title {
+      font-size: var(--text-5xl);
+      font-weight: var(--font-bold);
+      margin-bottom: var(--space-4);
+    }
+
+    .section-subtitle {
+      font-size: var(--text-xl);
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: var(--leading-loose);
+    }
+
+    /* Сетки */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-6);
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-6);
+    }
+
+    /* ============================================
+       8. HERO
+       ============================================ */
+    .hero {
+      padding: var(--space-24) 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -30%;
+      width: 80%;
+      height: 150%;
+      background: radial-gradient(ellipse at center, var(--gradient-glow), transparent 70%);
+      z-index: -1;
+      animation: heroGlow 8s ease-in-out infinite alternate;
+    }
+
+    @keyframes heroGlow {
+      0% { opacity: 0.5; transform: translateX(-10%); }
+      100% { opacity: 0.8; transform: translateX(10%); }
+    }
+
+    .hero-badge {
+      margin-bottom: var(--space-6);
+    }
+
+    .hero-title {
+      font-size: var(--text-7xl);
+      font-weight: var(--font-black);
+      line-height: 1.05;
+      margin-bottom: var(--space-6);
+      letter-spacing: -0.03em;
+    }
+
+    .hero-subtitle {
+      font-size: var(--text-xl);
+      color: var(--text-secondary);
+      margin-bottom: var(--space-10);
+      line-height: var(--leading-loose);
+      max-width: 800px;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-6);
+      margin-bottom: var(--space-10);
+    }
+
+    .stat-card {
+      text-align: center;
+      padding: var(--space-6);
+      background-color: var(--bg-card);
+      border-radius: var(--radius-2xl);
+      border: 1px solid var(--border-secondary);
+      transition: all var(--duration-normal) var(--ease-out);
+    }
+
+    .stat-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--border-primary);
+    }
+
+    .stat-value {
+      font-size: var(--text-5xl);
+      font-weight: var(--font-black);
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: block;
+      line-height: 1;
+      margin-bottom: var(--space-3);
+    }
+
+    .stat-label {
+      font-size: var(--text-sm);
+      color: var(--text-tertiary);
+      display: block;
+      line-height: var(--leading-normal);
+    }
+
+    .hero-cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-4);
+      margin-bottom: var(--space-8);
+    }
+
+    .hero-note {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      color: var(--text-tertiary);
+      font-size: var(--text-sm);
+    }
+
+    /* ============================================
+       9. ИСТОРИЯ / ЭКОСИСТЕМА / ШАГИ
+       ============================================ */
+    .story-card, .ecosystem-card, .step-card, .result-card {
+      padding: var(--space-8);
+    }
+
+    .story-icon, .ecosystem-icon, .step-icon, .result-icon {
+      width: 64px;
+      height: 64px;
+      background: var(--gradient-primary);
+      border-radius: var(--radius-xl);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--text-2xl);
+      color: white;
+      margin-bottom: var(--space-5);
+    }
+
+    .ecosystem-subtitle {
+      color: var(--accent-primary);
+      font-size: var(--text-base);
+      font-weight: var(--font-medium);
+      margin-bottom: var(--space-4);
+    }
+
+    .ecosystem-audience {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+      margin-top: var(--space-5);
+      margin-bottom: var(--space-4);
+    }
+
+    .audience-badge {
+      padding: var(--space-1) var(--space-3);
+      background-color: var(--glass-bg-light);
+      border: 1px solid var(--border-secondary);
+      border-radius: var(--radius-full);
+      font-size: var(--text-xs);
+      font-weight: var(--font-medium);
+      color: var(--text-secondary);
+    }
+
+    /* ============================================
+       10. ТАБЫ
+       ============================================ */
+    .tabs-container {
+      margin-bottom: var(--space-10);
+    }
+
+    .tabs-buttons {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-3);
+      margin-bottom: var(--space-8);
+    }
+
+    .tab-button {
+      padding: var(--space-3) var(--space-6);
+      background: transparent;
+      border: 1px solid var(--border-primary);
+      border-radius: var(--radius-xl);
+      color: var(--text-secondary);
+      font-weight: var(--font-semibold);
+      font-family: inherit;
+      font-size: var(--text-base);
+      cursor: pointer;
+      transition: all var(--duration-normal) var(--ease-out);
+    }
+
+    .tab-button:hover:not(.active) {
+      border-color: var(--text-tertiary);
+      color: var(--text-primary);
+    }
+
+    .tab-button.active {
+      background: var(--gradient-primary);
+      color: white;
+      border-color: transparent;
+      box-shadow: var(--shadow-glow);
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+      animation: fadeIn var(--duration-normal) var(--ease-out);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* ============================================
+       11. ФУНКЦИИ
+       ============================================ */
+    .feature-item {
+      display: flex;
+      gap: var(--space-4);
+      padding: var(--space-5);
+      background-color: var(--bg-card);
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border-secondary);
+      transition: all var(--duration-normal) var(--ease-out);
+    }
+
+    .feature-item:hover {
+      border-color: var(--border-primary);
+      transform: translateY(-2px);
+    }
+
+    .feature-icon-small {
+      width: 48px;
+      height: 48px;
+      min-width: 48px;
+      background: var(--gradient-primary);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--text-lg);
+      color: white;
+    }
+
+    .feature-text h5 {
+      margin-bottom: var(--space-2);
+    }
+
+    .feature-text p {
+      font-size: var(--text-sm);
+      line-height: var(--leading-normal);
+    }
+
+    /* ============================================
+       12. CTA
+       ============================================ */
+    .cta-section {
+      padding: var(--space-24) 0;
+    }
+
+    .cta-content {
+      text-align: center;
+      padding: var(--space-16) var(--space-8);
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .cta-content h2 {
+      margin-bottom: var(--space-4);
+    }
+
+    .cta-content > p {
+      font-size: var(--text-lg);
+      margin-bottom: var(--space-8);
+      line-height: var(--leading-loose);
+    }
+
+    .cta-features {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+      margin-bottom: var(--space-8);
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .cta-feature {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      color: var(--text-secondary);
+      font-size: var(--text-base);
+    }
+
+    .cta-feature-icon {
+      color: var(--accent-green);
+      font-size: var(--text-lg);
+    }
+
+    .cta-buttons {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: var(--space-4);
+      margin-bottom: var(--space-6);
+    }
+
+    .cta-note {
+      font-size: var(--text-sm);
+      color: var(--text-tertiary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+    }
+
+    /* ============================================
+       13. ФУТЕР
+       ============================================ */
+    .footer {
+      background-color: var(--bg-secondary);
+      padding: var(--space-16) 0 var(--space-8);
+      position: relative;
+    }
+
+    .footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border-primary), transparent);
+    }
+
+    .footer-content {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: var(--space-12);
+      margin-bottom: var(--space-12);
+    }
+
+    .footer-logo {
+      font-size: var(--text-xl);
+      font-weight: var(--font-bold);
+      margin-bottom: var(--space-3);
+      color: var(--text-primary);
+    }
+
+    .footer-description {
+      color: var(--text-secondary);
+      font-size: var(--text-sm);
+      line-height: var(--leading-normal);
+      margin-bottom: var(--space-4);
+    }
+
+    .footer-tech {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+    }
+
+    .tech-tag {
+      padding: var(--space-1) var(--space-3);
+      background-color: var(--glass-bg-light);
+      border: 1px solid var(--border-secondary);
+      border-radius: var(--radius-full);
+      font-size: var(--text-xs);
+      font-weight: var(--font-medium);
+      color: var(--text-tertiary);
+    }
+
+    .footer-column h4 {
+      font-size: var(--text-base);
+      font-weight: var(--font-semibold);
+      margin-bottom: var(--space-4);
+      color: var(--text-primary);
+    }
+
+    .footer-links {
+      list-style: none;
+    }
+
+    .footer-links li {
+      margin-bottom: var(--space-2);
+    }
+
+    .footer-links a {
+      color: var(--text-secondary);
+      font-size: var(--text-sm);
+    }
+
+    .footer-links a:hover {
+      color: var(--accent-primary);
+    }
+
+    .footer-contact {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      color: var(--text-secondary);
+      font-size: var(--text-sm);
+    }
+
+    .contact-item span {
+      color: var(--accent-primary);
+    }
+
+    .contact-item a {
+      color: var(--text-secondary);
+    }
+
+    .contact-item a:hover {
+      color: var(--accent-primary);
+    }
+
+    .footer-legal {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-6);
+      padding: var(--space-6) 0;
+      border-top: 1px solid var(--border-secondary);
+      margin-bottom: var(--space-4);
+    }
+
+    .footer-legal a {
+      color: var(--text-tertiary);
+      font-size: var(--text-sm);
+    }
+
+    .footer-legal a:hover {
+      color: var(--text-secondary);
+    }
+
+    .footer-copyright {
+      text-align: center;
+      color: var(--text-tertiary);
+      font-size: var(--text-sm);
+    }
+
+    /* ============================================
+       14. АДАПТИВНОСТЬ
+       ============================================ */
+
+    /* Планшеты и мобильные */
+    @media (max-width: 1024px) {
+      :root {
+        --text-7xl: 56px;
+        --text-6xl: 44px;
+        --text-5xl: 36px;
+        --text-4xl: 30px;
+      }
+      
+      body {
+        flex-direction: column;
+      }
+      
+      /* Sidebar для мобильных */
+      .sidebar {
+        position: fixed;
+        left: -280px;
+        top: 0;
+        height: 100vh;
+        width: 280px;
+        transition: left var(--duration-normal) var(--ease-out);
+        z-index: 999;
+      }
+      
+      .sidebar.open {
+        left: 0;
+      }
+      
+      .sidebar-overlay {
+        display: block;
+      }
+      
+      .menu-btn {
+        display: flex;
+      }
+      
+      .hero-stats {
+        grid-template-columns: 1fr;
+        max-width: 500px;
+      }
+      
+      .stat-card {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        text-align: left;
+        padding: var(--space-5);
+      }
+      
+      .stat-value {
+        font-size: var(--text-4xl);
+        margin-bottom: 0;
+      }
+      
+      .stat-label {
+        text-align: right;
+        max-width: 200px;
+      }
+      
+      .grid-2, .grid-3 {
+        grid-template-columns: 1fr;
+      }
+      
+      .footer-content {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-8);
+      }
+      
+      .footer-brand {
+        grid-column: 1 / -1;
+        text-align: center;
+      }
+    }
+
+    /* Мобильные */
+    @media (max-width: 768px) {
+      :root {
+        --text-7xl: 40px;
+        --text-6xl: 32px;
+        --text-5xl: 28px;
+        --text-4xl: 24px;
+        --text-3xl: 22px;
+      }
+      
+      .section {
+        padding: var(--space-16) 0;
+      }
+      
+      .hero {
+        padding: var(--space-20) 0 var(--space-16);
+      }
+      
+      .hero-cta {
+        flex-direction: column;
+      }
+      
+      .hero-cta .button {
+        width: 100%;
+      }
+      
+      .tabs-buttons {
+        flex-direction: column;
+      }
+      
+      .tab-button {
+        width: 100%;
+      }
+      
+      .cta-buttons {
+        flex-direction: column;
+      }
+      
+      .cta-buttons .button {
+        width: 100%;
+      }
+      
+      .footer-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      
+      .footer-tech {
+        justify-content: center;
+      }
+      
+      .footer-contact {
+        align-items: center;
+      }
+      
+      .footer-legal {
+        flex-direction: column;
+        gap: var(--space-2);
+        align-items: center;
+      }
+    }
+
+    /* Маленькие экраны */
+    @media (max-width: 375px) {
+      :root {
+        --text-7xl: 32px;
+        --text-6xl: 28px;
+        --text-5xl: 24px;
+        --text-4xl: 22px;
+      }
+      
+      .container {
+        padding: 0 var(--space-4);
+      }
+    }
+
+    /* Скроллбар */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg-secondary);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--border-primary);
+      border-radius: var(--radius-full);
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--text-tertiary);
+    }
+
+    ::selection {
+      background-color: var(--accent-primary);
+      color: white;
+    }
+
+    *:focus-visible {
+      outline: 2px solid var(--accent-primary);
+      outline-offset: 2px;
+    }
+  </style>
 </head>
 <body>
-    <nav>
-        <div class="container">
-            <div class="logo">
-                <i class="fa-solid fa-rocket"></i> Progress<span>.</span>
-            </div>
-            
-            <button class="hamburger" aria-label="Меню">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            
-            <div class="nav-links">
-                <a href="index.html" class="active">Главная</a>
-                <a href="progress.html">PROGRESS</a>
-                <a href="progress-plus.html">PROGRESS+</a>
-                <a href="history.html">История</a>
-                <a href="contacts.html">Контакты</a>
-                <a href="https://t.me/avickprogress_bot" class="btn-nav" target="_blank">
-                    <i class="fa-brands fa-telegram"></i> Начать
-                </a>
-            </div>
-        </div>
+  <!-- Overlay для мобильных -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- Боковая навигация -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <a href="index.html" class="sidebar-brand">
+        <span class="brand-icon">🚀</span>
+        Progress<span class="brand-dot">.</span>
+      </a>
+    </div>
+    
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <div class="nav-section-title">Навигация</div>
+        <ul class="nav-links">
+          <li>
+            <a href="index.html" class="nav-link active">
+              <span class="nav-link-icon">🏠</span>
+              Главная
+            </a>
+          </li>
+          <li>
+            <a href="progress.html" class="nav-link">
+              <span class="nav-link-icon">🤖</span>
+              PROGRESS
+            </a>
+          </li>
+          <li>
+            <a href="progress-plus.html" class="nav-link">
+              <span class="nav-link-icon">🔍</span>
+              PROGRESS+
+            </a>
+          </li>
+          <li>
+            <a href="history.html" class="nav-link">
+              <span class="nav-link-icon">📜</span>
+              История
+            </a>
+          </li>
+          <li>
+            <a href="contacts.html" class="nav-link">
+              <span class="nav-link-icon">📞</span>
+              Контакты
+            </a>
+          </li>
+        </ul>
+      </div>
+      
+      <div class="nav-section">
+        <div class="nav-section-title">Быстрый старт</div>
+        <ul class="nav-links">
+          <li>
+            <a href="https://t.me/avickprogress_bot" class="nav-link" target="_blank" rel="noopener noreferrer">
+              <span class="nav-link-icon">📱</span>
+              PROGRESS Bot
+            </a>
+          </li>
+          <li>
+            <a href="https://t.me/avickprogressplusBOT" class="nav-link" target="_blank" rel="noopener noreferrer">
+              <span class="nav-link-icon">🔎</span>
+              PROGRESS+ Bot
+            </a>
+          </li>
+        </ul>
+      </div>
     </nav>
+    
+    <div class="sidebar-footer">
+      <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">
+        <span class="nav-link-icon" id="themeIcon">☀️</span>
+        <span id="themeText">Светлая тема</span>
+      </button>
+    </div>
+  </aside>
 
+  <!-- Кнопка меню (мобильная) -->
+  <button class="menu-btn" id="sidebarToggle" aria-label="Открыть меню">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </button>
+
+  <!-- Основной контент -->
+  <main class="main-content">
+    <!-- Hero секция -->
     <section class="hero">
-        <div class="container">
-            <div class="hero-badge glass-hover">
-                <i class="fa-solid fa-bolt"></i> MVP запущен • Бета-доступ
-            </div>
-            
-            <h1>Прогресс — система, созданная репетитором<br><span class="gradient-text">для репетиторов</span></h1>
-            
-            <p class="hero-subtitle">
-                Родилась из личной боли тысяч преподавателей, которые теряют драгоценное время в хаосе переписок, 
-                ручном управлении заданиями и отсутствии прозрачности для учеников. Мы объединили всё в одну 
-                интеллектуальную экосистему, работающую прямо в Telegram.
-            </p>
-            
-            <div class="hero-stats">
-                <div class="hero-stat">
-                    <div class="hero-stat-number">73%</div>
-                    <div class="hero-stat-text">репетиторов используют 3+ мессенджера одновременно, теряя задачи в хаосе переписок</div>
-                </div>
-                <div class="hero-stat">
-                    <div class="hero-stat-number">57%</div>
-                    <div class="hero-stat-text">преподавателей тратят до 2 часов в день на административную рутину вместо преподавания</div>
-                </div>
-                <div class="hero-stat">
-                    <div class="hero-stat-number">68%</div>
-                    <div class="hero-stat-text">учеников теряют задания и материалы, а родители не видят реального прогресса</div>
-                </div>
-            </div>
-            
-            <div class="hero-cta">
-                <a href="progress.html" class="btn-main">
-                    <i class="fa-solid fa-robot"></i> PROGRESS для репетиторов
-                    <span class="btn-subtext">Управление обучением, автоматизация, аналитика</span>
-                </a>
-                <a href="progress-plus.html" class="btn-secondary">
-                    <i class="fa-solid fa-magnifying-glass-chart"></i> PROGRESS+ для учеников
-                    <span class="btn-subtext">Умный поиск репетиторов, объективные рейтинги</span>
-                </a>
-            </div>
-            
-            <div class="hero-note">
-                <i class="fa-solid fa-circle-info"></i>
-                <span>Работает полностью в Telegram • Регистрация за 2 минуты • Бесплатный доступ для первых пользователей</span>
-            </div>
+      <div class="container">
+        <div class="hero-badge badge badge-secondary">
+          ⚡ MVP запущен • Бета-доступ
         </div>
+        
+        <h1 class="hero-title">
+          Прогресс — система, созданная репетитором<br>
+          <span class="gradient-text">для репетиторов</span>
+        </h1>
+        
+        <p class="hero-subtitle">
+          Родилась из личной боли тысяч преподавателей, которые теряют драгоценное время в хаосе переписок, 
+          ручном управлении заданиями и отсутствии прозрачности для учеников. Мы объединили всё в одну 
+          интеллектуальную экосистему, работающую прямо в Telegram.
+        </p>
+        
+        <div class="hero-stats">
+          <div class="stat-card">
+            <span class="stat-value">73%</span>
+            <span class="stat-label">репетиторов используют 3+ мессенджера одновременно, теряя задачи в хаосе переписок</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-value">57%</span>
+            <span class="stat-label">преподавателей тратят до 2 часов в день на административную рутину вместо преподавания</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-value">68%</span>
+            <span class="stat-label">учеников теряют задания и материалы, а родители не видят реального прогресса</span>
+          </div>
+        </div>
+        
+        <div class="hero-cta">
+          <a href="progress.html" class="button button-primary button-block">
+            <span class="button-icon">🤖</span>
+            <span class="button-title">PROGRESS для репетиторов</span>
+            <span class="button-subtext">Управление обучением, автоматизация, аналитика</span>
+          </a>
+          <a href="progress-plus.html" class="button button-secondary button-block">
+            <span class="button-icon">📊</span>
+            <span class="button-title">PROGRESS+ для учеников</span>
+            <span class="button-subtext">Умный поиск репетиторов, объективные рейтинги</span>
+          </a>
+        </div>
+        
+        <div class="hero-note">
+          <span>ℹ️</span>
+          <span>Работает полностью в Telegram • Регистрация за 2 минуты • Бесплатный доступ для первых пользователей</span>
+        </div>
+      </div>
     </section>
 
-    <section id="story">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Почему мы создали<br><span class="gradient-text">этот проект</span></h2>
-                <p class="section-subtitle">
-                    История, которая знакома каждому репетитору — и которую мы решили изменить
-                </p>
-            </div>
-            
-            <div class="story-grid">
-                <div class="story-card glass-hover">
-                    <div class="story-icon">
-                        <i class="fa-solid fa-comments"></i>
-                    </div>
-                    <h3>Хаос в коммуникациях</h3>
-                    <p><strong>Проблема:</strong> У каждого ученика — свой мессенджер. WhatsApp для родителей, Telegram для заданий, Viber для срочных вопросов. Задания теряются в сотнях чатов, файлы — в разных папках.</p>
-                    <p><strong>Наше решение:</strong> Единое пространство в Telegram, где все коммуникации структурированы. Один бот — все ученики, все задания, все материалы.</p>
-                </div>
-                
-                <div class="story-card glass-hover">
-                    <div class="story-icon">
-                        <i class="fa-solid fa-clock-rotate-left"></i>
-                    </div>
-                    <h3>Ручная рутина убивает время</h3>
-                    <p><strong>Проблема:</strong> "Напомни сделать домашку", "Когда следующее занятие?", "Скиньте материалы ещё раз". Один репетитор повторяет это десятки раз в неделю.</p>
-                    <p><strong>Наше решение:</strong> Автоматические напоминания о дедлайнах, структурированные материалы в банке тем, умные уведомления для учеников и родителей.</p>
-                </div>
-                
-                <div class="story-card glass-hover">
-                    <div class="story-icon">
-                        <i class="fa-solid fa-chart-bar"></i>
-                    </div>
-                    <h3>Прогресс невидим</h3>
-                    <p><strong>Проблема:</strong> Ученики не видят своего роста, родители не понимают, за что платят, а репетиторы не могут показать результаты системно.</p>
-                    <p><strong>Наше решение:</strong> Визуальная аналитика прогресса, радар-диаграммы успеваемости, понятные отчёты для родителей и мотивационные графики для учеников.</p>
-                </div>
-                
-                <div class="story-card glass-hover">
-                    <div class="story-icon">
-                        <i class="fa-solid fa-user-plus"></i>
-                    </div>
-                    <h3>Барьер для начинающих</h3>
-                    <p><strong>Проблема:</strong> Новички-репетиторы не могут себя показать, ученики не знают, как выбрать хорошего преподавателя, только по отзывам и интуиции.</p>
-                    <p><strong>Наше решение:</strong> PROGRESS+ с объективными рейтингами на основе реальных данных, SMART-категории преподавателей, встроенная диагностика для учеников.</p>
-                </div>
-            </div>
+    <!-- История -->
+    <section class="section section-alt" id="story">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Почему мы создали<br><span class="gradient-text">этот проект</span></h2>
+          <p class="section-subtitle">
+            История, которая знакома каждому репетитору — и которую мы решили изменить
+          </p>
         </div>
+        
+        <div class="grid-2">
+          <div class="card story-card">
+            <div class="story-icon">💬</div>
+            <h3>Хаос в коммуникациях</h3>
+            <p><strong>Проблема:</strong> У каждого ученика — свой мессенджер. WhatsApp для родителей, Telegram для заданий, Viber для срочных вопросов. Задания теряются в сотнях чатов, файлы — в разных папках.</p>
+            <p><strong>Наше решение:</strong> Единое пространство в Telegram, где все коммуникации структурированы. Один бот — все ученики, все задания, все материалы.</p>
+          </div>
+          
+          <div class="card story-card">
+            <div class="story-icon">⏰</div>
+            <h3>Ручная рутина убивает время</h3>
+            <p><strong>Проблема:</strong> "Напомни сделать домашку", "Когда следующее занятие?", "Скиньте материалы ещё раз". Один репетитор повторяет это десятки раз в неделю.</p>
+            <p><strong>Наше решение:</strong> Автоматические напоминания о дедлайнах, структурированные материалы в банке тем, умные уведомления для учеников и родителей.</p>
+          </div>
+          
+          <div class="card story-card">
+            <div class="story-icon">📈</div>
+            <h3>Прогресс невидим</h3>
+            <p><strong>Проблема:</strong> Ученики не видят своего роста, родители не понимают, за что платят, а репетиторы не могут показать результаты системно.</p>
+            <p><strong>Наше решение:</strong> Визуальная аналитика прогресса, радар-диаграммы успеваемости, понятные отчёты для родителей и мотивационные графики для учеников.</p>
+          </div>
+          
+          <div class="card story-card">
+            <div class="story-icon">👤</div>
+            <h3>Барьер для начинающих</h3>
+            <p><strong>Проблема:</strong> Новички-репетиторы не могут себя показать, ученики не знают, как выбрать хорошего преподавателя, только по отзывам и интуиции.</p>
+            <p><strong>Наше решение:</strong> PROGRESS+ с объективными рейтингами на основе реальных данных, SMART-категории преподавателей, встроенная диагностика для учеников.</p>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <section id="ecosystem">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-label">Экосистема</span>
-                <h2 class="section-title">Два бота —<br><span class="gradient-text">полный цикл обучения</span></h2>
-                <p class="section-subtitle">
-                    От поиска идеального репетитора до системного отслеживания прогресса
-                </p>
-            </div>
-            
-            <div class="ecosystem-cards">
-                <div class="ecosystem-card glass-hover" onclick="location.href='progress-plus.html'">
-                    <div class="ecosystem-icon" style="background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);">
-                        <i class="fa-solid fa-magnifying-glass-chart"></i>
-                    </div>
-                    <h3>PROGRESS+</h3>
-                    <p class="ecosystem-subtitle">Умный поиск и выбор репетиторов</p>
-                    <p><strong>Для кого:</strong> Ученики, родители, взрослые, ищущие преподавателя.</p>
-                    <p><strong>Что делает:</strong> Показывает объективные рейтинги преподавателей на основе реальных данных (скорость проверки, выполнение заданий, отзывы учеников). SMART-категории (Diamond, Top Expert, Expert), встроенные тесты для определения уровня и потребностей.</p>
-                    <p><strong>Зачем нужно:</strong> Чтобы выбрать репетитора не наугад, а на основе данных. Чтобы видеть реальную эффективность, а не только красивую анкету.</p>
-                    <div class="ecosystem-audience">
-                        <span class="audience-badge">Для учеников</span>
-                        <span class="audience-badge">Для родителей</span>
-                        <span class="audience-badge">Для начинающих</span>
-                    </div>
-                    <a href="progress-plus.html" class="btn-small">Узнать больше о PROGRESS+ →</a>
-                </div>
-                
-                <div class="ecosystem-card glass-hover" onclick="location.href='progress.html'">
-                    <div class="ecosystem-icon" style="background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);">
-                        <i class="fa-solid fa-robot"></i>
-                    </div>
-                    <h3>PROGRESS Bot</h3>
-                    <p class="ecosystem-subtitle">Управление всем учебным процессом</p>
-                    <p><strong>Для кого:</strong> Репетиторы, преподаватели, курсы, образовательные проекты.</p>
-                    <p><strong>Что делает:</strong> Конструктор курсов с папками для материалов, автоматические напоминания о дедлайнах, система токенов для безопасного подключения учеников, глубокая аналитика прогресса, проверка заданий прямо в чате.</p>
-                    <p><strong>Зачем нужно:</strong> Чтобы вернуть себе 2+ часа в день, которые уходят на рутину. Чтобы показывать родителям прогресс ребёнка цифрами, а не словами. Чтобы все материалы и задания были в одном месте.</p>
-                    <div class="ecosystem-audience">
-                        <span class="audience-badge">Для репетиторов</span>
-                        <span class="audience-badge">Для преподавателей</span>
-                        <span class="audience-badge">Для курсов</span>
-                    </div>
-                    <a href="progress.html" class="btn-small">Узнать больше о PROGRESS →</a>
-                </div>
-            </div>
+    <!-- Экосистема -->
+    <section class="section" id="ecosystem">
+      <div class="container">
+        <div class="section-header">
+          <span class="badge badge-primary">Экосистема</span>
+          <h2 class="section-title">Два бота —<br><span class="gradient-text">полный цикл обучения</span></h2>
+          <p class="section-subtitle">
+            От поиска идеального репетитора до системного отслеживания прогресса
+          </p>
         </div>
+        
+        <div class="grid-2">
+          <div class="card ecosystem-card" onclick="location.href='progress-plus.html'">
+            <div class="ecosystem-icon" style="background: linear-gradient(135deg, #0a84ff 0%, #5e5ce6 100%);">
+              🔍
+            </div>
+            <h3>PROGRESS+</h3>
+            <p class="ecosystem-subtitle">Умный поиск и выбор репетиторов</p>
+            <p><strong>Для кого:</strong> Ученики, родители, взрослые, ищущие преподавателя.</p>
+            <p><strong>Что делает:</strong> Показывает объективные рейтинги преподавателей на основе реальных данных (скорость проверки, выполнение заданий, отзывы учеников).</p>
+            <p><strong>Зачем нужно:</strong> Чтобы выбрать репетитора не наугад, а на основе данных.</p>
+            <div class="ecosystem-audience">
+              <span class="audience-badge">Для учеников</span>
+              <span class="audience-badge">Для родителей</span>
+            </div>
+            <a href="progress-plus.html" class="button button-small button-secondary">Узнать больше →</a>
+          </div>
+          
+          <div class="card ecosystem-card" onclick="location.href='progress.html'">
+            <div class="ecosystem-icon" style="background: linear-gradient(135deg, #5e5ce6 0%, #bf5af2 100%);">
+              🤖
+            </div>
+            <h3>PROGRESS Bot</h3>
+            <p class="ecosystem-subtitle">Управление всем учебным процессом</p>
+            <p><strong>Для кого:</strong> Репетиторы, преподаватели, курсы, образовательные проекты.</p>
+            <p><strong>Что делает:</strong> Конструктор курсов с папками для материалов, автоматические напоминания о дедлайнах, система токенов для безопасного подключения.</p>
+            <p><strong>Зачем нужно:</strong> Чтобы вернуть себе 2+ часа в день, которые уходят на рутину.</p>
+            <div class="ecosystem-audience">
+              <span class="audience-badge">Для репетиторов</span>
+              <span class="audience-badge">Для курсов</span>
+            </div>
+            <a href="progress.html" class="button button-small button-secondary">Узнать больше →</a>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <section class="section-alt">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Как это работает<br><span class="gradient-text">на практике</span></h2>
-                <p class="section-subtitle">
-                    Простой путь от хаоса к системе — за 3 шага
-                </p>
-            </div>
-            
-            <div class="results-grid">
-                <div class="result-card glass-hover">
-                    <div class="result-icon">
-                        <i class="fa-solid fa-key"></i>
-                    </div>
-                    <h3>Шаг 1: Подключение</h3>
-                    <p>Репетитор создаёт токен и отправляет ученику. Ученик вводит токен в бота — и они подключены. Никаких сложных регистраций, паролей, подтверждений.</p>
-                </div>
-                
-                <div class="result-card glass-hover">
-                    <div class="result-icon">
-                        <i class="fa-solid fa-folder-tree"></i>
-                    </div>
-                    <h3>Шаг 2: Организация</h3>
-                    <p>Репетитор создаёт темы, загружает материалы, даёт задания с дедлайнами. Ученик видит всё в одном интерфейсе: что задано, на когда, какие материалы доступны.</p>
-                </div>
-                
-                <div class="result-card glass-hover">
-                    <div class="result-icon">
-                        <i class="fa-solid fa-chart-line-up"></i>
-                    </div>
-                    <h3>Шаг 3: Прогресс</h3>
-                    <p>Система автоматически напоминает о дедлайнах, собирает статистику, строит графики прогресса. Репетитор видит, где нужна помощь, ученик видит свои успехи.</p>
-                </div>
-            </div>
+    <!-- Как это работает -->
+    <section class="section section-alt">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Как это работает<br><span class="gradient-text">на практике</span></h2>
+          <p class="section-subtitle">
+            Простой путь от хаоса к системе — за 3 шага
+          </p>
         </div>
+        
+        <div class="grid-3">
+          <div class="card step-card">
+            <div class="step-icon">🔑</div>
+            <h3>Шаг 1: Подключение</h3>
+            <p>Репетитор создаёт токен и отправляет ученику. Ученик вводит токен в бота — и они подключены.</p>
+          </div>
+          
+          <div class="card step-card">
+            <div class="step-icon">📁</div>
+            <h3>Шаг 2: Организация</h3>
+            <p>Репетитор создаёт темы, загружает материалы, даёт задания с дедлайнами.</p>
+          </div>
+          
+          <div class="card step-card">
+            <div class="step-icon">📊</div>
+            <h3>Шаг 3: Прогресс</h3>
+            <p>Система автоматически напоминает о дедлайнах, собирает статистику, строит графики.</p>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <section>
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Что конкретно<br><span class="gradient-text">вы получаете</span></h2>
-                <p class="section-subtitle">
-                    Ключевые функции, которые решают реальные проблемы
-                </p>
-            </div>
-            
-            <div class="features-tabs">
-                <button class="tab-btn active" data-tab="tutors">Для репетиторов</button>
-                <button class="tab-btn" data-tab="students">Для учеников</button>
-            </div>
-            
-            <div id="tutors-tab" class="tab-content active">
-                <div class="feature-list">
-                    <div class="feature-item">
-                        <div class="feature-icon"><i class="fa-solid fa-key"></i></div>
-                        <div class="feature-text">
-                            <h5>Система токенов — безопасное подключение</h5>
-                            <p>Одноразовые токены вместо сложных регистраций. Контролируйте, кто имеет доступ к вашим материалам. Токен действует 1 час — ученик не потеряет его и не передаст другому.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="feature-item">
-                        <div class="feature-icon"><i class="fa-solid fa-folder-tree"></i></div>
-                        <div class="feature-text">
-                            <h5>Банк тем — конструктор вашего курса</h5>
-                            <p>Создавайте структурированные темы с папками для теории, практики, шаблонов заданий. Загружайте файлы, ссылки, тексты. Всё в одном месте, доступно в один клик.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="feature-item">
-                        <div class="feature-icon"><i class="fa-solid fa-bell"></i></div>
-                        <div class="feature-text">
-                            <h5>Автоматические напоминания</h5>
-                            <p>Больше не нужно писать "не забудь сделать домашку". Система сама напомнит ученику за 24 часа, 3 часа и 15 минут до дедлайна. Вы экономите время, ученик не пропускает задания.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="feature-item">
-                        <div class="feature-icon"><i class="fa-solid fa-chart-radar"></i></div>
-                        <div class="feature-text">
-                            <h5>Глубокая аналитика прогресса</h5>
-                            <p>Видите слабые и сильные стороны каждого ученика. Радар-диаграммы показывают успеваемость, оперативность, вовлечённость. Показывайте родителям прогресс цифрами, а не словами.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="feature-item">
-                        <div class="feature-icon"><i class="fa-solid fa-file-check"></i></div>
-                        <div class="feature-text">
-                            <h5>Проверка заданий в чате</h5>
-                            <p>Ученик сдал работу — вы получаете уведомление. Смотрите файл прямо в Telegram, ставите оценку, пишете комментарий. Всё без переключения между приложениями.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="feature-item">
-                        <div class="feature-icon"><i class="fa-solid fa-users"></i></div>
-                        <div class="feature-text">
-                            <h5>Управление всеми учениками в одном месте</h5>
-                            <p>Больше не нужно искать, кто в каком чате. Все ваши ученики — в одном интерфейсе. Фильтруйте по предметам, смотрите статистику, отправляйте групповые уведомления.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div id="students-tab" class="tab-content">
-                <div class="feature-list">
-                    <div class="feature-item">
-                        <div class="feature-icon"><i class="fa-solid fa-tasks"></i></div>
-                        <div class="feature-text">
-                            <h5>Все задания в одном месте</h5>
-                            <p>Больше не нужно искать, что задали, в десятках чатов. Все задания от всех репетиторов — в одном интерфейсе. Фильтруйте по статусу: активные, просроченные, выполненные.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="feature-item">
-                        <div class="feature-icon"><i class="fa-solid fa-book-open"></i></div>
-                        <div class="feature-text">
-                            <h5>Структурированные учебные материалы</h5>
-                            <p>Все материалы от репетитора собраны по темам и папкам. Скачивайте файлы, переходите по ссылкам, читайте тексты — всё организовано и понятно.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="feature-item">
-                        <div class="feature-icon"><i class="fa-solid fa-chart-line-up"></i></div>
-                        <div class="feature-text">
-                            <h5>Визуальный прогресс и мотивация</h5>
-                            <p>Видите свои успехи в цифрах и графиках. Какие темы даются легко, где нужно подтянуть. Мотивационные отчёты и достижения помогают не сбиваться с пути.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="feature-item">
-                        <div class="feature-icon"><i class="fa-solid fa-users"></i></div>
-                        <div class="feature-text">
-                            <h5>Занимайтесь с несколькими репетиторами</h5>
-                            <p>Учите математику с одним преподавателем, английский — с другим. Все в одном боте, с отдельными разделами для каждого репетитора. Переключайтесь одним нажатием.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="feature-item">
-                        <div class="feature-icon"><i class="fa-solid fa-bell"></i></div>
-                        <div class="feature-text">
-                            <h5>Умные напоминания о дедлайнах</h5>
-                            <p>Система сама напомнит, когда нужно сдать работу. За 24 часа, 3 часа и 15 минут до дедлайна. Никаких пропущенных заданий и оправданий "я забыл".</p>
-                        </div>
-                    </div>
-                    
-                    <div class="feature-item">
-                        <div class="feature-icon"><i class="fa-solid fa-magnifying-glass-chart"></i></div>
-                        <div class="feature-text">
-                            <h5>PROGRESS+ для поиска репетиторов</h5>
-                            <p>Нужен новый преподаватель? PROGRESS+ покажет объективные рейтинги на основе реальных данных. SMART-категории, отзывы, статистика эффективности.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <!-- Функционал -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Что конкретно<br><span class="gradient-text">вы получаете</span></h2>
+          <p class="section-subtitle">
+            Ключевые функции, которые решают реальные проблемы
+          </p>
         </div>
+        
+        <div class="tabs-container">
+          <div class="tabs-buttons">
+            <button class="tab-button active" data-tab="tutors">Для репетиторов</button>
+            <button class="tab-button" data-tab="students">Для учеников</button>
+          </div>
+          
+          <div id="tutors-tab" class="tab-content active">
+            <div class="grid-2">
+              <div class="feature-item">
+                <div class="feature-icon-small">🔑</div>
+                <div class="feature-text">
+                  <h5>Система токенов — безопасное подключение</h5>
+                  <p>Одноразовые токены вместо сложных регистраций. Контролируйте, кто имеет доступ к вашим материалам.</p>
+                </div>
+              </div>
+              
+              <div class="feature-item">
+                <div class="feature-icon-small">📁</div>
+                <div class="feature-text">
+                  <h5>Банк тем — конструктор вашего курса</h5>
+                  <p>Создавайте структурированные темы с папками для теории, практики, шаблонов заданий.</p>
+                </div>
+              </div>
+              
+              <div class="feature-item">
+                <div class="feature-icon-small">🔔</div>
+                <div class="feature-text">
+                  <h5>Автоматические напоминания</h5>
+                  <p>Система сама напомнит ученику за 24 часа, 3 часа и 15 минут до дедлайна.</p>
+                </div>
+              </div>
+              
+              <div class="feature-item">
+                <div class="feature-icon-small">📡</div>
+                <div class="feature-text">
+                  <h5>Глубокая аналитика прогресса</h5>
+                  <p>Видите слабые и сильные стороны каждого ученика. Радар-диаграммы показывают успеваемость.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div id="students-tab" class="tab-content">
+            <div class="grid-2">
+              <div class="feature-item">
+                <div class="feature-icon-small">📋</div>
+                <div class="feature-text">
+                  <h5>Все задания в одном месте</h5>
+                  <p>Больше не нужно искать, что задали, в десятках чатов. Все задания от всех репетиторов — в одном интерфейсе.</p>
+                </div>
+              </div>
+              
+              <div class="feature-item">
+                <div class="feature-icon-small">📖</div>
+                <div class="feature-text">
+                  <h5>Структурированные учебные материалы</h5>
+                  <p>Все материалы от репетитора собраны по темам и папкам. Скачивайте файлы, переходите по ссылкам.</p>
+                </div>
+              </div>
+              
+              <div class="feature-item">
+                <div class="feature-icon-small">📈</div>
+                <div class="feature-text">
+                  <h5>Визуальный прогресс и мотивация</h5>
+                  <p>Видите свои успехи в цифрах и графиках. Какие темы даются легко, где нужно подтянуть.</p>
+                </div>
+              </div>
+              
+              <div class="feature-item">
+                <div class="feature-icon-small">🔔</div>
+                <div class="feature-text">
+                  <h5>Умные напоминания о дедлайнах</h5>
+                  <p>Система сама напомнит, когда нужно сдать работу. Никаких пропущенных заданий.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <section class="section-alt">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Что изменится<br><span class="gradient-text">в вашей работе</span></h2>
-                <p class="section-subtitle">
-                    Конкретные результаты, которые получают первые пользователи
-                </p>
-            </div>
-            
-            <div class="results-grid">
-                <div class="result-card glass-hover">
-                    <div class="result-icon">
-                        <i class="fa-solid fa-clock"></i>
-                    </div>
-                    <h3>Вернёте 2+ часа в день</h3>
-                    <p>Автоматизация напоминаний, проверки заданий и организации материалов освобождает время для преподавания, а не администрирования.</p>
-                </div>
-                
-                <div class="result-card glass-hover">
-                    <div class="result-icon">
-                        <i class="fa-solid fa-chart-line-up"></i>
-                    </div>
-                    <h3>Повысите эффективность на 40%</h3>
-                    <p>Ученики видят прогресс и мотивированы заниматься. Вы видите слабые места и точечно их прорабатываете. Результаты становятся измеримыми.</p>
-                </div>
-                
-                <div class="result-card glass-hover">
-                    <div class="result-icon">
-                        <i class="fa-solid fa-user-plus"></i>
-                    </div>
-                    <h3>Увеличите количество учеников</h3>
-                    <p>С системой вы сможете уделять больше внимания каждому ученику, не теряя в качестве. А PROGRESS+ поможет новым ученикам найти вас.</p>
-                </div>
-            </div>
+    <!-- Результаты -->
+    <section class="section section-alt">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Что изменится<br><span class="gradient-text">в вашей работе</span></h2>
+          <p class="section-subtitle">
+            Конкретные результаты, которые получают первые пользователи
+          </p>
         </div>
+        
+        <div class="grid-3">
+          <div class="card result-card">
+            <div class="result-icon">⏰</div>
+            <h3>Вернёте 2+ часа в день</h3>
+            <p>Автоматизация напоминаний, проверки заданий и организации материалов освобождает время для преподавания.</p>
+          </div>
+          
+          <div class="card result-card">
+            <div class="result-icon">📈</div>
+            <h3>Повысите эффективность на 40%</h3>
+            <p>Ученики видят прогресс и мотивированы заниматься. Результаты становятся измеримыми.</p>
+          </div>
+          
+          <div class="card result-card">
+            <div class="result-icon">👨‍🎓</div>
+            <h3>Увеличите количество учеников</h3>
+            <p>С системой вы сможете уделять больше внимания каждому ученику, не теряя в качестве.</p>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <section class="final-cta">
-        <div class="container">
-            <div class="cta-content glass-hover">
-                <h2>Попробуйте будущее репетиторства уже сегодня</h2>
-                <p>Присоединяйтесь к первым репетиторам и ученикам, которые уже используют систему. Бесплатный доступ, персональная поддержка, возможность влиять на развитие продукта.</p>
-                
-                <div class="cta-features">
-                    <div class="cta-feature">
-                        <i class="fa-solid fa-check"></i>
-                        <span>Полный доступ ко всем функциям бесплатно для первых пользователей</span>
-                    </div>
-                    <div class="cta-feature">
-                        <i class="fa-solid fa-check"></i>
-                        <span>Регистрация за 2 минуты прямо в Telegram</span>
-                    </div>
-                    <div class="cta-feature">
-                        <i class="fa-solid fa-check"></i>
-                        <span>Персональная поддержка от команды проекта</span>
-                    </div>
-                    <div class="cta-feature">
-                        <i class="fa-solid fa-check"></i>
-                        <span>Вы помогаете формировать продукт под реальные нужды репетиторов</span>
-                    </div>
-                </div>
-                
-                <div class="cta-buttons">
-                    <a href="https://t.me/avickprogress_bot" class="btn-main" target="_blank">
-                        <i class="fa-brands fa-telegram"></i> Начать с PROGRESS для репетиторов
-                    </a>
-                    <a href="https://t.me/avickprogressplusBOT" class="btn-secondary" target="_blank">
-                        <i class="fa-brands fa-telegram"></i> Начать с PROGRESS+ для учеников
-                    </a>
-                </div>
-                
-                <p style="margin-top: var(--spacing-md); font-size: 0.9rem; color: var(--text-tertiary);">
-                    <i class="fa-solid fa-circle-info"></i> Оба бота работают в Telegram. Регистрация занимает 2 минуты. Все данные защищены.
-                </p>
+    <!-- CTA секция -->
+    <section class="cta-section section">
+      <div class="container">
+        <div class="cta-content card">
+          <h2>Попробуйте будущее репетиторства уже сегодня</h2>
+          <p>Присоединяйтесь к первым репетиторам и ученикам, которые уже используют систему. Бесплатный доступ, персональная поддержка.</p>
+          
+          <div class="cta-features">
+            <div class="cta-feature">
+              <span class="cta-feature-icon">✓</span>
+              <span>Полный доступ ко всем функциям бесплатно для первых пользователей</span>
             </div>
+            <div class="cta-feature">
+              <span class="cta-feature-icon">✓</span>
+              <span>Регистрация за 2 минуты прямо в Telegram</span>
+            </div>
+            <div class="cta-feature">
+              <span class="cta-feature-icon">✓</span>
+              <span>Персональная поддержка от команды проекта</span>
+            </div>
+          </div>
+          
+          <div class="cta-buttons">
+            <a href="https://t.me/avickprogress_bot" class="button button-primary button-large" target="_blank" rel="noopener noreferrer">
+              🤖 Начать с PROGRESS для репетиторов
+            </a>
+            <a href="https://t.me/avickprogressplusBOT" class="button button-secondary button-large" target="_blank" rel="noopener noreferrer">
+              🔍 Начать с PROGRESS+ для учеников
+            </a>
+          </div>
+          
+          <div class="cta-note">
+            <span>ℹ️</span>
+            <span>Оба бота работают в Telegram. Регистрация занимает 2 минуты. Все данные защищены.</span>
+          </div>
         </div>
+      </div>
     </section>
 
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-col">
-                    <h4>Progress</h4>
-                    <p style="color: rgba(255, 255, 255, 0.7); margin-bottom: 20px;">
-                        Система, созданная репетитором для репетиторов. Возвращаем время преподавания, убираем хаос, показываем прогресс.
-                    </p>
-                    <div class="tech-stack">
-                        <span class="tech-tag">Работает в Telegram</span>
-                        <span class="tech-tag">Для репетиторов</span>
-                        <span class="tech-tag">Для учеников</span>
-                    </div>
-                </div>
-                
-                <div class="footer-col">
-                    <h4>Продукт</h4>
-                    <ul>
-                        <li><a href="index.html">Главная</a></li>
-                        <li><a href="progress.html">PROGRESS Bot</a></li>
-                        <li><a href="progress-plus.html">PROGRESS+</a></li>
-                        <li><a href="history.html">История создания</a></li>
-                        <li><a href="contacts.html">Контакты</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h4>Помощь</h4>
-                    <ul>
-                        <li><a href="#">Как начать</a></li>
-                        <li><a href="#">Частые вопросы</a></li>
-                        <li><a href="#">Инструкции</a></li>
-                        <li><a href="#">Поддержка</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h4>Контакты</h4>
-                    <div class="footer-contact">
-                        <div class="contact-item">
-                            <i class="fa-brands fa-telegram"></i>
-                            <span><a href="https://t.me/avickprogress_bot" target="_blank">PROGRESS Bot для репетиторов</a></span>
-                        </div>
-                        <div class="contact-item">
-                            <i class="fa-brands fa-telegram"></i>
-                            <span><a href="https://t.me/avickprogressplusBOT" target="_blank">PROGRESS+ для учеников</a></span>
-                        </div>
-                        <div class="contact-item">
-                            <i class="fa-solid fa-envelope"></i>
-                            <span>contact@progress.education</span>
-                        </div>
-                    </div>
-                </div>
+    <!-- Футер -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-brand">
+            <h3 class="footer-logo">Progress</h3>
+            <p class="footer-description">Система, созданная репетитором для репетиторов. Возвращаем время преподавания, убираем хаос, показываем прогресс.</p>
+            <div class="footer-tech">
+              <span class="tech-tag">Telegram</span>
+              <span class="tech-tag">Для репетиторов</span>
+              <span class="tech-tag">Для учеников</span>
             </div>
-            
-            <div class="footer-bottom">
-                <div class="footer-links">
-                    <a href="#">Политика конфиденциальности</a>
-                    <a href="#">Условия использования</a>
-                </div>
+          </div>
+          
+          <div class="footer-column">
+            <h4>Продукт</h4>
+            <ul class="footer-links">
+              <li><a href="index.html">Главная</a></li>
+              <li><a href="progress.html">PROGRESS Bot</a></li>
+              <li><a href="progress-plus.html">PROGRESS+</a></li>
+              <li><a href="history.html">История создания</a></li>
+              <li><a href="contacts.html">Контакты</a></li>
+            </ul>
+          </div>
+          
+          <div class="footer-column">
+            <h4>Помощь</h4>
+            <ul class="footer-links">
+              <li><a href="#">Как начать</a></li>
+              <li><a href="#">Частые вопросы</a></li>
+              <li><a href="#">Инструкции</a></li>
+              <li><a href="#">Поддержка</a></li>
+            </ul>
+          </div>
+          
+          <div class="footer-column">
+            <h4>Контакты</h4>
+            <div class="footer-contact">
+              <div class="contact-item">
+                <span>📱</span>
+                <a href="https://t.me/avickprogress_bot" target="_blank" rel="noopener noreferrer">PROGRESS Bot</a>
+              </div>
+              <div class="contact-item">
+                <span>📱</span>
+                <a href="https://t.me/avickprogressplusBOT" target="_blank" rel="noopener noreferrer">PROGRESS+</a>
+              </div>
+              <div class="contact-item">
+                <span>✉️</span>
+                <span>contact@progress.education</span>
+              </div>
             </div>
-            
-            <div class="copyright">
-                &copy; 2025 Система управления учебным процессом «Прогресс». Создано репетиторами для репетиторов.
-            </div>
+          </div>
         </div>
+        
+        <div class="footer-legal">
+          <a href="#">Политика конфиденциальности</a>
+          <a href="#">Условия использования</a>
+        </div>
+        
+        <div class="footer-copyright">
+          © 2025 Система управления учебным процессом «Прогресс». Создано репетиторами для репетиторов.
+        </div>
+      </div>
     </footer>
+  </main>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Подсветка активной страницы в навигации
-            const currentPage = window.location.pathname.split('/').pop();
-            document.querySelectorAll('.nav-links a').forEach(link => {
-                if (link.getAttribute('href') === currentPage) {
-                    link.classList.add('active');
-                }
-            });
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Элементы
+      const sidebar = document.getElementById('sidebar');
+      const sidebarToggle = document.getElementById('sidebarToggle');
+      const sidebarOverlay = document.getElementById('sidebarOverlay');
+      const themeToggle = document.getElementById('themeToggle');
+      const themeIcon = document.getElementById('themeIcon');
+      const themeText = document.getElementById('themeText');
+      const navLinks = document.querySelectorAll('.nav-link');
 
-            // Табы функционала
-            const tabButtons = document.querySelectorAll('.tab-btn');
-            const tabContents = document.querySelectorAll('.tab-content');
+      // Инициализация темы
+      let currentTheme = localStorage.getItem('theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', currentTheme);
+      updateThemeUI(currentTheme);
 
-            tabButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const tabId = button.getAttribute('data-tab');
-                    
-                    // Убираем активный класс у всех кнопок и контента
-                    tabButtons.forEach(btn => btn.classList.remove('active'));
-                    tabContents.forEach(content => content.classList.remove('active'));
-                    
-                    // Добавляем активный класс текущей кнопке и соответствующему контенту
-                    button.classList.add('active');
-                    document.getElementById(`${tabId}-tab`).classList.add('active');
-                });
-            });
+      // Переключатель темы
+      function toggleTheme() {
+        currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        localStorage.setItem('theme', currentTheme);
+        updateThemeUI(currentTheme);
+      }
 
-            // Мобильное меню
-            const hamburger = document.querySelector('.hamburger');
-            const navLinks = document.querySelector('.nav-links');
+      function updateThemeUI(theme) {
+        if (theme === 'dark') {
+          themeIcon.textContent = '☀️';
+          themeText.textContent = 'Светлая тема';
+        } else {
+          themeIcon.textContent = '🌙';
+          themeText.textContent = 'Тёмная тема';
+        }
+      }
 
-            hamburger.addEventListener('click', () => {
-                navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
-                navLinks.style.flexDirection = 'column';
-                navLinks.style.position = 'absolute';
-                navLinks.style.top = '100%';
-                navLinks.style.left = '0';
-                navLinks.style.right = '0';
-                navLinks.style.background = 'rgba(10, 10, 10, 0.95)';
-                navLinks.style.backdropFilter = 'blur(10px)';
-                navLinks.style.padding = '20px';
-                navLinks.style.borderTop = '1px solid rgba(255, 255, 255, 0.1)';
-            });
+      themeToggle.addEventListener('click', toggleTheme);
 
-            // Закрытие меню при клике на ссылку
-            document.querySelectorAll('.nav-links a').forEach(link => {
-                link.addEventListener('click', () => {
-                    if (window.innerWidth <= 768) {
-                        navLinks.style.display = 'none';
-                    }
-                });
-            });
+      // Открытие/закрытие sidebar
+      function openSidebar() {
+        sidebar.classList.add('open');
+        sidebarOverlay.classList.add('show');
+        document.body.style.overflow = 'hidden';
+      }
 
-            // Адаптивное меню
-            window.addEventListener('resize', () => {
-                if (window.innerWidth > 768) {
-                    navLinks.style.display = 'flex';
-                    navLinks.style.flexDirection = 'row';
-                    navLinks.style.position = 'static';
-                    navLinks.style.background = 'transparent';
-                    navLinks.style.padding = '0';
-                    navLinks.style.borderTop = 'none';
-                } else {
-                    navLinks.style.display = 'none';
-                }
-            });
+      function closeSidebar() {
+        sidebar.classList.remove('open');
+        sidebarOverlay.classList.remove('show');
+        document.body.style.overflow = '';
+      }
+
+      sidebarToggle.addEventListener('click', function() {
+        if (sidebar.classList.contains('open')) {
+          closeSidebar();
+        } else {
+          openSidebar();
+        }
+      });
+
+      sidebarOverlay.addEventListener('click', closeSidebar);
+
+      // Закрытие при клике на ссылку (мобильные)
+      navLinks.forEach(function(link) {
+        link.addEventListener('click', function() {
+          if (window.innerWidth <= 1024) {
+            closeSidebar();
+          }
         });
-    </script>
+      });
+
+      // Закрытие по Esc
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+          closeSidebar();
+        }
+      });
+
+      // Табы
+      const tabButtons = document.querySelectorAll('.tab-button');
+      const tabContents = document.querySelectorAll('.tab-content');
+
+      tabButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+          const tabId = this.getAttribute('data-tab');
+          
+          tabButtons.forEach(function(btn) {
+            btn.classList.remove('active');
+          });
+          tabContents.forEach(function(content) {
+            content.classList.remove('active');
+          });
+          
+          this.classList.add('active');
+          document.getElementById(tabId + '-tab').classList.add('active');
+        });
+      });
+    });
+  </script>
 </body>
 </html>

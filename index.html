@@ -1,150 +1,73 @@
 <!DOCTYPE html>
-<html lang="ru" data-theme="dark">
+<html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Прогресс — Интеллектуальная экосистема для репетиторов и учеников</title>
-  <meta name="description" content="Система управления обучением для репетиторов. Автоматизация, аналитика, организация — всё в Telegram.">
-  <meta name="keywords" content="репетитор, обучение, Telegram бот, прогресс, образование, автоматизация">
-  
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  
-  <!-- Favicon -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>">
-  
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Прогресс — Telegram-бот для репетиторов и учеников</title>
   <style>
-    /* ============================================
-       APPLE-STYLE DESIGN SYSTEM
-       С боковой навигацией (Sidebar)
-       ============================================ */
+    /* Reset and Base */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-    /* ============================================
-       1. ПЕРЕМЕННЫЕ - ТЕМНАЯ ТЕМА
-       ============================================ */
     :root {
-      --bg-primary: #000000;
-      --bg-secondary: #0a0a0a;
-      --bg-tertiary: #111111;
-      --bg-card: #1c1c1e;
-      --bg-elevated: #2c2c2e;
-      
-      --text-primary: #ffffff;
-      --text-secondary: rgba(255, 255, 255, 0.7);
-      --text-tertiary: rgba(255, 255, 255, 0.5);
-      --text-disabled: rgba(255, 255, 255, 0.3);
-      
-      --accent-primary: #0a84ff;
-      --accent-primary-hover: #409cff;
-      --accent-secondary: #5e5ce6;
-      --accent-tertiary: #bf5af2;
-      --accent-green: #30d158;
-      --accent-orange: #ff9f0a;
-      
-      --gradient-primary: linear-gradient(135deg, #0a84ff 0%, #5e5ce6 50%, #bf5af2 100%);
-      --gradient-glow: linear-gradient(135deg, rgba(10, 132, 255, 0.3), rgba(94, 92, 230, 0.3));
-      
-      --border-primary: rgba(255, 255, 255, 0.15);
-      --border-secondary: rgba(255, 255, 255, 0.1);
-      --border-tertiary: rgba(255, 255, 255, 0.05);
-      
-      --shadow-1: 0 2px 8px rgba(0, 0, 0, 0.3);
-      --shadow-2: 0 4px 16px rgba(0, 0, 0, 0.4);
-      --shadow-3: 0 8px 32px rgba(0, 0, 0, 0.5);
-      --shadow-glow: 0 8px 40px rgba(10, 132, 255, 0.25);
-      
-      --glass-bg: rgba(28, 28, 30, 0.8);
-      --glass-bg-light: rgba(255, 255, 255, 0.05);
-      --overlay-bg: rgba(0, 0, 0, 0.6);
-      
-      --text-xs: 12px;
-      --text-sm: 14px;
-      --text-base: 16px;
-      --text-lg: 18px;
-      --text-xl: 20px;
-      --text-2xl: 24px;
-      --text-3xl: 30px;
-      --text-4xl: 38px;
-      --text-5xl: 48px;
-      --text-6xl: 64px;
-      --text-7xl: 80px;
-      
-      --font-light: 300;
-      --font-regular: 400;
-      --font-medium: 500;
-      --font-semibold: 600;
-      --font-bold: 700;
-      --font-black: 900;
-      
-      --leading-tight: 1.2;
-      --leading-normal: 1.5;
-      --leading-loose: 1.75;
-      
-      --tracking-tight: -0.02em;
-      
-      --space-1: 4px;
-      --space-2: 8px;
-      --space-3: 12px;
-      --space-4: 16px;
-      --space-5: 20px;
-      --space-6: 24px;
-      --space-8: 32px;
-      --space-10: 40px;
-      --space-12: 48px;
-      --space-16: 64px;
-      --space-20: 80px;
-      --space-24: 96px;
-      
+      --bg-primary: oklch(0.99 0.002 240);
+      --bg-secondary: oklch(1 0 0);
+      --bg-tertiary: oklch(0.96 0.01 240);
+      --text-primary: oklch(0.15 0.02 240);
+      --text-secondary: oklch(0.5 0.02 240);
+      --text-muted: oklch(0.6 0.02 240);
+      --border-color: oklch(0.92 0.01 240);
+      --accent-blue: oklch(0.45 0.18 250);
+      --accent-blue-light: oklch(0.65 0.18 250);
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
       --radius-sm: 8px;
       --radius-md: 12px;
       --radius-lg: 16px;
-      --radius-xl: 20px;
-      --radius-2xl: 24px;
-      --radius-full: 9999px;
-      
-      --sidebar-width: 260px;
-      --container-max: 1200px;
-      
-      --duration-fast: 0.15s;
-      --duration-normal: 0.3s;
-      --ease-out: cubic-bezier(0, 0, 0.2, 1);
+      --radius-xl: 24px;
+
+      /* Colors for cards */
+      --blue-50: oklch(0.95 0.05 250);
+      --blue-100: oklch(0.90 0.08 250);
+      --blue-200: oklch(0.80 0.12 250);
+      --blue-500: oklch(0.55 0.18 250);
+      --blue-600: oklch(0.45 0.18 250);
+      --blue-700: oklch(0.40 0.15 250);
+      --purple-50: oklch(0.95 0.05 300);
+      --purple-500: oklch(0.55 0.15 300);
+      --green-50: oklch(0.95 0.05 150);
+      --green-500: oklch(0.55 0.15 150);
+      --red-50: oklch(0.95 0.05 25);
+      --red-500: oklch(0.55 0.20 25);
+      --orange-50: oklch(0.95 0.08 70);
+      --orange-500: oklch(0.60 0.15 70);
+      --amber-50: oklch(0.98 0.05 90);
+      --amber-500: oklch(0.75 0.15 70);
     }
 
-    /* Светлая тема */
-    [data-theme="light"] {
-      --bg-primary: #ffffff;
-      --bg-secondary: #f5f5f7;
-      --bg-tertiary: #e5e5ea;
-      --bg-card: #ffffff;
-      --bg-elevated: #ffffff;
-      
-      --text-primary: #1d1d1f;
-      --text-secondary: rgba(0, 0, 0, 0.65);
-      --text-tertiary: rgba(0, 0, 0, 0.45);
-      
-      --accent-primary: #0071e3;
-      --accent-primary-hover: #0077ed;
-      
-      --border-primary: rgba(0, 0, 0, 0.12);
-      --border-secondary: rgba(0, 0, 0, 0.08);
-      
-      --shadow-1: 0 2px 8px rgba(0, 0, 0, 0.08);
-      --shadow-2: 0 4px 16px rgba(0, 0, 0, 0.12);
-      --shadow-3: 0 8px 32px rgba(0, 0, 0, 0.15);
-      --shadow-glow: 0 8px 40px rgba(0, 113, 227, 0.15);
-      
-      --glass-bg: rgba(255, 255, 255, 0.9);
-      --glass-bg-light: rgba(0, 0, 0, 0.03);
-      --overlay-bg: rgba(0, 0, 0, 0.4);
-    }
+    .dark {
+      --bg-primary: oklch(0.12 0.015 250);
+      --bg-secondary: oklch(0.17 0.015 250);
+      --bg-tertiary: oklch(0.22 0.015 250);
+      --text-primary: oklch(0.95 0.01 240);
+      --text-secondary: oklch(0.75 0.02 240);
+      --text-muted: oklch(0.55 0.02 240);
+      --border-color: oklch(0.25 0.015 250);
 
-    /* Сброс */
-    *, *::before, *::after {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+      --blue-50: oklch(0.20 0.05 250);
+      --blue-100: oklch(0.25 0.08 250);
+      --blue-500: oklch(0.60 0.18 250);
+      --blue-600: oklch(0.65 0.18 250);
+      --purple-50: oklch(0.20 0.05 300);
+      --purple-500: oklch(0.60 0.15 300);
+      --green-50: oklch(0.20 0.05 150);
+      --green-500: oklch(0.60 0.15 150);
+      --red-50: oklch(0.20 0.05 25);
+      --orange-50: oklch(0.20 0.08 70);
+      --amber-50: oklch(0.18 0.05 90);
     }
 
     html {
@@ -154,1636 +77,2492 @@
     }
 
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
-      font-size: var(--text-base);
-      font-weight: var(--font-regular);
-      line-height: var(--leading-normal);
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg-primary);
       color: var(--text-primary);
-      background-color: var(--bg-primary);
-      overflow-x: hidden;
-      min-height: 100vh;
+      line-height: 1.6;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* Layout */
+    .app-container {
       display: flex;
-    }
-
-    /* ============================================
-       2. БОКОВАЯ НАВИГАЦИЯ (SIDEBAR)
-       ============================================ */
-    
-    /* Overlay для мобильных */
-    .sidebar-overlay {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: var(--overlay-bg);
-      z-index: 998;
-      opacity: 0;
-      transition: opacity var(--duration-normal) var(--ease-out);
-    }
-
-    .sidebar-overlay.show {
-      opacity: 1;
+      min-height: 100vh;
     }
 
     /* Sidebar */
     .sidebar {
-      width: var(--sidebar-width);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 280px;
       height: 100vh;
-      background-color: var(--bg-secondary);
-      border-right: 1px solid var(--border-secondary);
+      background: var(--bg-secondary);
+      border-right: 1px solid var(--border-color);
       display: flex;
       flex-direction: column;
-      position: sticky;
-      top: 0;
-      flex-shrink: 0;
-      z-index: 999;
+      z-index: 100;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+      overflow: hidden;
+    }
+
+    .sidebar.open {
+      transform: translateX(0);
+    }
+
+    @media (min-width: 1024px) {
+      .sidebar {
+        transform: translateX(0);
+      }
+      .sidebar.collapsed {
+        transform: translateX(-100%);
+      }
     }
 
     .sidebar-header {
-      padding: var(--space-6);
-      border-bottom: 1px solid var(--border-secondary);
+      padding: 24px;
+      border-bottom: 1px solid var(--border-color);
     }
 
-    .sidebar-brand {
+    .logo {
       display: flex;
       align-items: center;
-      gap: var(--space-3);
-      font-size: var(--text-xl);
-      font-weight: var(--font-bold);
+      gap: 12px;
+    }
+
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent-blue), #8b5cf6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 18px;
+    }
+
+    .logo-text h1 {
+      font-size: 16px;
+      font-weight: 600;
       color: var(--text-primary);
-      text-decoration: none;
     }
 
-    .sidebar-brand .brand-icon {
-      font-size: var(--text-2xl);
-    }
-
-    .sidebar-brand .brand-dot {
-      color: var(--accent-primary);
+    .logo-text p {
+      font-size: 12px;
+      color: var(--text-muted);
     }
 
     .sidebar-nav {
       flex: 1;
-      padding: var(--space-4);
       overflow-y: auto;
+      padding: 16px;
     }
 
-    .nav-section {
-      margin-bottom: var(--space-6);
-    }
-
-    .nav-section-title {
-      font-size: var(--text-xs);
-      font-weight: var(--font-semibold);
-      color: var(--text-tertiary);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      padding: var(--space-2) var(--space-3);
-      margin-bottom: var(--space-2);
-    }
-
-    .nav-links {
-      list-style: none;
-    }
-
-    .nav-link {
+    .nav-item {
       display: flex;
       align-items: center;
-      gap: var(--space-3);
-      padding: var(--space-3) var(--space-4);
+      gap: 12px;
+      padding: 10px 16px;
+      border-radius: 12px;
+      cursor: pointer;
       color: var(--text-secondary);
       text-decoration: none;
-      font-weight: var(--font-medium);
-      border-radius: var(--radius-md);
-      transition: all var(--duration-fast) var(--ease-out);
-      margin-bottom: var(--space-1);
+      transition: all 0.2s ease;
+      margin-bottom: 4px;
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left;
+      font-size: 14px;
     }
 
-    .nav-link:hover {
+    .nav-item:hover {
+      background: var(--bg-tertiary);
       color: var(--text-primary);
-      background-color: var(--glass-bg-light);
     }
 
-    .nav-link.active {
-      color: var(--text-primary);
-      background: var(--gradient-primary);
-      box-shadow: var(--shadow-glow);
+    .nav-item.active {
+      background: var(--blue-50);
+      color: var(--accent-blue);
+      font-weight: 500;
     }
 
-    .nav-link-icon {
-      font-size: var(--text-lg);
-      width: 24px;
-      text-align: center;
+    .nav-item .icon {
+      font-size: 18px;
+    }
+
+    .nav-item .arrow {
+      margin-left: auto;
+      transition: transform 0.2s ease;
+    }
+
+    .nav-item.expanded .arrow {
+      transform: rotate(90deg);
+    }
+
+    .nav-children {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .nav-children.open {
+      max-height: 500px;
+    }
+
+    .nav-child {
+      padding: 8px 16px 8px 44px;
+      font-size: 13px;
     }
 
     .sidebar-footer {
-      padding: var(--space-4);
-      border-top: 1px solid var(--border-secondary);
+      padding: 16px;
+      border-top: 1px solid var(--border-color);
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-muted);
     }
 
-    .theme-toggle {
+    /* Header */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border-color);
+      backdrop-filter: blur(20px);
+    }
+
+    .header-content {
       display: flex;
       align-items: center;
-      gap: var(--space-3);
-      width: 100%;
-      padding: var(--space-3) var(--space-4);
-      background: var(--glass-bg-light);
-      border: 1px solid var(--border-secondary);
-      border-radius: var(--radius-md);
-      color: var(--text-secondary);
-      font-weight: var(--font-medium);
-      font-family: inherit;
-      font-size: var(--text-base);
+      justify-content: space-between;
+      height: 64px;
+      padding: 0 24px;
+    }
+
+    .menu-toggle {
+      padding: 8px;
+      border-radius: 12px;
+      border: none;
+      background: none;
       cursor: pointer;
-      transition: all var(--duration-fast) var(--ease-out);
+      color: var(--text-secondary);
+      transition: background 0.2s ease;
     }
 
-    .theme-toggle:hover {
+    .menu-toggle:hover {
+      background: var(--bg-tertiary);
+    }
+
+    .mobile-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .mobile-logo .logo-icon {
+      width: 32px;
+      height: 32px;
+      font-size: 14px;
+      border-radius: 8px;
+    }
+
+    .mobile-logo span {
+      font-weight: 600;
       color: var(--text-primary);
-      border-color: var(--border-primary);
     }
 
-    /* ============================================
-       3. КНОПКА МЕНЮ (МОБИЛЬНАЯ)
-       ============================================ */
-    .menu-btn {
-      display: none;
-      position: fixed;
-      top: var(--space-4);
-      left: var(--space-4);
-      width: 48px;
-      height: 48px;
-      background: var(--bg-card);
-      border: 1px solid var(--border-secondary);
-      border-radius: var(--radius-md);
+    @media (min-width: 1024px) {
+      .mobile-logo {
+        display: none;
+      }
+    }
+
+    /* Theme Toggle */
+    .theme-toggle {
+      position: relative;
+      width: 56px;
+      height: 32px;
+      border-radius: 16px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      background: linear-gradient(135deg, #87ceeb 0%, #f0f9ff 100%);
+    }
+
+    .dark .theme-toggle {
+      background: linear-gradient(135deg, #1e3a5f 0%, #0f172a 100%);
+    }
+
+    .theme-toggle .sun,
+    .theme-toggle .moon {
+      position: absolute;
+      top: 4px;
+      width: 24px;
+      height: 24px;
+      display: flex;
       align-items: center;
       justify-content: center;
-      cursor: pointer;
-      z-index: 1000;
-      color: var(--text-primary);
-      box-shadow: var(--shadow-2);
-      transition: all var(--duration-fast) var(--ease-out);
+      transition: all 0.3s ease;
     }
 
-    .menu-btn:hover {
-      background: var(--bg-elevated);
-      border-color: var(--border-primary);
+    .theme-toggle .sun {
+      left: 4px;
+      color: #f59e0b;
     }
 
-    /* ============================================
-       4. ОСНОВНОЙ КОНТЕНТ
-       ============================================ */
+    .theme-toggle .moon {
+      right: 4px;
+      color: #cbd5e1;
+    }
+
+    .dark .theme-toggle .sun {
+      opacity: 0;
+      transform: rotate(90deg) scale(0);
+    }
+
+    .dark .theme-toggle .moon {
+      opacity: 1;
+      transform: rotate(0) scale(1);
+    }
+
+    .theme-toggle .moon {
+      opacity: 0;
+      transform: rotate(-90deg) scale(0);
+    }
+
+    .dark .theme-toggle .moon {
+      opacity: 1;
+      transform: rotate(0) scale(1);
+    }
+
+    .theme-toggle .toggle-circle {
+      position: absolute;
+      top: 4px;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: white;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      transition: left 0.3s ease;
+      left: 4px;
+    }
+
+    .dark .theme-toggle .toggle-circle {
+      left: 28px;
+    }
+
+    /* Main Content */
     .main-content {
       flex: 1;
-      min-width: 0;
+      margin-left: 0;
+      transition: margin-left 0.3s ease;
     }
 
-    .container {
-      max-width: var(--container-max);
+    @media (min-width: 1024px) {
+      .main-content {
+        margin-left: 280px;
+      }
+      .main-content.sidebar-collapsed {
+        margin-left: 0;
+      }
+    }
+
+    .content-wrapper {
+      max-width: 800px;
       margin: 0 auto;
-      padding: 0 var(--space-6);
+      padding: 32px 24px;
     }
 
-    /* ============================================
-       5. ТИПОГРАФИКА
-       ============================================ */
-    h1, h2, h3, h4, h5, h6 {
-      font-weight: var(--font-bold);
-      line-height: var(--leading-tight);
-      letter-spacing: var(--tracking-tight);
+    @media (min-width: 768px) {
+      .content-wrapper {
+        padding: 48px;
+      }
+    }
+
+    /* Overlay */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(4px);
+      z-index: 90;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Sections */
+    section {
+      margin-bottom: 64px;
+      scroll-margin-top: 100px;
+    }
+
+    h2 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      letter-spacing: -0.02em;
+    }
+
+    @media (min-width: 768px) {
+      h2 {
+        font-size: 32px;
+      }
+    }
+
+    h3 {
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    h4 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 12px;
       color: var(--text-primary);
     }
-
-    h1 { font-size: var(--text-6xl); font-weight: var(--font-black); }
-    h2 { font-size: var(--text-4xl); }
-    h3 { font-size: var(--text-2xl); }
-    h4 { font-size: var(--text-xl); }
-    h5 { font-size: var(--text-lg); font-weight: var(--font-semibold); }
 
     p {
       color: var(--text-secondary);
-      line-height: var(--leading-normal);
+      margin-bottom: 16px;
+      line-height: 1.7;
     }
 
-    a {
-      color: var(--accent-primary);
-      text-decoration: none;
-      transition: color var(--duration-fast) var(--ease-out);
-    }
-
-    a:hover { color: var(--accent-primary-hover); }
-
-    strong, b {
-      font-weight: var(--font-semibold);
-      color: var(--text-primary);
-    }
-
-    .gradient-text {
-      background: var(--gradient-primary);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    /* ============================================
-       6. КОМПОНЕНТЫ
-       ============================================ */
-
-    /* Кнопки */
-    .button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: var(--space-2);
-      padding: var(--space-3) var(--space-6);
-      border-radius: var(--radius-lg);
-      font-size: var(--text-base);
-      font-weight: var(--font-semibold);
-      font-family: inherit;
-      cursor: pointer;
-      transition: all var(--duration-normal) var(--ease-out);
-      border: none;
-      white-space: nowrap;
-    }
-
-    .button-primary {
-      background: var(--gradient-primary);
-      color: white;
-      box-shadow: var(--shadow-glow);
-    }
-
-    .button-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 40px rgba(10, 132, 255, 0.35);
-    }
-
-    .button-secondary {
-      background: var(--glass-bg-light);
-      color: var(--text-primary);
-      border: 1px solid var(--border-primary);
-    }
-
-    .button-secondary:hover {
-      transform: translateY(-2px);
-      background: var(--bg-card);
-    }
-
-    .button-small {
-      padding: var(--space-2) var(--space-4);
-      font-size: var(--text-sm);
-      border-radius: var(--radius-md);
-    }
-
-    .button-large {
-      padding: var(--space-4) var(--space-8);
-      font-size: var(--text-lg);
-    }
-
-    .button-block {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      text-align: left;
-      padding: var(--space-5) var(--space-6);
-      flex: 1;
-    }
-
-    .button-block .button-icon {
-      font-size: var(--text-2xl);
-      margin-bottom: var(--space-2);
-    }
-
-    .button-block .button-title {
-      font-weight: var(--font-bold);
-      margin-bottom: var(--space-1);
-    }
-
-    .button-block .button-subtext {
-      font-size: var(--text-sm);
-      color: var(--text-secondary);
-      font-weight: var(--font-regular);
-      opacity: 0.8;
-    }
-
-    /* Карточки */
+    /* Cards */
     .card {
-      background-color: var(--bg-card);
-      border-radius: var(--radius-2xl);
-      padding: var(--space-6);
-      border: 1px solid var(--border-secondary);
-      transition: all var(--duration-normal) var(--ease-out);
-      position: relative;
-      overflow: hidden;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-xl);
+      padding: 24px;
+      margin-bottom: 24px;
     }
 
-    .card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--accent-primary), transparent);
-      opacity: 0;
-      transition: opacity var(--duration-normal) var(--ease-out);
+    /* Feature Cards */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin-top: 32px;
     }
 
-    .card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-3);
-      border-color: var(--border-primary);
+    @media (min-width: 768px) {
+      .feature-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
     }
 
-    .card:hover::before {
-      opacity: 1;
+    .feature-card {
+      padding: 24px;
+      border-radius: var(--radius-xl);
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      transition: all 0.3s ease;
     }
 
-    /* Бейджи */
+    .feature-card:hover {
+      border-color: var(--accent-blue);
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
+    }
+
+    .feature-card .icon {
+      font-size: 32px;
+      margin-bottom: 16px;
+    }
+
+    .feature-card h3 {
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+
+    .feature-card p {
+      font-size: 14px;
+      margin-bottom: 0;
+    }
+
+    /* Problem/Solution Cards */
+    .problem-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 16px;
+      border-radius: var(--radius-md);
+      background: var(--red-50);
+      border: 1px solid transparent;
+      margin-bottom: 12px;
+    }
+
+    .solution-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 20px;
+      border-radius: var(--radius-md);
+      background: var(--green-50);
+      border: 1px solid transparent;
+      margin-bottom: 12px;
+    }
+
+    /* Badge */
     .badge {
       display: inline-flex;
       align-items: center;
-      gap: var(--space-2);
-      padding: var(--space-2) var(--space-4);
-      border-radius: var(--radius-full);
-      font-size: var(--text-xs);
-      font-weight: var(--font-semibold);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: var(--radius-md);
+      background: var(--bg-tertiary);
+      color: var(--text-muted);
+      font-size: 13px;
+      margin-bottom: 16px;
     }
 
-    .badge-primary {
-      background: var(--gradient-primary);
+    .badge svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    /* Steps */
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .step {
+      display: flex;
+      gap: 16px;
+    }
+
+    .step-number {
+      flex-shrink: 0;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--accent-blue);
       color: white;
-      box-shadow: var(--shadow-glow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 14px;
     }
 
-    .badge-secondary {
-      background: var(--glass-bg-light);
+    .step-content h4 {
+      margin-bottom: 4px;
+    }
+
+    /* Tags */
+    .tag {
+      display: inline-block;
+      padding: 8px 16px;
+      border-radius: 20px;
+      background: var(--bg-tertiary);
       color: var(--text-secondary);
-      border: 1px solid var(--border-secondary);
+      font-size: 14px;
+      margin: 4px;
     }
 
-    /* ============================================
-       7. СЕКЦИИ
-       ============================================ */
-    .section {
-      padding: var(--space-24) 0;
-      position: relative;
-    }
-
-    .section-alt {
-      background-color: var(--bg-secondary);
-      position: relative;
-    }
-
-    .section-alt::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--accent-primary), transparent);
-    }
-
-    .section-header {
-      text-align: center;
-      margin-bottom: var(--space-16);
-      max-width: 800px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .section-title {
-      font-size: var(--text-5xl);
-      font-weight: var(--font-bold);
-      margin-bottom: var(--space-4);
-    }
-
-    .section-subtitle {
-      font-size: var(--text-xl);
+    /* Action Buttons */
+    .action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 12px;
+      border-radius: var(--radius-sm);
+      background: var(--bg-tertiary);
       color: var(--text-secondary);
-      max-width: 600px;
-      margin: 0 auto;
-      line-height: var(--leading-loose);
+      font-size: 13px;
+      margin: 4px;
     }
 
-    /* Сетки */
-    .grid-2 {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: var(--space-6);
+    /* Info Box */
+    .info-box {
+      padding: 16px;
+      border-radius: var(--radius-md);
+      margin-top: 24px;
     }
 
-    .grid-3 {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: var(--space-6);
+    .info-box.warning {
+      background: var(--amber-50);
     }
 
-    /* ============================================
-       8. HERO
-       ============================================ */
-    .hero {
-      padding: var(--space-24) 0;
-      position: relative;
+    .info-box.info {
+      background: var(--blue-50);
+    }
+
+    .info-box p {
+      margin-bottom: 0;
+      font-size: 14px;
+    }
+
+    /* FAQ Accordion */
+    .faq-item {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-xl);
+      margin-bottom: 12px;
       overflow: hidden;
     }
 
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -30%;
-      width: 80%;
-      height: 150%;
-      background: radial-gradient(ellipse at center, var(--gradient-glow), transparent 70%);
-      z-index: -1;
-      animation: heroGlow 8s ease-in-out infinite alternate;
-    }
-
-    @keyframes heroGlow {
-      0% { opacity: 0.5; transform: translateX(-10%); }
-      100% { opacity: 0.8; transform: translateX(10%); }
-    }
-
-    .hero-badge {
-      margin-bottom: var(--space-6);
-    }
-
-    .hero-title {
-      font-size: var(--text-7xl);
-      font-weight: var(--font-black);
-      line-height: 1.05;
-      margin-bottom: var(--space-6);
-      letter-spacing: -0.03em;
-    }
-
-    .hero-subtitle {
-      font-size: var(--text-xl);
-      color: var(--text-secondary);
-      margin-bottom: var(--space-10);
-      line-height: var(--leading-loose);
-      max-width: 800px;
-    }
-
-    .hero-stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: var(--space-6);
-      margin-bottom: var(--space-10);
-    }
-
-    .stat-card {
-      text-align: center;
-      padding: var(--space-6);
-      background-color: var(--bg-card);
-      border-radius: var(--radius-2xl);
-      border: 1px solid var(--border-secondary);
-      transition: all var(--duration-normal) var(--ease-out);
-    }
-
-    .stat-card:hover {
-      transform: translateY(-2px);
-      border-color: var(--border-primary);
-    }
-
-    .stat-value {
-      font-size: var(--text-5xl);
-      font-weight: var(--font-black);
-      background: var(--gradient-primary);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      display: block;
-      line-height: 1;
-      margin-bottom: var(--space-3);
-    }
-
-    .stat-label {
-      font-size: var(--text-sm);
-      color: var(--text-tertiary);
-      display: block;
-      line-height: var(--leading-normal);
-    }
-
-    .hero-cta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--space-4);
-      margin-bottom: var(--space-8);
-    }
-
-    .hero-note {
+    .faq-question {
       display: flex;
       align-items: center;
-      gap: var(--space-3);
-      color: var(--text-tertiary);
-      font-size: var(--text-sm);
-    }
-
-    /* ============================================
-       9. ИСТОРИЯ / ЭКОСИСТЕМА / ШАГИ
-       ============================================ */
-    .story-card, .ecosystem-card, .step-card, .result-card {
-      padding: var(--space-8);
-    }
-
-    .story-icon, .ecosystem-icon, .step-icon, .result-icon {
-      width: 64px;
-      height: 64px;
-      background: var(--gradient-primary);
-      border-radius: var(--radius-xl);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: var(--text-2xl);
-      color: white;
-      margin-bottom: var(--space-5);
-    }
-
-    .ecosystem-subtitle {
-      color: var(--accent-primary);
-      font-size: var(--text-base);
-      font-weight: var(--font-medium);
-      margin-bottom: var(--space-4);
-    }
-
-    .ecosystem-audience {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--space-2);
-      margin-top: var(--space-5);
-      margin-bottom: var(--space-4);
-    }
-
-    .audience-badge {
-      padding: var(--space-1) var(--space-3);
-      background-color: var(--glass-bg-light);
-      border: 1px solid var(--border-secondary);
-      border-radius: var(--radius-full);
-      font-size: var(--text-xs);
-      font-weight: var(--font-medium);
-      color: var(--text-secondary);
-    }
-
-    /* ============================================
-       10. ТАБЫ
-       ============================================ */
-    .tabs-container {
-      margin-bottom: var(--space-10);
-    }
-
-    .tabs-buttons {
-      display: flex;
-      justify-content: center;
-      gap: var(--space-3);
-      margin-bottom: var(--space-8);
-    }
-
-    .tab-button {
-      padding: var(--space-3) var(--space-6);
-      background: transparent;
-      border: 1px solid var(--border-primary);
-      border-radius: var(--radius-xl);
-      color: var(--text-secondary);
-      font-weight: var(--font-semibold);
-      font-family: inherit;
-      font-size: var(--text-base);
+      justify-content: space-between;
+      padding: 20px;
       cursor: pointer;
-      transition: all var(--duration-normal) var(--ease-out);
+      background: none;
+      border: none;
+      width: 100%;
+      text-align: left;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-primary);
+      transition: background 0.2s ease;
     }
 
-    .tab-button:hover:not(.active) {
-      border-color: var(--text-tertiary);
+    .faq-question:hover {
+      background: var(--bg-tertiary);
+    }
+
+    .faq-question svg {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      transition: transform 0.3s ease;
+      color: var(--text-muted);
+    }
+
+    .faq-item.open .faq-question svg {
+      transform: rotate(180deg);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .faq-item.open .faq-answer {
+      max-height: 500px;
+    }
+
+    .faq-answer-content {
+      padding: 0 20px 20px;
+      font-size: 14px;
+      color: var(--text-secondary);
+      border-top: 1px solid var(--border-color);
+      padding-top: 16px;
+    }
+
+    /* Glossary */
+    .glossary-term {
+      display: flex;
+      gap: 16px;
+      padding: 16px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .glossary-term:last-child {
+      border-bottom: none;
+    }
+
+    .glossary-term .term {
+      min-width: 140px;
+      font-weight: 600;
       color: var(--text-primary);
     }
 
-    .tab-button.active {
-      background: var(--gradient-primary);
-      color: white;
-      border-color: transparent;
-      box-shadow: var(--shadow-glow);
-    }
-
-    .tab-content {
-      display: none;
-    }
-
-    .tab-content.active {
-      display: block;
-      animation: fadeIn var(--duration-normal) var(--ease-out);
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    /* ============================================
-       11. ФУНКЦИИ
-       ============================================ */
-    .feature-item {
+    .status-badge {
       display: flex;
-      gap: var(--space-4);
-      padding: var(--space-5);
-      background-color: var(--bg-card);
-      border-radius: var(--radius-xl);
-      border: 1px solid var(--border-secondary);
-      transition: all var(--duration-normal) var(--ease-out);
+      align-items: center;
+      gap: 12px;
+      padding: 16px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      margin-bottom: 12px;
     }
 
-    .feature-item:hover {
-      border-color: var(--border-primary);
-      transform: translateY(-2px);
+    .status-badge code {
+      font-size: 13px;
+      color: var(--accent-blue);
+      background: var(--blue-50);
+      padding: 2px 8px;
+      border-radius: 4px;
     }
 
-    .feature-icon-small {
+    /* Scroll to top */
+    .scroll-top {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
       width: 48px;
       height: 48px;
-      min-width: 48px;
-      background: var(--gradient-primary);
-      border-radius: var(--radius-md);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: var(--text-lg);
+      border-radius: 50%;
+      background: var(--accent-blue);
       color: white;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-md);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s ease;
+      z-index: 80;
     }
 
-    .feature-text h5 {
-      margin-bottom: var(--space-2);
+    .scroll-top.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
-    .feature-text p {
-      font-size: var(--text-sm);
-      line-height: var(--leading-normal);
+    .scroll-top:hover {
+      transform: scale(1.1);
     }
 
-    /* ============================================
-       12. CTA
-       ============================================ */
-    .cta-section {
-      padding: var(--space-24) 0;
-    }
-
-    .cta-content {
+    /* Footer */
+    footer {
+      padding: 24px;
+      border-top: 1px solid var(--border-color);
       text-align: center;
-      padding: var(--space-16) var(--space-8);
-      max-width: 800px;
-      margin: 0 auto;
+      color: var(--text-muted);
+      font-size: 14px;
     }
 
-    .cta-content h2 {
-      margin-bottom: var(--space-4);
-    }
-
-    .cta-content > p {
-      font-size: var(--text-lg);
-      margin-bottom: var(--space-8);
-      line-height: var(--leading-loose);
-    }
-
-    .cta-features {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-4);
-      margin-bottom: var(--space-8);
-      max-width: 500px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .cta-feature {
-      display: flex;
-      align-items: center;
-      gap: var(--space-3);
+    /* Lists */
+    ul, ol {
+      margin-left: 24px;
+      margin-bottom: 16px;
       color: var(--text-secondary);
-      font-size: var(--text-base);
     }
 
-    .cta-feature-icon {
-      color: var(--accent-green);
-      font-size: var(--text-lg);
+    li {
+      margin-bottom: 8px;
     }
 
-    .cta-buttons {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: var(--space-4);
-      margin-bottom: var(--space-6);
+    /* Code */
+    code {
+      font-family: 'SF Mono', Monaco, 'Courier New', monospace;
+      font-size: 13px;
+      background: var(--bg-tertiary);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--accent-blue);
     }
 
-    .cta-note {
-      font-size: var(--text-sm);
-      color: var(--text-tertiary);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: var(--space-2);
-    }
-
-    /* ============================================
-       13. ФУТЕР
-       ============================================ */
-    .footer {
-      background-color: var(--bg-secondary);
-      padding: var(--space-16) 0 var(--space-8);
-      position: relative;
-    }
-
-    .footer::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--border-primary), transparent);
-    }
-
-    .footer-content {
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr 1fr;
-      gap: var(--space-12);
-      margin-bottom: var(--space-12);
-    }
-
-    .footer-logo {
-      font-size: var(--text-xl);
-      font-weight: var(--font-bold);
-      margin-bottom: var(--space-3);
+    strong {
       color: var(--text-primary);
     }
 
-    .footer-description {
-      color: var(--text-secondary);
-      font-size: var(--text-sm);
-      line-height: var(--leading-normal);
-      margin-bottom: var(--space-4);
-    }
-
-    .footer-tech {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--space-2);
-    }
-
-    .tech-tag {
-      padding: var(--space-1) var(--space-3);
-      background-color: var(--glass-bg-light);
-      border: 1px solid var(--border-secondary);
-      border-radius: var(--radius-full);
-      font-size: var(--text-xs);
-      font-weight: var(--font-medium);
-      color: var(--text-tertiary);
-    }
-
-    .footer-column h4 {
-      font-size: var(--text-base);
-      font-weight: var(--font-semibold);
-      margin-bottom: var(--space-4);
-      color: var(--text-primary);
-    }
-
-    .footer-links {
-      list-style: none;
-    }
-
-    .footer-links li {
-      margin-bottom: var(--space-2);
-    }
-
-    .footer-links a {
-      color: var(--text-secondary);
-      font-size: var(--text-sm);
-    }
-
-    .footer-links a:hover {
-      color: var(--accent-primary);
-    }
-
-    .footer-contact {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-3);
-    }
-
-    .contact-item {
-      display: flex;
-      align-items: center;
-      gap: var(--space-2);
-      color: var(--text-secondary);
-      font-size: var(--text-sm);
-    }
-
-    .contact-item span {
-      color: var(--accent-primary);
-    }
-
-    .contact-item a {
-      color: var(--text-secondary);
-    }
-
-    .contact-item a:hover {
-      color: var(--accent-primary);
-    }
-
-    .footer-legal {
-      display: flex;
-      justify-content: center;
-      gap: var(--space-6);
-      padding: var(--space-6) 0;
-      border-top: 1px solid var(--border-secondary);
-      margin-bottom: var(--space-4);
-    }
-
-    .footer-legal a {
-      color: var(--text-tertiary);
-      font-size: var(--text-sm);
-    }
-
-    .footer-legal a:hover {
-      color: var(--text-secondary);
-    }
-
-    .footer-copyright {
-      text-align: center;
-      color: var(--text-tertiary);
-      font-size: var(--text-sm);
-    }
-
-    /* ============================================
-       14. АДАПТИВНОСТЬ
-       ============================================ */
-
-    /* Планшеты и мобильные */
-    @media (max-width: 1024px) {
-      :root {
-        --text-7xl: 56px;
-        --text-6xl: 44px;
-        --text-5xl: 36px;
-        --text-4xl: 30px;
-      }
-      
-      body {
-        flex-direction: column;
-      }
-      
-      /* Sidebar для мобильных */
-      .sidebar {
-        position: fixed;
-        left: -280px;
-        top: 0;
-        height: 100vh;
-        width: 280px;
-        transition: left var(--duration-normal) var(--ease-out);
-        z-index: 999;
-      }
-      
-      .sidebar.open {
-        left: 0;
-      }
-      
-      .sidebar-overlay {
-        display: block;
-      }
-      
-      .menu-btn {
-        display: flex;
-      }
-      
-      .hero-stats {
-        grid-template-columns: 1fr;
-        max-width: 500px;
-      }
-      
-      .stat-card {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        text-align: left;
-        padding: var(--space-5);
-      }
-      
-      .stat-value {
-        font-size: var(--text-4xl);
-        margin-bottom: 0;
-      }
-      
-      .stat-label {
-        text-align: right;
-        max-width: 200px;
-      }
-      
-      .grid-2, .grid-3 {
-        grid-template-columns: 1fr;
-      }
-      
-      .footer-content {
-        grid-template-columns: 1fr 1fr;
-        gap: var(--space-8);
-      }
-      
-      .footer-brand {
-        grid-column: 1 / -1;
-        text-align: center;
-      }
-    }
-
-    /* Мобильные */
-    @media (max-width: 768px) {
-      :root {
-        --text-7xl: 40px;
-        --text-6xl: 32px;
-        --text-5xl: 28px;
-        --text-4xl: 24px;
-        --text-3xl: 22px;
-      }
-      
-      .section {
-        padding: var(--space-16) 0;
-      }
-      
-      .hero {
-        padding: var(--space-20) 0 var(--space-16);
-      }
-      
-      .hero-cta {
-        flex-direction: column;
-      }
-      
-      .hero-cta .button {
-        width: 100%;
-      }
-      
-      .tabs-buttons {
-        flex-direction: column;
-      }
-      
-      .tab-button {
-        width: 100%;
-      }
-      
-      .cta-buttons {
-        flex-direction: column;
-      }
-      
-      .cta-buttons .button {
-        width: 100%;
-      }
-      
-      .footer-content {
-        grid-template-columns: 1fr;
-        text-align: center;
-      }
-      
-      .footer-tech {
-        justify-content: center;
-      }
-      
-      .footer-contact {
-        align-items: center;
-      }
-      
-      .footer-legal {
-        flex-direction: column;
-        gap: var(--space-2);
-        align-items: center;
-      }
-    }
-
-    /* Маленькие экраны */
-    @media (max-width: 375px) {
-      :root {
-        --text-7xl: 32px;
-        --text-6xl: 28px;
-        --text-5xl: 24px;
-        --text-4xl: 22px;
-      }
-      
-      .container {
-        padding: 0 var(--space-4);
-      }
-    }
-
-    /* Скроллбар */
+    /* Custom scrollbar */
     ::-webkit-scrollbar {
       width: 8px;
     }
 
     ::-webkit-scrollbar-track {
-      background: var(--bg-secondary);
+      background: transparent;
     }
 
     ::-webkit-scrollbar-thumb {
-      background: var(--border-primary);
-      border-radius: var(--radius-full);
+      background: var(--text-muted);
+      border-radius: 4px;
     }
 
     ::-webkit-scrollbar-thumb:hover {
-      background: var(--text-tertiary);
+      background: var(--text-secondary);
     }
 
-    ::selection {
-      background-color: var(--accent-primary);
-      color: white;
+    /* Grid layouts */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
     }
 
-    *:focus-visible {
-      outline: 2px solid var(--accent-primary);
-      outline-offset: 2px;
+    @media (min-width: 768px) {
+      .grid-2 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    @media (min-width: 768px) {
+      .grid-3 {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    @media (min-width: 768px) {
+      .grid-4 {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 20px;
+      background: var(--blue-50);
+      color: var(--accent-blue);
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 24px;
+    }
+
+    .hero-badge .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-blue);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .hero h1 {
+      font-size: 36px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      letter-spacing: -0.02em;
+    }
+
+    @media (min-width: 768px) {
+      .hero h1 {
+        font-size: 48px;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .hero h1 {
+        font-size: 60px;
+      }
+    }
+
+    .hero h1 .gradient {
+      background: linear-gradient(135deg, var(--accent-blue), #8b5cf6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero .subtitle {
+      font-size: 20px;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Menu buttons */
+    .menu-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 16px;
+      border-radius: var(--radius-md);
+      background: var(--bg-tertiary);
+      text-align: center;
+      transition: background 0.2s ease;
+    }
+
+    .menu-btn .icon {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    .menu-btn .label {
+      font-weight: 500;
+      color: var(--text-primary);
+      font-size: 14px;
+    }
+
+    .menu-btn .desc {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* Notification list */
+    .notification-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px;
+      background: var(--bg-tertiary);
+      border-radius: var(--radius-md);
+      margin-bottom: 12px;
+    }
+
+    .notification-item .icon {
+      font-size: 20px;
+    }
+
+    /* Technical cards */
+    .tech-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 24px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-xl);
+      margin-bottom: 16px;
+    }
+
+    .tech-card .icon-box {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+
+    .tech-card .icon-box.blue { background: var(--blue-50); }
+    .tech-card .icon-box.purple { background: var(--purple-50); }
+    .tech-card .icon-box.green { background: var(--green-50); }
+    .tech-card .icon-box.orange { background: var(--orange-50); }
+
+    /* Inline colored boxes */
+    .box-blue {
+      background: var(--blue-50);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      margin: 12px 0;
+    }
+
+    .box-green {
+      background: var(--green-50);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      margin: 12px 0;
+    }
+
+    .box-purple {
+      background: var(--purple-50);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      margin: 12px 0;
+    }
+
+    .box-orange {
+      background: var(--orange-50);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      margin: 12px 0;
     }
   </style>
 </head>
 <body>
-  <!-- Overlay для мобильных -->
-  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="app-container">
+    <!-- Overlay -->
+    <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
 
-  <!-- Боковая навигация -->
-  <aside class="sidebar" id="sidebar">
-    <div class="sidebar-header">
-      <a href="index.html" class="sidebar-brand">
-        <span class="brand-icon">🚀</span>
-        Progress<span class="brand-dot">.</span>
-      </a>
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">
+          <div class="logo-icon">П</div>
+          <div class="logo-text">
+            <h1>Прогресс</h1>
+            <p>Telegram-бот</p>
+          </div>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="#introduction" class="nav-item" data-section="introduction">
+          <span class="icon">👋</span>
+          <span>Введение</span>
+        </a>
+
+        <div class="nav-group">
+          <button class="nav-item" onclick="toggleNav(this)" data-section="quick-start">
+            <span class="icon">🚀</span>
+            <span>Быстрый старт</span>
+            <span class="arrow">▶</span>
+          </button>
+          <div class="nav-children">
+            <a href="#for-students" class="nav-item nav-child" data-section="for-students">
+              <span class="icon">👨‍🎓</span>
+              <span>Для учеников</span>
+            </a>
+            <a href="#for-tutors" class="nav-item nav-child" data-section="for-tutors">
+              <span class="icon">👨‍🏫</span>
+              <span>Для репетиторов</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="nav-group">
+          <button class="nav-item" onclick="toggleNav(this)" data-section="student-features">
+            <span class="icon">👨‍🎓</span>
+            <span>Функционал для учеников</span>
+            <span class="arrow">▶</span>
+          </button>
+          <div class="nav-children">
+            <a href="#student-dashboard" class="nav-item nav-child" data-section="student-dashboard">
+              <span class="icon">📊</span>
+              <span>Главный экран</span>
+            </a>
+            <a href="#student-tasks" class="nav-item nav-child" data-section="student-tasks">
+              <span class="icon">📝</span>
+              <span>Мои задания</span>
+            </a>
+            <a href="#student-materials" class="nav-item nav-child" data-section="student-materials">
+              <span class="icon">📚</span>
+              <span>Материалы</span>
+            </a>
+            <a href="#student-progress" class="nav-item nav-child" data-section="student-progress">
+              <span class="icon">📈</span>
+              <span>Мой прогресс</span>
+            </a>
+            <a href="#student-tutors" class="nav-item nav-child" data-section="student-tutors">
+              <span class="icon">👨‍🏫</span>
+              <span>Репетиторы</span>
+            </a>
+            <a href="#student-profile" class="nav-item nav-child" data-section="student-profile">
+              <span class="icon">⚙️</span>
+              <span>Мой профиль</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="nav-group">
+          <button class="nav-item" onclick="toggleNav(this)" data-section="tutor-features">
+            <span class="icon">👨‍🏫</span>
+            <span>Функционал для репетиторов</span>
+            <span class="arrow">▶</span>
+          </button>
+          <div class="nav-children">
+            <a href="#tutor-menu" class="nav-item nav-child" data-section="tutor-menu">
+              <span class="icon">📋</span>
+              <span>Главное меню</span>
+            </a>
+            <a href="#tutor-students" class="nav-item nav-child" data-section="tutor-students">
+              <span class="icon">👨‍🎓</span>
+              <span>Ученики</span>
+            </a>
+            <a href="#tutor-sessions" class="nav-item nav-child" data-section="tutor-sessions">
+              <span class="icon">📅</span>
+              <span>Занятия</span>
+            </a>
+            <a href="#tutor-materials" class="nav-item nav-child" data-section="tutor-materials">
+              <span class="icon">📚</span>
+              <span>Банк тем</span>
+            </a>
+            <a href="#tutor-tasks" class="nav-item nav-child" data-section="tutor-tasks">
+              <span class="icon">📝</span>
+              <span>Задания</span>
+            </a>
+            <a href="#tutor-analytics" class="nav-item nav-child" data-section="tutor-analytics">
+              <span class="icon">📊</span>
+              <span>Аналитика</span>
+            </a>
+            <a href="#tutor-profile" class="nav-item nav-child" data-section="tutor-profile">
+              <span class="icon">⚙️</span>
+              <span>Профиль</span>
+            </a>
+            <a href="#tutor-admin" class="nav-item nav-child" data-section="tutor-admin">
+              <span class="icon">👑</span>
+              <span>Админ-панель</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="nav-group">
+          <button class="nav-item" onclick="toggleNav(this)" data-section="common-features">
+            <span class="icon">🔧</span>
+            <span>Общие функции</span>
+            <span class="arrow">▶</span>
+          </button>
+          <div class="nav-children">
+            <a href="#help-system" class="nav-item nav-child" data-section="help-system">
+              <span class="icon">❓</span>
+              <span>Система помощи</span>
+            </a>
+            <a href="#notifications" class="nav-item nav-child" data-section="notifications">
+              <span class="icon">🔔</span>
+              <span>Уведомления</span>
+            </a>
+          </div>
+        </div>
+
+        <a href="#faq" class="nav-item" data-section="faq">
+          <span class="icon">❓</span>
+          <span>FAQ</span>
+        </a>
+
+        <a href="#technical-details" class="nav-item" data-section="technical-details">
+          <span class="icon">🔒</span>
+          <span>Технические детали</span>
+        </a>
+
+        <a href="#glossary" class="nav-item" data-section="glossary">
+          <span class="icon">📖</span>
+          <span>Глоссарий</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        Версия 1.0 • Февраль 2026
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+      <!-- Header -->
+      <header class="header">
+        <div class="header-content">
+          <button class="menu-toggle" onclick="toggleSidebar()">
+            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </button>
+
+          <div class="mobile-logo">
+            <div class="logo-icon">П</div>
+            <span>Прогресс</span>
+          </div>
+
+          <button class="theme-toggle" onclick="toggleTheme()">
+            <span class="sun">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="8" cy="8" r="3"></circle>
+                <path d="M8 1v1M8 14v1M15 8h-1M2 8H1M13 13l-.7-.7M3.7 3.7l-.7-.7M13 3l-.7.7M3.7 12.3l-.7.7"></path>
+              </svg>
+            </span>
+            <span class="moon">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M13 7a5 5 0 11-7 7 6 6 0 007-7z"></path>
+              </svg>
+            </span>
+            <span class="toggle-circle"></span>
+          </button>
+        </div>
+      </header>
+
+      <div class="content-wrapper">
+        <!-- Hero Section -->
+        <section class="hero">
+          <div class="hero-badge">
+            <span class="dot"></span>
+            Версия 1.0 • Февраль 2026
+          </div>
+          <h1>
+            Telegram-бот
+            <span class="gradient">«Прогресс»</span>
+          </h1>
+          <p class="subtitle">Ваш персональный ассистент в обучении</p>
+
+          <div class="feature-grid">
+            <div class="feature-card">
+              <div class="icon">📚</div>
+              <h3>Единое пространство</h3>
+              <p>Все материалы, задания и расписание в одном месте — в Telegram</p>
+            </div>
+            <div class="feature-card">
+              <div class="icon">⚙️</div>
+              <h3>Автоматизация</h3>
+              <p>Бот сам напоминает о занятиях и дедлайнах</p>
+            </div>
+            <div class="feature-card">
+              <div class="icon">📊</div>
+              <h3>Прозрачность</h3>
+              <p>Наглядный прогресс обучения для учеников и репетиторов</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Introduction -->
+        <section id="introduction" data-section="introduction">
+          <h2><span>👋</span> Введение: Что такое «Прогресс» и зачем он нужен</h2>
+
+          <p><strong>«Прогресс»</strong> — это интеллектуальная платформа в Telegram, созданная для организации эффективного взаимодействия между репетиторами и учениками. Бот превращает хаотичный обмен сообщениями, файлами и домашними заданиями в структурированную, прозрачную и автоматизированную систему.</p>
+
+          <h3>Какую проблему решает бот?</h3>
+          <p>До появления «Прогресса» репетиторы и ученики сталкивались с типичными проблемами:</p>
+
+          <div class="problem-card">
+            <span>📂</span>
+            <div>
+              <strong>Разрозненность</strong>
+              <p>Задания в одном чате, файлы в другом, напоминания в третьем. Всё теряется.</p>
+            </div>
+          </div>
+
+          <div class="problem-card">
+            <span>📋</span>
+            <div>
+              <strong>Отсутствие структуры</strong>
+              <p>Невозможно удобно хранить и систематизировать учебные материалы по темам.</p>
+            </div>
+          </div>
+
+          <div class="problem-card">
+            <span>⏰</span>
+            <div>
+              <strong>Ручная работа</strong>
+              <p>Репетитору приходится вручную напоминать о дедлайнах, проверять работы, отслеживать прогресс.</p>
+            </div>
+          </div>
+
+          <div class="problem-card">
+            <span>📈</span>
+            <div>
+              <strong>Непонимание прогресса</strong>
+              <p>Ни ученик, ни репетитор не видят объективной картины успеваемости в динамике.</p>
+            </div>
+          </div>
+
+          <h3>Что предлагает «Прогресс»?</h3>
+
+          <div class="grid-2">
+            <div class="solution-card">
+              <span>🏠</span>
+              <div>
+                <strong>Единое пространство</strong>
+                <p>Все учебные материалы, задания, расписание и статистика в одном месте — в Telegram.</p>
+              </div>
+            </div>
+            <div class="solution-card">
+              <span>🗂️</span>
+              <div>
+                <strong>Структура и порядок</strong>
+                <p>Четкая иерархия «Дисциплина → Направление → Тема → Папки → Материалы» позволяет навести порядок в любом предмете.</p>
+              </div>
+            </div>
+            <div class="solution-card">
+              <span>⚙️</span>
+              <div>
+                <strong>Автоматизация</strong>
+                <p>Бот сам напоминает о занятиях и дедлайнах, освобождая время для обучения.</p>
+              </div>
+            </div>
+            <div class="solution-card">
+              <span>🔍</span>
+              <div>
+                <strong>Прозрачность</strong>
+                <p>Репетитор видит полную картину успеваемости каждого ученика, а ученик — наглядный прогресс.</p>
+              </div>
+            </div>
+          </div>
+
+          <h3>«Прогресс» подходит для любого формата обучения:</h3>
+          <div>
+            <span class="tag">Индивидуальные занятия (онлайн или офлайн)</span>
+            <span class="tag">Подготовка к экзаменам (ОГЭ, ЕГЭ, олимпиады)</span>
+            <span class="tag">Изучение языков</span>
+            <span class="tag">Программирование и IT-курсы</span>
+            <span class="tag">Школьные и вузовские дисциплины</span>
+          </div>
+        </section>
+
+        <!-- Quick Start -->
+        <section id="quick-start" data-section="quick-start">
+          <h2><span>🚀</span> Быстрый старт: Первый вход и регистрация</h2>
+
+          <!-- For Students -->
+          <div id="for-students" data-section="for-students">
+            <h3><span>👨‍🎓</span> Для учеников</h3>
+
+            <div class="card">
+              <div class="steps">
+                <div class="step">
+                  <div class="step-number">1</div>
+                  <div class="step-content">
+                    <h4>Начало</h4>
+                    <p>Перейдите по ссылке на бота и нажмите <code>/start</code>.</p>
+                  </div>
+                </div>
+                <div class="step">
+                  <div class="step-number">2</div>
+                  <div class="step-content">
+                    <h4>Выбор роли</h4>
+                    <p>Нажмите кнопку <strong>«👨‍🎓 Я ученик»</strong>.</p>
+                  </div>
+                </div>
+                <div class="step">
+                  <div class="step-number">3</div>
+                  <div class="step-content">
+                    <h4>Ввод токена</h4>
+                    <p>Вам потребуется уникальный код-приглашение (токен), который вы получили от своего репетитора. Введите его в формате <code>XXXX-XXXX</code> (например, <code>A3B7-9K2M</code>).</p>
+                  </div>
+                </div>
+                <div class="step">
+                  <div class="step-number">4</div>
+                  <div class="step-content">
+                    <h4>Автоматическая регистрация</h4>
+                    <ul>
+                      <li>Бот проверит токен и автоматически создаст ваш профиль.</li>
+                      <li>Вас сразу привяжут к нужному репетитору, дисциплине и направлению.</li>
+                      <li>Вы увидите приветственное сообщение с краткой информацией о вашем репетиторе.</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="step">
+                  <div class="step-number">5</div>
+                  <div class="step-content">
+                    <h4>Знакомство с интерфейсом</h4>
+                    <p>После регистрации бот покажет краткую справку и сразу откроет ваше главное меню.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="info-box warning">
+                <p><strong>⚠️ Важно:</strong> Токен действует только 1 час. Если вы не успели, попросите репетитора сгенерировать новый.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- For Tutors -->
+          <div id="for-tutors" data-section="for-tutors">
+            <h3><span>👨‍🏫</span> Для репетиторов</h3>
+
+            <p>Регистрация репетитора — более подробный процесс, ведь вам нужно создать свой профессиональный профиль.</p>
+
+            <div class="card">
+              <div class="steps">
+                <div class="step">
+                  <div class="step-number">1</div>
+                  <div class="step-content">
+                    <h4>Начало</h4>
+                    <p>Перейдите по ссылке на бота и нажмите <code>/start</code>.</p>
+                  </div>
+                </div>
+                <div class="step">
+                  <div class="step-number">2</div>
+                  <div class="step-content">
+                    <h4>Выбор роли</h4>
+                    <p>Нажмите кнопку <strong>«👨‍🏫 Я репетитор»</strong>.</p>
+                  </div>
+                </div>
+                <div class="step">
+                  <div class="step-number">3</div>
+                  <div class="step-content">
+                    <h4>Ввод ФИО</h4>
+                    <p>Введите ваше полное имя (Фамилия Имя Отчество). Это имя будут видеть ваши ученики.</p>
+                  </div>
+                </div>
+                <div class="step">
+                  <div class="step-number">4</div>
+                  <div class="step-content">
+                    <h4>Выбор дисциплин</h4>
+                    <ul>
+                      <li>Вам откроется список всех доступных дисциплин.</li>
+                      <li>Нажимайте на нужные предметы, чтобы выбрать их (они будут отмечаться галочкой ✅).</li>
+                      <li>Можно выбрать несколько дисциплин.</li>
+                      <li>После выбора нажмите кнопку <strong>«✅ Перейти к направлениям»</strong>.</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="step">
+                  <div class="step-number">5</div>
+                  <div class="step-content">
+                    <h4>Настройка направлений (ключевая особенность!)</h4>
+                    <p>Для каждой выбранной дисциплины вы можете создать <strong>направления</strong>. Направления — это ваша специализация внутри предмета.</p>
+                    <div class="box-blue">
+                      <p><strong>📌 Пример:</strong> Для дисциплины «Программирование» вы можете добавить направления: «Python», «Golang», «Web-разработка».</p>
+                    </div>
+                    <p><strong>Зачем это нужно?</strong></p>
+                    <ul>
+                      <li>Структурировать учеников (например, все ученики по Python будут в одной группе).</li>
+                      <li>Создавать темы и материалы, привязанные к конкретному направлению.</li>
+                      <li>Ученик, подключившись по токену, автоматически получит доступ к материалам своего направления.</li>
+                    </ul>
+                    <p><em>Вы можете пропустить этот шаг и добавить направления позже в профиле.</em></p>
+                  </div>
+                </div>
+                <div class="step">
+                  <div class="step-number">6</div>
+                  <div class="step-content">
+                    <h4>Указание локации</h4>
+                    <p>Выберите удобный способ: определить автоматически (по геолокации), ввести название города вручную или выбрать из списка популярных городов. Локация важна для определения часового пояса и корректной работы напоминаний о занятиях.</p>
+                  </div>
+                </div>
+                <div class="step">
+                  <div class="step-number">7</div>
+                  <div class="step-content">
+                    <h4>Контакты</h4>
+                    <p>Укажите, как с вами удобно связаться (телефон, Telegram, email).</p>
+                  </div>
+                </div>
+                <div class="step">
+                  <div class="step-number">8</div>
+                  <div class="step-content">
+                    <h4>«О себе» (необязательно)</h4>
+                    <p>Напишите краткую информацию о вашем опыте, образовании и методике преподавания. Это поможет ученикам сделать выбор. Шаг можно пропустить.</p>
+                  </div>
+                </div>
+                <div class="step">
+                  <div class="step-number">9</div>
+                  <div class="step-content">
+                    <h4>Проверка данных</h4>
+                    <p>Бот покажет вам всю введенную информацию. Если всё верно, нажмите <strong>«✅ Подтвердить»</strong>. Если нужно что-то исправить, нажмите <strong>«🔄 Изменить»</strong>.</p>
+                  </div>
+                </div>
+                <div class="step">
+                  <div class="step-number">10</div>
+                  <div class="step-content">
+                    <h4>Завершение</h4>
+                    <p>Поздравляем! Ваш профиль создан. Бот покажет главное меню репетитора и краткую справку.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Student Features -->
+        <section id="student-features" data-section="student-features">
+          <h2><span>👨‍🎓</span> Раздел 1: Функционал для учеников</h2>
+
+          <p>После регистрации и входа в бот вы попадаете в главное меню ученика. Интерфейс интуитивно понятен и разделен на логические блоки.</p>
+
+          <!-- Dashboard -->
+          <div id="student-dashboard" data-section="student-dashboard">
+            <h3><span>📊</span> Главный экран (Дашборд)</h3>
+            <div class="card">
+              <div class="badge">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
+                Главное меню → 📝 Мои задания
+              </div>
+
+              <p>Это ваш командный центр. При входе в раздел «Мои задания» вы сразу видите:</p>
+
+              <ul>
+                <li><strong>Текущий репетитор:</strong> Имя и дисциплина, с которой вы сейчас работаете.</li>
+                <li><strong>Краткая статистика:</strong> Сколько заданий выполнено, в работе, на проверке и просрочено.</li>
+                <li><strong>Ближайшие задания:</strong> Список из 3 самых срочных заданий с указанием темы и дедлайна.</li>
+              </ul>
+
+              <h4>Кнопки быстрой навигации:</h4>
+              <div class="grid-4">
+                <div class="menu-btn">
+                  <span class="icon">👨‍🏫</span>
+                  <span class="label">Репетитор</span>
+                  <span class="desc">Переключение</span>
+                </div>
+                <div class="menu-btn">
+                  <span class="icon">📋</span>
+                  <span class="label">Все</span>
+                  <span class="desc">Полный список</span>
+                </div>
+                <div class="menu-btn">
+                  <span class="icon">📚</span>
+                  <span class="label">По темам</span>
+                  <span class="desc">Группировка</span>
+                </div>
+                <div class="menu-btn">
+                  <span class="icon">📅</span>
+                  <span class="label">Календарь</span>
+                  <span class="desc">Дедлайны</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tasks -->
+          <div id="student-tasks" data-section="student-tasks">
+            <h3><span>📝</span> Мои задания</h3>
+
+            <div class="card">
+              <h4>Просмотр всех заданий</h4>
+              <div class="badge">Главное меню → 📝 Мои задания → 📋 Все</div>
+
+              <p>Здесь вы видите полный список всех ваших заданий. Для удобства навигации:</p>
+              <ul>
+                <li><strong>Фильтры:</strong> «Все», «Активные» (🟡), «Просроченные» (🔴), «На проверке» (📤), «Выполненные» (✅).</li>
+                <li><strong>Пагинация:</strong> Если заданий много, список разбит на страницы.</li>
+              </ul>
+
+              <div class="box-blue">
+                <h4>Карточка задания:</h4>
+                <p>🟡 Иконка статуса • 📝 Краткое описание • 📚 Тема • 📅 Дедлайн • 📎 Файл</p>
+              </div>
+            </div>
+
+            <div class="card">
+              <h4>Просмотр по темам</h4>
+              <div class="badge">Главное меню → 📝 Мои задания → 📚 По темам</div>
+              <p>Задания сгруппированы по темам, которые создал ваш репетитор. Нажмите на тему, чтобы увидеть все связанные с ней задания.</p>
+            </div>
+
+            <div class="card">
+              <h4>Календарь дедлайнов</h4>
+              <div class="badge">Главное меню → 📝 Мои задания → 📅 Календарь</div>
+              <p>Визуальный календарь, где дни с предстоящими дедлайнами отмечены точкой. Можно листать месяцы.</p>
+            </div>
+
+            <div class="card">
+              <h4>Детальный просмотр и сдача задания</h4>
+              <p>Нажмите на любое задание в списке, чтобы открыть его детальную карточку:</p>
+              <ul>
+                <li>Полное описание задания</li>
+                <li>Дисциплину и тему</li>
+                <li>Точное время дедлайна</li>
+                <li>Прикрепленные файлы (если есть)</li>
+                <li>История сдач</li>
+              </ul>
+
+              <div class="box-green">
+                <h4>📤 Как сдать работу:</h4>
+                <ol>
+                  <li>Нажмите кнопку <strong>«📤 Сдать работу»</strong> внизу карточки задания.</li>
+                  <li>Бот перейдет в режим ожидания.</li>
+                  <li>Отправьте ваш ответ (файл, фото или текст).</li>
+                  <li>Бот подтвердит получение работы и отправит уведомление репетитору.</li>
+                  <li>Статус задания изменится на «📤 На проверке».</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <!-- Materials -->
+          <div id="student-materials" data-section="student-materials">
+            <h3><span>📚</span> Материалы</h3>
+
+            <div class="card">
+              <div class="badge">Главное меню → 📚 Материалы</div>
+
+              <p>Это ваша личная библиотека учебных материалов, которую наполняет репетитор.</p>
+
+              <h4>Структура материалов:</h4>
+              <ol>
+                <li><strong>Выбор репетитора:</strong> Если у вас несколько репетиторов, сначала выберите чьи материалы смотреть.</li>
+                <li><strong>Выбор темы:</strong> Вы увидите список всех тем, созданных репетитором.</li>
+                <li><strong>Просмотр папок:</strong>
+                  <ul>
+                    <li><strong>«Теория»</strong> — правила, формулы, конспекты</li>
+                    <li><strong>«Дополнительно»</strong> — ссылки, видео, файлы</li>
+                  </ul>
+                </li>
+                <li><strong>Изучение материалов:</strong>
+                  <ul>
+                    <li>📎 <strong>Файл:</strong> Можно скачать</li>
+                    <li>🔗 <strong>Ссылка:</strong> Откроется в браузере</li>
+                    <li>📝 <strong>Текст:</strong> Откроется в чате</li>
+                  </ul>
+                </li>
+              </ol>
+            </div>
+          </div>
+
+          <!-- Progress -->
+          <div id="student-progress" data-section="student-progress">
+            <h3><span>📈</span> Мой прогресс</h3>
+
+            <div class="card">
+              <div class="badge">Главное меню → 📈 Мой прогресс</div>
+
+              <p>Здесь вы видите наглядную статистику своего обучения в виде красивых графиков (в стиле Apple).</p>
+
+              <h4>Вкладки дашборда:</h4>
+
+              <div class="grid-2">
+                <div class="box-blue">
+                  <h4>📊 Обзор</h4>
+                  <ul>
+                    <li>Круговая диаграмма процента выполненных заданий</li>
+                    <li>Числовые показатели по всем статусам</li>
+                    <li>Персонализированный совет</li>
+                  </ul>
+                </div>
+                <div class="box-purple">
+                  <h4>📚 Темы</h4>
+                  <ul>
+                    <li>Горизонтальный бар-чарт успеваемости</li>
+                    <li>Красным — слабые темы</li>
+                    <li>Зеленым — сильные темы</li>
+                  </ul>
+                </div>
+                <div class="box-green">
+                  <h4>🎯 Прогноз</h4>
+                  <ul>
+                    <li>Оценка текущего темпа</li>
+                    <li>Прогноз на месяц</li>
+                    <li>Мотивирующий совет</li>
+                  </ul>
+                </div>
+              </div>
+
+              <p><em>Можно переключать период анализа: 7 дней, 30 дней, 90 дней.</em></p>
+            </div>
+          </div>
+
+          <!-- Tutors -->
+          <div id="student-tutors" data-section="student-tutors">
+            <h3><span>👨‍🏫</span> Репетиторы</h3>
+
+            <div class="card">
+              <div class="badge">Главное меню → 👨‍🏫 Репетиторы</div>
+
+              <p>Если вы занимаетесь с несколькими преподавателями, этот раздел для вас.</p>
+
+              <ul>
+                <li><strong>Список репетиторов:</strong> Вы видите всех своих репетиторов. Текущий выбранный отмечен галочкой ✅.</li>
+                <li><strong>Детали репетитора:</strong> Нажав на репетитора, вы увидите его контактную информацию.</li>
+                <li><strong>Выбор репетитора:</strong> Кнопка <strong>«✅ Выбрать этого репетитора»</strong> переключит весь интерфейс.</li>
+                <li><strong>Добавление нового репетитора:</strong> Нажмите <strong>«➕ Добавить репетитора»</strong> и введите токен.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Profile -->
+          <div id="student-profile" data-section="student-profile">
+            <h3><span>⚙️</span> Мой профиль</h3>
+
+            <div class="card">
+              <div class="badge">Главное меню → ⚙️ Мой профиль</div>
+              <p>Здесь вы можете управлять своими данными: просмотр текущей информации (ФИО, ваши контакты, контакты родителей) и редактирование любого поля с помощью кнопок «✏️ Изменить...».</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Tutor Features -->
+        <section id="tutor-features" data-section="tutor-features">
+          <h2><span>👨‍🏫</span> Раздел 2: Функционал для репетиторов</h2>
+
+          <p>Интерфейс репетитора спроектирован так, чтобы все важные инструменты были под рукой и требовали минимум действий.</p>
+
+          <!-- Main Menu -->
+          <div id="tutor-menu" data-section="tutor-menu">
+            <h3><span>📋</span> Главное меню репетитора</h3>
+
+            <div class="card">
+              <p>После регистрации или команды <code>/start</code> вы попадаете в главное меню:</p>
+
+              <div class="grid-3">
+                <div class="menu-btn">
+                  <span class="icon">👨‍🎓</span>
+                  <span class="label">Ученики</span>
+                  <span class="desc">Управление учениками</span>
+                </div>
+                <div class="menu-btn">
+                  <span class="icon">📅</span>
+                  <span class="label">Занятия</span>
+                  <span class="desc">Планирование</span>
+                </div>
+                <div class="menu-btn">
+                  <span class="icon">📚</span>
+                  <span class="label">Материалы</span>
+                  <span class="desc">Банк тем</span>
+                </div>
+                <div class="menu-btn">
+                  <span class="icon">📊</span>
+                  <span class="label">Аналитика</span>
+                  <span class="desc">Статистика</span>
+                </div>
+                <div class="menu-btn">
+                  <span class="icon">⚙️</span>
+                  <span class="label">Профиль</span>
+                  <span class="desc">Редактирование</span>
+                </div>
+                <div class="menu-btn">
+                  <span class="icon">➕</span>
+                  <span class="label">Ученик</span>
+                  <span class="desc">Добавить</span>
+                </div>
+              </div>
+
+              <p><em>* Для администратора также доступна кнопка <strong>👑 Пользователи</strong> — админ-панель.</em></p>
+            </div>
+          </div>
+
+          <!-- Students -->
+          <div id="tutor-students" data-section="tutor-students">
+            <h3><span>👨‍🎓</span> Ученики</h3>
+
+            <div class="badge">Главное меню → 👨‍🎓 Ученики</div>
+
+            <div class="card">
+              <h4>Список учеников</h4>
+              <p>Вы видите список всех ваших активных учеников с пагинацией. Рядом с именем ученика отображается краткая информация о его дисциплинах и направлениях.</p>
+            </div>
+
+            <div class="card">
+              <h4>Карточка ученика</h4>
+              <p>Нажмите на имя ученика, чтобы открыть его полную карточку:</p>
+
+              <ul>
+                <li><strong>Личные данные:</strong> Имя, контакты ученика и родителей, ваш личный комментарий.</li>
+                <li><strong>Дисциплины:</strong> Список всех дисциплин, которые ученик у вас изучает.</li>
+                <li><strong>Панель действий:</strong> Набор кнопок для быстрых операций.</li>
+              </ul>
+
+              <h4>Действия в карточке:</h4>
+              <div class="grid-4">
+                <span class="action-btn">📝 Задание</span>
+                <span class="action-btn">📥 Проверить</span>
+                <span class="action-btn">📚 Все задания</span>
+                <span class="action-btn">🎓 Дисциплины</span>
+                <span class="action-btn">🔄 Обновить</span>
+                <span class="action-btn">⏸️ Отключить</span>
+                <span class="action-btn" style="background: var(--red-50);">🗑️ Удалить</span>
+              </div>
+            </div>
+
+            <div class="card">
+              <h4>Управление дисциплинами ученика</h4>
+              <p>Этот мощный инструмент позволяет гибко настраивать, что именно изучает ученик у вас.</p>
+
+              <ol>
+                <li>Нажмите <strong>«🎓 Управление дисциплинами»</strong> в карточке ученика.</li>
+                <li>Вы увидите список уже добавленных дисциплин. Для каждой можно изменить направление или удалить.</li>
+                <li>Кнопка <strong>«➕ Добавить новый предмет»</strong> позволяет добавить еще одну дисциплину.</li>
+              </ol>
+            </div>
+
+            <div class="card">
+              <h4>Добавление нового ученика</h4>
+              <p>Процесс создания токена-приглашения:</p>
+
+              <ol>
+                <li>Нажмите кнопку <strong>«➕ Добавить ученика»</strong>.</li>
+                <li>Введите имя ученика.</li>
+                <li>Выберите дисциплину.</li>
+                <li>Выберите направление (если есть).</li>
+                <li>Добавьте комментарий (необязательно).</li>
+                <li>Бот сгенерирует уникальный токен вида <code>XXXX-XXXX</code>.</li>
+                <li>Отправьте токен ученику любым удобным способом.</li>
+              </ol>
+
+              <div class="info-box warning">
+                <p><strong>⚠️ Важно:</strong> Токен действует только <strong>1 час</strong>. По истечении этого времени его нужно будет создать заново.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sessions -->
+          <div id="tutor-sessions" data-section="tutor-sessions">
+            <h3><span>📅</span> Занятия</h3>
+
+            <div class="badge">Главное меню → 📅 Занятия</div>
+
+            <p>Модуль для планирования и учёта занятий. Работа с ним построена вокруг выбора ученика, после чего становятся доступны все действия.</p>
+
+            <div class="card">
+              <h4>Выбор ученика и карточка занятий</h4>
+              <p>Сначала вы выбираете ученика из списка. После этого открывается карточка занятий:</p>
+              <ul>
+                <li>Информация о последнем занятии</li>
+                <li>Информация о ближайшем запланированном занятии</li>
+                <li>Список недавних занятий (до 3)</li>
+                <li>Пять основных действий</li>
+              </ul>
+
+              <h4>Основные действия:</h4>
+
+              <div class="box-blue">
+                <h4>📅 Запланировать урок</h4>
+                <ol>
+                  <li>Выберите дату (доступны только сегодня и будущие)</li>
+                  <li>Выберите час и минуты</li>
+                  <li>Выберите длительность</li>
+                  <li>Выберите тему из списка (или создайте новую)</li>
+                  <li>Добавьте комментарий</li>
+                  <li>Решите, отправлять ли уведомление ученику</li>
+                  <li>Подтвердите создание</li>
+                </ol>
+              </div>
+
+              <div class="box-purple">
+                <h4>📋 Расписание</h4>
+                <p>Показывает список всех запланированных занятий. Нажав на занятие, можно:</p>
+                <p>✅ Отметить проведённым • ❌ Отменить • 🔄 Перенести • 🗑 Удалить</p>
+              </div>
+
+              <div class="grid-3">
+                <div class="box-green">
+                  <h4>✅ Отметить</h4>
+                  <p>Быстрая отметка, что занятие состоялось</p>
+                </div>
+                <div class="box-orange">
+                  <h4>❌ Отменить</h4>
+                  <p>Отметка отмены с указанием причины</p>
+                </div>
+                <div class="box-blue">
+                  <h4>🔄 Перенести</h4>
+                  <p>Изменить дату и время занятия</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <h4>Статистика и отчёты по занятиям</h4>
+              <div class="grid-2">
+                <div>
+                  <strong>📊 Статистика</strong>
+                  <p>Сводка по занятиям: всего, проведено, отменено, перенесено, средняя длительность.</p>
+                </div>
+                <div>
+                  <strong>📄 Отчёт</strong>
+                  <p>Детальный отчёт в HTML: по занятиям, по темам или полный отчёт.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Materials Bank -->
+          <div id="tutor-materials" data-section="tutor-materials">
+            <h3><span>📚</span> Банк тем (Материалы)</h3>
+
+            <div class="badge">Главное меню → 📚 Материалы</div>
+
+            <p>Это, пожалуй, самое мощное и уникальное место в боте. Здесь вы создаёте и структурируете все свои учебные материалы по принципу <strong>Дисциплина → Направление → Тема → Папки → Материалы</strong>.</p>
+
+            <div class="card">
+              <h4>Создание структуры</h4>
+              <ol>
+                <li><strong>Выбор дисциплины:</strong> Если у вас несколько дисциплин, сначала выберите нужную.</li>
+                <li><strong>Выбор направления:</strong> Можно выбрать одно направление или посмотреть все темы.</li>
+                <li><strong>Список тем:</strong> Нажмите на тему для редактирования или <strong>«➕ Новая тема»</strong> для создания.</li>
+              </ol>
+
+              <div class="box-green">
+                <p>При создании темы бот автоматически создаст три стандартные папки: <strong>«Теория»</strong>, <strong>«Шаблоны заданий»</strong>, <strong>«Дополнительно»</strong>.</p>
+              </div>
+            </div>
+
+            <div class="card">
+              <h4>Редактор темы</h4>
+              <p>Внутри темы вы видите список папок. Для каждой папки отображается:</p>
+              <ul>
+                <li>Иконка видимости: 👁️ (видно) или 🚫 (скрыто)</li>
+                <li>Название папки</li>
+                <li>Количество материалов</li>
+                <li>Кнопка контекстного меню <strong>⋯</strong></li>
+              </ul>
+
+              <h4>Контекстное меню папки (⋯):</h4>
+              <div>
+                <span class="action-btn">✏️ Переименовать</span>
+                <span class="action-btn">👁️ Скрыть/Показать</span>
+                <span class="action-btn">⬆️⬇️ Переместить</span>
+                <span class="action-btn" style="background: var(--red-50);">🗑️ Удалить</span>
+              </div>
+            </div>
+
+            <div class="card">
+              <h4>Наполнение папок материалами</h4>
+              <p>Нажмите на название папки, чтобы войти в неё и добавить материалы трёх типов:</p>
+
+              <div class="grid-3">
+                <div class="box-blue">
+                  <span style="font-size: 24px;">📎</span>
+                  <h4>Файл</h4>
+                  <p>Любой файл из Telegram</p>
+                </div>
+                <div class="box-purple">
+                  <span style="font-size: 24px;">🔗</span>
+                  <h4>Ссылка</h4>
+                  <p>URL с названием</p>
+                </div>
+                <div class="box-green">
+                  <span style="font-size: 24px;">📝</span>
+                  <h4>Текст</h4>
+                  <p>Текстовая заметка</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <h4>Экспорт темы</h4>
+              <div class="grid-2">
+                <div>
+                  <strong>📁 Скачать ZIP</strong>
+                  <p>Арив с папками, файлами и файлом README.md со списком ссылок и текстовых материалов.</p>
+                </div>
+                <div>
+                  <strong>📋 Текстовый отчёт</strong>
+                  <p>Выводит в чат структуру темы в виде текста.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tasks -->
+          <div id="tutor-tasks" data-section="tutor-tasks">
+            <h3><span>📝</span> Задания</h3>
+
+            <p>Работа с заданиями в боте продумана до мелочей и разделена на два основных процесса: создание и проверка.</p>
+
+            <div class="card">
+              <h4>Создание задания</h4>
+              <p>Вы можете создать задание из карточки ученика (кнопка <strong>«📝 Задание»</strong>) или из главного меню.</p>
+
+              <ol>
+                <li>Выбор ученика и дисциплины</li>
+                <li><strong>Выбор темы:</strong> Задание всегда привязано к конкретной теме. Можно создать тему «на лету».</li>
+                <li><strong>Способ создания:</strong> Ввести вручную или использовать шаблон из папки «Шаблоны заданий».</li>
+                <li><strong>Дедлайн:</strong> Умный выбор («Сегодня», «Завтра») или свой вариант в календаре.</li>
+                <li>Прикрепление файла (опционально)</li>
+                <li>Подтверждение. Ученик мгновенно получает уведомление.</li>
+              </ol>
+            </div>
+
+            <div class="card">
+              <h4>Проверка заданий</h4>
+              <div class="badge">Главное меню → 📥 Проверить</div>
+
+              <p>Этот раздел показывает всех учеников, у которых есть задания, ожидающие проверки (статус «submitted»).</p>
+
+              <ol>
+                <li>Список учеников с количеством работ на проверке</li>
+                <li>Список сданных работ с краткой информацией</li>
+                <li>Детальный просмотр с файлом ответа ученика</li>
+              </ol>
+
+              <div class="grid-2">
+                <div class="box-green">
+                  <h4>✅ Принять</h4>
+                  <p>Работа засчитывается как выполненная. Ученик получает уведомление.</p>
+                </div>
+                <div class="box-orange">
+                  <h4>✏️ Вернуть на доработку</h4>
+                  <p>Напишите комментарий. Задание перейдёт в статус «🔄 На доработке».</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Analytics -->
+          <div id="tutor-analytics" data-section="tutor-analytics">
+            <h3><span>📊</span> Аналитика</h3>
+
+            <div class="badge">Главное меню → 📊 Аналитика</div>
+
+            <p>Раздел для глубокого анализа успеваемости каждого ученика. Визуализация данных помогает быстро выявлять проблемы и зоны роста.</p>
+
+            <div class="card">
+              <h4>Дашборд ученика:</h4>
+
+              <div class="grid-2">
+                <div class="box-blue">
+                  <h4>📊 Обзор</h4>
+                  <p>Основная статистика с круговой диаграммой и метриками</p>
+                </div>
+                <div class="box-purple">
+                  <h4>📚 Темы</h4>
+                  <p>График успеваемости по темам (горизонтальные бары)</p>
+                </div>
+                <div class="box-green">
+                  <h4>📈 Динамика</h4>
+                  <p>График прогресса по неделям (линейный график)</p>
+                </div>
+                <div class="box-orange">
+                  <h4>📊 Сравнить</h4>
+                  <p>Сравнение с предыдущим периодом</p>
+                </div>
+              </div>
+
+              <p>Кнопка <strong>«📤 Экспорт отчёта»</strong> генерирует подробный текстовый отчёт по ученику.</p>
+            </div>
+          </div>
+
+          <!-- Profile -->
+          <div id="tutor-profile" data-section="tutor-profile">
+            <h3><span>⚙️</span> Профиль репетитора</h3>
+
+            <div class="badge">Главное меню → ⚙️ Профиль</div>
+
+            <p>Здесь вы управляете всей информацией о себе, которая отображается ученикам.</p>
+
+            <div class="card">
+              <h4>✏️ Основная информация</h4>
+              <div>
+                <span class="action-btn">📛 ФИО</span>
+                <span class="action-btn">📍 Локация</span>
+                <span class="action-btn">🎓 Образование</span>
+                <span class="action-btn">📅 Опыт</span>
+                <span class="action-btn">💰 Стоимость</span>
+                <span class="action-btn">🏫 Формат</span>
+              </div>
+            </div>
+
+            <div class="card">
+              <h4>📊 Специализация</h4>
+              <div>
+                <span class="action-btn">📈 Уровень учеников</span>
+                <span class="action-btn">👥 Возраст учеников</span>
+                <span class="action-btn">🎯 Цели подготовки</span>
+              </div>
+            </div>
+
+            <div class="card">
+              <h4>📞 Контакты и дополнительно</h4>
+              <div>
+                <span class="action-btn">📞 Контакты</span>
+                <span class="action-btn">🕐 Время связи</span>
+                <span class="action-btn">🏆 Достижения</span>
+                <span class="action-btn">💡 Методика</span>
+                <span class="action-btn">💬 О себе</span>
+              </div>
+            </div>
+
+            <div class="card">
+              <h4>🎯 Управление направлениями</h4>
+              <p>Нажмите <strong>«🎯 Направления»</strong> для управления специализациями внутри дисциплин. Можно добавлять и удалять направления.</p>
+            </div>
+          </div>
+
+          <!-- Admin -->
+          <div id="tutor-admin" data-section="tutor-admin">
+            <h3><span>👑</span> Админ-панель</h3>
+
+            <div class="card" style="background: linear-gradient(135deg, var(--amber-50), var(--orange-50));">
+              <p>Эта секция доступна только пользователю с Telegram ID <code>1373472999</code> и предназначена для мониторинга и управления всей системой.</p>
+
+              <div class="grid-2">
+                <div>
+                  <strong>📊 Общая статистика</strong>
+                  <p>Пользователи, активности</p>
+                </div>
+                <div>
+                  <strong>📝 Статистика по заданиям</strong>
+                  <p>Распределение по статусам</p>
+                </div>
+                <div>
+                  <strong>📅 Статистика по занятиям</strong>
+                  <p>За 90 дней</p>
+                </div>
+                <div>
+                  <strong>📤 Экспорт данных</strong>
+                  <p>Выгрузка в JSON</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Common Features -->
+        <section id="common-features" data-section="common-features">
+          <h2><span>🔧</span> Раздел 3: Общие функции</h2>
+
+          <div id="help-system" data-section="help-system">
+            <h3><span>❓</span> Система помощи /help</h3>
+
+            <div class="card">
+              <p>В любой момент вы можете вызвать команду <code>/help</code> или нажать соответствующую кнопку в меню. Система помощи интерактивна и адаптируется под вашу роль (репетитор или ученик).</p>
+
+              <div class="grid-2">
+                <div class="box-blue">
+                  <strong>Главный экран помощи</strong>
+                  <p>Приветствие и список основных разделов</p>
+                </div>
+                <div class="box-purple">
+                  <strong>Детальные подразделы</strong>
+                  <p>Подробное описание функционала с советами</p>
+                </div>
+                <div class="box-green">
+                  <strong>FAQ</strong>
+                  <p>Часто задаваемые вопросы с пагинацией</p>
+                </div>
+                <div class="box-orange">
+                  <strong>Поддержка</strong>
+                  <p>Контакты для связи с разработчиком</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="notifications" data-section="notifications">
+            <h3><span>🔔</span> Уведомления и напоминания</h3>
+
+            <div class="card">
+              <p>Бот работает в фоновом режиме и сам напоминает о важных событиях, чтобы ни вы, ни ваши ученики ничего не пропустили.</p>
+
+              <div class="grid-2">
+                <div>
+                  <h4><span>👨‍🏫</span> Для репетиторов</h4>
+                  <div class="notification-item">
+                    <span class="icon">⏰</span>
+                    <div>
+                      <strong>За 1 час до занятия</strong>
+                      <p>Напоминание о предстоящем занятии</p>
+                    </div>
+                  </div>
+                  <div class="notification-item">
+                    <span class="icon">✅</span>
+                    <div>
+                      <strong>После окончания занятия</strong>
+                      <p>Напоминание отметить проведённое занятие</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <h4><span>👨‍🎓</span> Для учеников</h4>
+                  <div class="notification-item">
+                    <span class="icon">📝</span>
+                    <div>
+                      <strong>О новом задании</strong>
+                      <p>Мгновенное уведомление при создании</p>
+                    </div>
+                  </div>
+                  <div class="notification-item">
+                    <span class="icon">📅</span>
+                    <div>
+                      <strong>О дедлайнах</strong>
+                      <p>За 24ч, 12ч и 1ч до срока сдачи</p>
+                    </div>
+                  </div>
+                  <div class="notification-item">
+                    <span class="icon">📤</span>
+                    <div>
+                      <strong>О результате проверки</strong>
+                      <p>Принято или возвращено с комментарием</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- FAQ -->
+        <section id="faq" data-section="faq">
+          <h2><span>❓</span> Раздел 4: Часто задаваемые вопросы (FAQ)</h2>
+
+          <div class="faq-item" onclick="toggleFaq(this)">
+            <button class="faq-question">
+              <span>Сколько стоит использование бота?</span>
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-content">
+                Бот полностью бесплатен для всех пользователей.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item" onclick="toggleFaq(this)">
+            <button class="faq-question">
+              <span>Что такое токен и где его взять?</span>
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-content">
+                <p>Токен — это уникальный код для связи ученика и репетитора.</p>
+                <ul>
+                  <li><strong>Репетитор:</strong> создает токен в разделе «Ученики» → «➕ Добавить ученика».</li>
+                  <li><strong>Ученик:</strong> вводит полученный от репетитора токен в разделе «Репетиторы» → «➕ Добавить». Токен действует 1 час.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item" onclick="toggleFaq(this)">
+            <button class="faq-question">
+              <span>Как добавить нового репетитора, если я уже занимаюсь с одним?</span>
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-content">
+                Перейдите в раздел «Репетиторы» и нажмите кнопку «➕ Добавить репетитора». Введите новый токен от другого преподавателя. Вы сможете переключаться между ними в том же разделе.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item" onclick="toggleFaq(this)">
+            <button class="faq-question">
+              <span>Можно ли удалить ученика безвозвратно?</span>
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-content">
+                Да, в карточке ученика есть кнопка «🗑️ Удалить ученика». <strong style="color: var(--red-500);">Это действие необратимо</strong> и приведет к удалению всех данных, включая задания и файлы.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item" onclick="toggleFaq(this)">
+            <button class="faq-question">
+              <span>Я случайно удалил(а) чат с ботом. Как восстановить доступ?</span>
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-content">
+                Просто найдите бота заново и нажмите <code>/start</code>. Бот автоматически восстановит ваш профиль и все данные.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item" onclick="toggleFaq(this)">
+            <button class="faq-question">
+              <span>У меня несколько дисциплин. Как структурировать материалы для каждой?</span>
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-content">
+                Используйте функционал «Направлений». Создайте направления внутри каждой дисциплины (например, «Python» и «Golang» для «Информатики»). Это позволит создавать отдельные темы и материалы для каждого направления и привязывать к ним учеников.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item" onclick="toggleFaq(this)">
+            <button class="faq-question">
+              <span>Ученик не видит материалы, которые я добавил. Почему?</span>
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-content">
+                <p>Проверьте два момента:</p>
+                <ol>
+                  <li>Убедитесь, что папка, в которую вы добавили материал, <strong>видима для учеников</strong> (иконка 👁️, а не 🚫).</li>
+                  <li>Проверьте, что у ученика выбрано правильное направление. Если материал добавлен в тему с направлением «Python», а ученик привязан к направлению «Golang», он этот материал не увидит.</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item" onclick="toggleFaq(this)">
+            <button class="faq-question">
+              <span>Как работает функция «Шаблоны заданий»?</span>
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-content">
+                В банке тем создайте папку с названием <strong>«Шаблоны заданий»</strong> (регистр важен). Добавьте в неё материалы (файлы, текст). При создании нового задания и выборе темы, бот предложит использовать готовый шаблон из этой папки, что значительно ускоряет процесс.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item" onclick="toggleFaq(this)">
+            <button class="faq-question">
+              <span>Мои файлы сохраняются? Где они хранятся?</span>
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-content">
+                Все файлы, загруженные через бота (материалы, сданные работы, шаблоны), сохраняются на сервере в специальных папках. Это гарантирует, что они не потеряются и будут доступны в любое время.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Technical Details -->
+        <section id="technical-details" data-section="technical-details">
+          <h2><span>🔒</span> Раздел 5: Технические детали и безопасность</h2>
+
+          <div class="tech-card">
+            <div class="icon-box blue">🐍</div>
+            <div>
+              <h3>Платформа</h3>
+              <p>Бот работает на языке <strong>Python</strong> с использованием библиотеки <code>python-telegram-bot</code> (v20.x).</p>
+            </div>
+          </div>
+
+          <div class="tech-card">
+            <div class="icon-box purple">🗄️</div>
+            <div>
+              <h3>База данных</h3>
+              <p>Для хранения всей информации используется <strong>SQLite</strong>. База данных имеет сложную структуру из более чем <strong>15 таблиц</strong>, обеспечивающих связи между пользователями, дисциплинами, темами, материалами, заданиями и занятиями.</p>
+            </div>
+          </div>
+
+          <div class="tech-card">
+            <div class="icon-box green">🛡️</div>
+            <div>
+              <h3>Безопасность</h3>
+              <ul>
+                <li>Все пользовательские данные проходят через <strong>экранирование HTML-символов</strong>, что предотвращает потенциальные инъекции.</li>
+                <li>Токены для приглашения учеников генерируются с использованием <strong>криптографически стойкого генератора</strong> случайных чисел и имеют ограниченный срок действия (1 час).</li>
+                <li>Доступ к админ-панели <strong>жестко ограничен по Telegram ID</strong>.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="tech-card">
+            <div class="icon-box orange">⚙️</div>
+            <div>
+              <h3>Фоновая работа</h3>
+              <p>Бот использует механизм <code>JobQueue</code> для выполнения периодических задач, таких как отправка напоминаний о занятиях и дедлайнах, не дожидаясь действий пользователя.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Glossary -->
+        <section id="glossary" data-section="glossary">
+          <h2><span>📖</span> Приложение: Глоссарий терминов</h2>
+
+          <h3>Основные термины</h3>
+          <div class="card">
+            <div class="glossary-term">
+              <span class="term">Дисциплина</span>
+              <span>Учебный предмет (например, «Математика», «Английский язык»).</span>
+            </div>
+            <div class="glossary-term">
+              <span class="term">Направление</span>
+              <span>Специализация внутри дисциплины (например, «ОГЭ», «Python», «Подготовка к IELTS»).</span>
+            </div>
+            <div class="glossary-term">
+              <span class="term">Тема</span>
+              <span>Логический блок учебного материала внутри дисциплины/направления (например, «Квадратные уравнения», «Времена глаголов»).</span>
+            </div>
+            <div class="glossary-term">
+              <span class="term">Папка</span>
+              <span>Контейнер для материалов внутри темы (например, «Теория», «Шаблоны заданий»). Может быть скрыта от учеников.</span>
+            </div>
+            <div class="glossary-term">
+              <span class="term">Материал</span>
+              <span>Единица контента (файл, ссылка, текст), добавленная в папку.</span>
+            </div>
+            <div class="glossary-term">
+              <span class="term">Задание</span>
+              <span>Задача, созданная репетитором для ученика, привязанная к теме и имеющая дедлайн.</span>
+            </div>
+            <div class="glossary-term">
+              <span class="term">Токен</span>
+              <span>Уникальный одноразовый код для привязки ученика к репетитору.</span>
+            </div>
+          </div>
+
+          <h3>Статусы задания</h3>
+          <div class="grid-2">
+            <div class="status-badge">
+              <span>🟡</span>
+              <div>
+                <code>pending</code>
+                <p>активное, ожидает выполнения</p>
+              </div>
+            </div>
+            <div class="status-badge">
+              <span>🔴</span>
+              <div>
+                <code>overdue</code>
+                <p>просроченное</p>
+              </div>
+            </div>
+            <div class="status-badge">
+              <span>📤</span>
+              <div>
+                <code>submitted</code>
+                <p>сдано на проверку</p>
+              </div>
+            </div>
+            <div class="status-badge">
+              <span>✅</span>
+              <div>
+                <code>completed</code>
+                <p>принято репетитором</p>
+              </div>
+            </div>
+            <div class="status-badge">
+              <span>🔄</span>
+              <div>
+                <code>returned_for_revision</code>
+                <p>возвращено на доработку</p>
+              </div>
+            </div>
+          </div>
+
+          <h3>Тип занятия</h3>
+          <div class="grid-4">
+            <div class="status-badge">
+              <div>
+                <code>scheduled</code>
+                <p>запланированное</p>
+              </div>
+            </div>
+            <div class="status-badge">
+              <div>
+                <code>completed</code>
+                <p>проведенное</p>
+              </div>
+            </div>
+            <div class="status-badge">
+              <div>
+                <code>cancelled</code>
+                <p>отмененное</p>
+              </div>
+            </div>
+            <div class="status-badge">
+              <div>
+                <code>rescheduled</code>
+                <p>перенесенное</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Footer -->
+      <footer>
+        <p>Telegram-бот «Прогресс» — Ваш персональный ассистент в обучении</p>
+      </footer>
     </div>
-    
-    <nav class="sidebar-nav">
-      <div class="nav-section">
-        <div class="nav-section-title">Навигация</div>
-        <ul class="nav-links">
-          <li>
-            <a href="index.html" class="nav-link active">
-              <span class="nav-link-icon">🏠</span>
-              Главная
-            </a>
-          </li>
-          <li>
-            <a href="progress.html" class="nav-link">
-              <span class="nav-link-icon">🤖</span>
-              PROGRESS
-            </a>
-          </li>
-          <li>
-            <a href="progress-plus.html" class="nav-link">
-              <span class="nav-link-icon">🔍</span>
-              PROGRESS+
-            </a>
-          </li>
-          <li>
-            <a href="history.html" class="nav-link">
-              <span class="nav-link-icon">📜</span>
-              История
-            </a>
-          </li>
-          <li>
-            <a href="contacts.html" class="nav-link">
-              <span class="nav-link-icon">📞</span>
-              Контакты
-            </a>
-          </li>
-        </ul>
-      </div>
-      
-      <div class="nav-section">
-        <div class="nav-section-title">Быстрый старт</div>
-        <ul class="nav-links">
-          <li>
-            <a href="https://t.me/avickprogress_bot" class="nav-link" target="_blank" rel="noopener noreferrer">
-              <span class="nav-link-icon">📱</span>
-              PROGRESS Bot
-            </a>
-          </li>
-          <li>
-            <a href="https://t.me/avickprogressplusBOT" class="nav-link" target="_blank" rel="noopener noreferrer">
-              <span class="nav-link-icon">🔎</span>
-              PROGRESS+ Bot
-            </a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-    
-    <div class="sidebar-footer">
-      <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">
-        <span class="nav-link-icon" id="themeIcon">☀️</span>
-        <span id="themeText">Светлая тема</span>
-      </button>
-    </div>
-  </aside>
 
-  <!-- Кнопка меню (мобильная) -->
-  <button class="menu-btn" id="sidebarToggle" aria-label="Открыть меню">
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <line x1="3" y1="12" x2="21" y2="12"></line>
-      <line x1="3" y1="6" x2="21" y2="6"></line>
-      <line x1="3" y1="18" x2="21" y2="18"></line>
-    </svg>
-  </button>
-
-  <!-- Основной контент -->
-  <main class="main-content">
-    <!-- Hero секция -->
-    <section class="hero">
-      <div class="container">
-        <div class="hero-badge badge badge-secondary">
-          ⚡ MVP запущен • Бета-доступ
-        </div>
-        
-        <h1 class="hero-title">
-          Прогресс — система, созданная репетитором<br>
-          <span class="gradient-text">для репетиторов</span>
-        </h1>
-        
-        <p class="hero-subtitle">
-          Родилась из личной боли тысяч преподавателей, которые теряют драгоценное время в хаосе переписок, 
-          ручном управлении заданиями и отсутствии прозрачности для учеников. Мы объединили всё в одну 
-          интеллектуальную экосистему, работающую прямо в Telegram.
-        </p>
-        
-        <div class="hero-stats">
-          <div class="stat-card">
-            <span class="stat-value">73%</span>
-            <span class="stat-label">репетиторов используют 3+ мессенджера одновременно, теряя задачи в хаосе переписок</span>
-          </div>
-          <div class="stat-card">
-            <span class="stat-value">57%</span>
-            <span class="stat-label">преподавателей тратят до 2 часов в день на административную рутину вместо преподавания</span>
-          </div>
-          <div class="stat-card">
-            <span class="stat-value">68%</span>
-            <span class="stat-label">учеников теряют задания и материалы, а родители не видят реального прогресса</span>
-          </div>
-        </div>
-        
-        <div class="hero-cta">
-          <a href="progress.html" class="button button-primary button-block">
-            <span class="button-icon">🤖</span>
-            <span class="button-title">PROGRESS для репетиторов</span>
-            <span class="button-subtext">Управление обучением, автоматизация, аналитика</span>
-          </a>
-          <a href="progress-plus.html" class="button button-secondary button-block">
-            <span class="button-icon">📊</span>
-            <span class="button-title">PROGRESS+ для учеников</span>
-            <span class="button-subtext">Умный поиск репетиторов, объективные рейтинги</span>
-          </a>
-        </div>
-        
-        <div class="hero-note">
-          <span>ℹ️</span>
-          <span>Работает полностью в Telegram • Регистрация за 2 минуты • Бесплатный доступ для первых пользователей</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- История -->
-    <section class="section section-alt" id="story">
-      <div class="container">
-        <div class="section-header">
-          <h2 class="section-title">Почему мы создали<br><span class="gradient-text">этот проект</span></h2>
-          <p class="section-subtitle">
-            История, которая знакома каждому репетитору — и которую мы решили изменить
-          </p>
-        </div>
-        
-        <div class="grid-2">
-          <div class="card story-card">
-            <div class="story-icon">💬</div>
-            <h3>Хаос в коммуникациях</h3>
-            <p><strong>Проблема:</strong> У каждого ученика — свой мессенджер. WhatsApp для родителей, Telegram для заданий, Viber для срочных вопросов. Задания теряются в сотнях чатов, файлы — в разных папках.</p>
-            <p><strong>Наше решение:</strong> Единое пространство в Telegram, где все коммуникации структурированы. Один бот — все ученики, все задания, все материалы.</p>
-          </div>
-          
-          <div class="card story-card">
-            <div class="story-icon">⏰</div>
-            <h3>Ручная рутина убивает время</h3>
-            <p><strong>Проблема:</strong> "Напомни сделать домашку", "Когда следующее занятие?", "Скиньте материалы ещё раз". Один репетитор повторяет это десятки раз в неделю.</p>
-            <p><strong>Наше решение:</strong> Автоматические напоминания о дедлайнах, структурированные материалы в банке тем, умные уведомления для учеников и родителей.</p>
-          </div>
-          
-          <div class="card story-card">
-            <div class="story-icon">📈</div>
-            <h3>Прогресс невидим</h3>
-            <p><strong>Проблема:</strong> Ученики не видят своего роста, родители не понимают, за что платят, а репетиторы не могут показать результаты системно.</p>
-            <p><strong>Наше решение:</strong> Визуальная аналитика прогресса, радар-диаграммы успеваемости, понятные отчёты для родителей и мотивационные графики для учеников.</p>
-          </div>
-          
-          <div class="card story-card">
-            <div class="story-icon">👤</div>
-            <h3>Барьер для начинающих</h3>
-            <p><strong>Проблема:</strong> Новички-репетиторы не могут себя показать, ученики не знают, как выбрать хорошего преподавателя, только по отзывам и интуиции.</p>
-            <p><strong>Наше решение:</strong> PROGRESS+ с объективными рейтингами на основе реальных данных, SMART-категории преподавателей, встроенная диагностика для учеников.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Экосистема -->
-    <section class="section" id="ecosystem">
-      <div class="container">
-        <div class="section-header">
-          <span class="badge badge-primary">Экосистема</span>
-          <h2 class="section-title">Два бота —<br><span class="gradient-text">полный цикл обучения</span></h2>
-          <p class="section-subtitle">
-            От поиска идеального репетитора до системного отслеживания прогресса
-          </p>
-        </div>
-        
-        <div class="grid-2">
-          <div class="card ecosystem-card" onclick="location.href='progress-plus.html'">
-            <div class="ecosystem-icon" style="background: linear-gradient(135deg, #0a84ff 0%, #5e5ce6 100%);">
-              🔍
-            </div>
-            <h3>PROGRESS+</h3>
-            <p class="ecosystem-subtitle">Умный поиск и выбор репетиторов</p>
-            <p><strong>Для кого:</strong> Ученики, родители, взрослые, ищущие преподавателя.</p>
-            <p><strong>Что делает:</strong> Показывает объективные рейтинги преподавателей на основе реальных данных (скорость проверки, выполнение заданий, отзывы учеников).</p>
-            <p><strong>Зачем нужно:</strong> Чтобы выбрать репетитора не наугад, а на основе данных.</p>
-            <div class="ecosystem-audience">
-              <span class="audience-badge">Для учеников</span>
-              <span class="audience-badge">Для родителей</span>
-            </div>
-            <a href="progress-plus.html" class="button button-small button-secondary">Узнать больше →</a>
-          </div>
-          
-          <div class="card ecosystem-card" onclick="location.href='progress.html'">
-            <div class="ecosystem-icon" style="background: linear-gradient(135deg, #5e5ce6 0%, #bf5af2 100%);">
-              🤖
-            </div>
-            <h3>PROGRESS Bot</h3>
-            <p class="ecosystem-subtitle">Управление всем учебным процессом</p>
-            <p><strong>Для кого:</strong> Репетиторы, преподаватели, курсы, образовательные проекты.</p>
-            <p><strong>Что делает:</strong> Конструктор курсов с папками для материалов, автоматические напоминания о дедлайнах, система токенов для безопасного подключения.</p>
-            <p><strong>Зачем нужно:</strong> Чтобы вернуть себе 2+ часа в день, которые уходят на рутину.</p>
-            <div class="ecosystem-audience">
-              <span class="audience-badge">Для репетиторов</span>
-              <span class="audience-badge">Для курсов</span>
-            </div>
-            <a href="progress.html" class="button button-small button-secondary">Узнать больше →</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Как это работает -->
-    <section class="section section-alt">
-      <div class="container">
-        <div class="section-header">
-          <h2 class="section-title">Как это работает<br><span class="gradient-text">на практике</span></h2>
-          <p class="section-subtitle">
-            Простой путь от хаоса к системе — за 3 шага
-          </p>
-        </div>
-        
-        <div class="grid-3">
-          <div class="card step-card">
-            <div class="step-icon">🔑</div>
-            <h3>Шаг 1: Подключение</h3>
-            <p>Репетитор создаёт токен и отправляет ученику. Ученик вводит токен в бота — и они подключены.</p>
-          </div>
-          
-          <div class="card step-card">
-            <div class="step-icon">📁</div>
-            <h3>Шаг 2: Организация</h3>
-            <p>Репетитор создаёт темы, загружает материалы, даёт задания с дедлайнами.</p>
-          </div>
-          
-          <div class="card step-card">
-            <div class="step-icon">📊</div>
-            <h3>Шаг 3: Прогресс</h3>
-            <p>Система автоматически напоминает о дедлайнах, собирает статистику, строит графики.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Функционал -->
-    <section class="section">
-      <div class="container">
-        <div class="section-header">
-          <h2 class="section-title">Что конкретно<br><span class="gradient-text">вы получаете</span></h2>
-          <p class="section-subtitle">
-            Ключевые функции, которые решают реальные проблемы
-          </p>
-        </div>
-        
-        <div class="tabs-container">
-          <div class="tabs-buttons">
-            <button class="tab-button active" data-tab="tutors">Для репетиторов</button>
-            <button class="tab-button" data-tab="students">Для учеников</button>
-          </div>
-          
-          <div id="tutors-tab" class="tab-content active">
-            <div class="grid-2">
-              <div class="feature-item">
-                <div class="feature-icon-small">🔑</div>
-                <div class="feature-text">
-                  <h5>Система токенов — безопасное подключение</h5>
-                  <p>Одноразовые токены вместо сложных регистраций. Контролируйте, кто имеет доступ к вашим материалам.</p>
-                </div>
-              </div>
-              
-              <div class="feature-item">
-                <div class="feature-icon-small">📁</div>
-                <div class="feature-text">
-                  <h5>Банк тем — конструктор вашего курса</h5>
-                  <p>Создавайте структурированные темы с папками для теории, практики, шаблонов заданий.</p>
-                </div>
-              </div>
-              
-              <div class="feature-item">
-                <div class="feature-icon-small">🔔</div>
-                <div class="feature-text">
-                  <h5>Автоматические напоминания</h5>
-                  <p>Система сама напомнит ученику за 24 часа, 3 часа и 15 минут до дедлайна.</p>
-                </div>
-              </div>
-              
-              <div class="feature-item">
-                <div class="feature-icon-small">📡</div>
-                <div class="feature-text">
-                  <h5>Глубокая аналитика прогресса</h5>
-                  <p>Видите слабые и сильные стороны каждого ученика. Радар-диаграммы показывают успеваемость.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <div id="students-tab" class="tab-content">
-            <div class="grid-2">
-              <div class="feature-item">
-                <div class="feature-icon-small">📋</div>
-                <div class="feature-text">
-                  <h5>Все задания в одном месте</h5>
-                  <p>Больше не нужно искать, что задали, в десятках чатов. Все задания от всех репетиторов — в одном интерфейсе.</p>
-                </div>
-              </div>
-              
-              <div class="feature-item">
-                <div class="feature-icon-small">📖</div>
-                <div class="feature-text">
-                  <h5>Структурированные учебные материалы</h5>
-                  <p>Все материалы от репетитора собраны по темам и папкам. Скачивайте файлы, переходите по ссылкам.</p>
-                </div>
-              </div>
-              
-              <div class="feature-item">
-                <div class="feature-icon-small">📈</div>
-                <div class="feature-text">
-                  <h5>Визуальный прогресс и мотивация</h5>
-                  <p>Видите свои успехи в цифрах и графиках. Какие темы даются легко, где нужно подтянуть.</p>
-                </div>
-              </div>
-              
-              <div class="feature-item">
-                <div class="feature-icon-small">🔔</div>
-                <div class="feature-text">
-                  <h5>Умные напоминания о дедлайнах</h5>
-                  <p>Система сама напомнит, когда нужно сдать работу. Никаких пропущенных заданий.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Результаты -->
-    <section class="section section-alt">
-      <div class="container">
-        <div class="section-header">
-          <h2 class="section-title">Что изменится<br><span class="gradient-text">в вашей работе</span></h2>
-          <p class="section-subtitle">
-            Конкретные результаты, которые получают первые пользователи
-          </p>
-        </div>
-        
-        <div class="grid-3">
-          <div class="card result-card">
-            <div class="result-icon">⏰</div>
-            <h3>Вернёте 2+ часа в день</h3>
-            <p>Автоматизация напоминаний, проверки заданий и организации материалов освобождает время для преподавания.</p>
-          </div>
-          
-          <div class="card result-card">
-            <div class="result-icon">📈</div>
-            <h3>Повысите эффективность на 40%</h3>
-            <p>Ученики видят прогресс и мотивированы заниматься. Результаты становятся измеримыми.</p>
-          </div>
-          
-          <div class="card result-card">
-            <div class="result-icon">👨‍🎓</div>
-            <h3>Увеличите количество учеников</h3>
-            <p>С системой вы сможете уделять больше внимания каждому ученику, не теряя в качестве.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CTA секция -->
-    <section class="cta-section section">
-      <div class="container">
-        <div class="cta-content card">
-          <h2>Попробуйте будущее репетиторства уже сегодня</h2>
-          <p>Присоединяйтесь к первым репетиторам и ученикам, которые уже используют систему. Бесплатный доступ, персональная поддержка.</p>
-          
-          <div class="cta-features">
-            <div class="cta-feature">
-              <span class="cta-feature-icon">✓</span>
-              <span>Полный доступ ко всем функциям бесплатно для первых пользователей</span>
-            </div>
-            <div class="cta-feature">
-              <span class="cta-feature-icon">✓</span>
-              <span>Регистрация за 2 минуты прямо в Telegram</span>
-            </div>
-            <div class="cta-feature">
-              <span class="cta-feature-icon">✓</span>
-              <span>Персональная поддержка от команды проекта</span>
-            </div>
-          </div>
-          
-          <div class="cta-buttons">
-            <a href="https://t.me/avickprogress_bot" class="button button-primary button-large" target="_blank" rel="noopener noreferrer">
-              🤖 Начать с PROGRESS для репетиторов
-            </a>
-            <a href="https://t.me/avickprogressplusBOT" class="button button-secondary button-large" target="_blank" rel="noopener noreferrer">
-              🔍 Начать с PROGRESS+ для учеников
-            </a>
-          </div>
-          
-          <div class="cta-note">
-            <span>ℹ️</span>
-            <span>Оба бота работают в Telegram. Регистрация занимает 2 минуты. Все данные защищены.</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Футер -->
-    <footer class="footer">
-      <div class="container">
-        <div class="footer-content">
-          <div class="footer-brand">
-            <h3 class="footer-logo">Progress</h3>
-            <p class="footer-description">Система, созданная репетитором для репетиторов. Возвращаем время преподавания, убираем хаос, показываем прогресс.</p>
-            <div class="footer-tech">
-              <span class="tech-tag">Telegram</span>
-              <span class="tech-tag">Для репетиторов</span>
-              <span class="tech-tag">Для учеников</span>
-            </div>
-          </div>
-          
-          <div class="footer-column">
-            <h4>Продукт</h4>
-            <ul class="footer-links">
-              <li><a href="index.html">Главная</a></li>
-              <li><a href="progress.html">PROGRESS Bot</a></li>
-              <li><a href="progress-plus.html">PROGRESS+</a></li>
-              <li><a href="history.html">История создания</a></li>
-              <li><a href="contacts.html">Контакты</a></li>
-            </ul>
-          </div>
-          
-          <div class="footer-column">
-            <h4>Помощь</h4>
-            <ul class="footer-links">
-              <li><a href="#">Как начать</a></li>
-              <li><a href="#">Частые вопросы</a></li>
-              <li><a href="#">Инструкции</a></li>
-              <li><a href="#">Поддержка</a></li>
-            </ul>
-          </div>
-          
-          <div class="footer-column">
-            <h4>Контакты</h4>
-            <div class="footer-contact">
-              <div class="contact-item">
-                <span>📱</span>
-                <a href="https://t.me/avickprogress_bot" target="_blank" rel="noopener noreferrer">PROGRESS Bot</a>
-              </div>
-              <div class="contact-item">
-                <span>📱</span>
-                <a href="https://t.me/avickprogressplusBOT" target="_blank" rel="noopener noreferrer">PROGRESS+</a>
-              </div>
-              <div class="contact-item">
-                <span>✉️</span>
-                <span>contact@progress.education</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="footer-legal">
-          <a href="#">Политика конфиденциальности</a>
-          <a href="#">Условия использования</a>
-        </div>
-        
-        <div class="footer-copyright">
-          © 2025 Система управления учебным процессом «Прогресс». Создано репетиторами для репетиторов.
-        </div>
-      </div>
-    </footer>
-  </main>
+    <!-- Scroll to top button -->
+    <button class="scroll-top" id="scrollTop" onclick="scrollToTop()">
+      <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+      </svg>
+    </button>
+  </div>
 
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // Элементы
+    // Theme Toggle
+    function toggleTheme() {
+      document.documentElement.classList.toggle('dark');
+      const isDark = document.documentElement.classList.contains('dark');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    }
+
+    // Initialize theme
+    (function() {
+      const savedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+      if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+
+    // Sidebar Toggle
+    function toggleSidebar() {
       const sidebar = document.getElementById('sidebar');
-      const sidebarToggle = document.getElementById('sidebarToggle');
-      const sidebarOverlay = document.getElementById('sidebarOverlay');
-      const themeToggle = document.getElementById('themeToggle');
-      const themeIcon = document.getElementById('themeIcon');
-      const themeText = document.getElementById('themeText');
-      const navLinks = document.querySelectorAll('.nav-link');
+      const overlay = document.getElementById('overlay');
+      const mainContent = document.getElementById('mainContent');
 
-      // Инициализация темы
-      let currentTheme = localStorage.getItem('theme') || 'dark';
-      document.documentElement.setAttribute('data-theme', currentTheme);
-      updateThemeUI(currentTheme);
-
-      // Переключатель темы
-      function toggleTheme() {
-        currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', currentTheme);
-        localStorage.setItem('theme', currentTheme);
-        updateThemeUI(currentTheme);
+      if (window.innerWidth >= 1024) {
+        // Desktop: collapse/expand
+        sidebar.classList.toggle('collapsed');
+        mainContent.classList.toggle('sidebar-collapsed');
+      } else {
+        // Mobile: show/hide with overlay
+        sidebar.classList.toggle('open');
+        overlay.classList.toggle('active');
       }
+    }
 
-      function updateThemeUI(theme) {
-        if (theme === 'dark') {
-          themeIcon.textContent = '☀️';
-          themeText.textContent = 'Светлая тема';
-        } else {
-          themeIcon.textContent = '🌙';
-          themeText.textContent = 'Тёмная тема';
-        }
-      }
+    function closeSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('overlay');
 
-      themeToggle.addEventListener('click', toggleTheme);
-
-      // Открытие/закрытие sidebar
-      function openSidebar() {
-        sidebar.classList.add('open');
-        sidebarOverlay.classList.add('show');
-        document.body.style.overflow = 'hidden';
-      }
-
-      function closeSidebar() {
+      if (window.innerWidth < 1024) {
         sidebar.classList.remove('open');
-        sidebarOverlay.classList.remove('show');
-        document.body.style.overflow = '';
+        overlay.classList.remove('active');
+      }
+    }
+
+    // Navigation expand/collapse
+    function toggleNav(element) {
+      const parent = element.parentElement;
+      const children = parent.querySelector('.nav-children');
+
+      element.classList.toggle('expanded');
+      children.classList.toggle('open');
+    }
+
+    // FAQ Accordion
+    function toggleFaq(element) {
+      element.classList.toggle('open');
+    }
+
+    // Scroll to top
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Scroll spy & scroll to top visibility
+    function handleScroll() {
+      const scrollTop = document.getElementById('scrollTop');
+
+      // Scroll to top button visibility
+      if (window.scrollY > 300) {
+        scrollTop.classList.add('visible');
+      } else {
+        scrollTop.classList.remove('visible');
       }
 
-      sidebarToggle.addEventListener('click', function() {
-        if (sidebar.classList.contains('open')) {
-          closeSidebar();
-        } else {
-          openSidebar();
+      // Scroll spy
+      const sections = document.querySelectorAll('[data-section]');
+      let currentSection = 'introduction';
+
+      sections.forEach(section => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top <= 150 && rect.bottom >= 150) {
+          currentSection = section.getAttribute('data-section');
         }
       });
 
-      sidebarOverlay.addEventListener('click', closeSidebar);
+      // Update active nav item
+      document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+        if (item.getAttribute('data-section') === currentSection) {
+          item.classList.add('active');
 
-      // Закрытие при клике на ссылку (мобильные)
-      navLinks.forEach(function(link) {
-        link.addEventListener('click', function() {
-          if (window.innerWidth <= 1024) {
-            closeSidebar();
+          // Expand parent if collapsed
+          const parent = item.closest('.nav-group');
+          if (parent) {
+            const btn = parent.querySelector('.nav-item');
+            const children = parent.querySelector('.nav-children');
+            if (btn && children) {
+              btn.classList.add('expanded');
+              children.classList.add('open');
+            }
           }
-        });
-      });
-
-      // Закрытие по Esc
-      document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && sidebar.classList.contains('open')) {
-          closeSidebar();
         }
       });
+    }
 
-      // Табы
-      const tabButtons = document.querySelectorAll('.tab-button');
-      const tabContents = document.querySelectorAll('.tab-content');
+    window.addEventListener('scroll', handleScroll);
 
-      tabButtons.forEach(function(button) {
-        button.addEventListener('click', function() {
-          const tabId = this.getAttribute('data-tab');
-          
-          tabButtons.forEach(function(btn) {
-            btn.classList.remove('active');
-          });
-          tabContents.forEach(function(content) {
-            content.classList.remove('active');
-          });
-          
-          this.classList.add('active');
-          document.getElementById(tabId + '-tab').classList.add('active');
-        });
-      });
+    // Handle resize
+    window.addEventListener('resize', function() {
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('overlay');
+      const mainContent = document.getElementById('mainContent');
+
+      if (window.innerWidth >= 1024) {
+        sidebar.classList.remove('open');
+        overlay.classList.remove('active');
+      }
     });
+
+    // Initial scroll spy call
+    handleScroll();
   </script>
 </body>
 </html>

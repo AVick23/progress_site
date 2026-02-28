@@ -2047,33 +2047,6 @@
           </div>
 
           <!-- Admin -->
-          <div id="tutor-admin" data-section="tutor-admin">
-            <h3><span>👑</span> Админ-панель</h3>
-
-            <div class="card" style="background: linear-gradient(135deg, var(--amber-50), var(--orange-50));">
-              <p>Эта секция доступна только пользователю с Telegram ID <code>1373472999</code> и предназначена для мониторинга и управления всей системой.</p>
-
-              <div class="grid-2">
-                <div>
-                  <strong>📊 Общая статистика</strong>
-                  <p>Пользователи, активности</p>
-                </div>
-                <div>
-                  <strong>📝 Статистика по заданиям</strong>
-                  <p>Распределение по статусам</p>
-                </div>
-                <div>
-                  <strong>📅 Статистика по занятиям</strong>
-                  <p>За 90 дней</p>
-                </div>
-                <div>
-                  <strong>📤 Экспорт данных</strong>
-                  <p>Выгрузка в JSON</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
 
         <!-- Common Features -->
         <section id="common-features" data-section="common-features">
@@ -2282,45 +2255,6 @@
         </section>
 
         <!-- Technical Details -->
-        <section id="technical-details" data-section="technical-details">
-          <h2><span>🔒</span> Раздел 5: Технические детали и безопасность</h2>
-
-          <div class="tech-card">
-            <div class="icon-box blue">🐍</div>
-            <div>
-              <h3>Платформа</h3>
-              <p>Бот работает на языке <strong>Python</strong> с использованием библиотеки <code>python-telegram-bot</code> (v20.x).</p>
-            </div>
-          </div>
-
-          <div class="tech-card">
-            <div class="icon-box purple">🗄️</div>
-            <div>
-              <h3>База данных</h3>
-              <p>Для хранения всей информации используется <strong>SQLite</strong>. База данных имеет сложную структуру из более чем <strong>15 таблиц</strong>, обеспечивающих связи между пользователями, дисциплинами, темами, материалами, заданиями и занятиями.</p>
-            </div>
-          </div>
-
-          <div class="tech-card">
-            <div class="icon-box green">🛡️</div>
-            <div>
-              <h3>Безопасность</h3>
-              <ul>
-                <li>Все пользовательские данные проходят через <strong>экранирование HTML-символов</strong>, что предотвращает потенциальные инъекции.</li>
-                <li>Токены для приглашения учеников генерируются с использованием <strong>криптографически стойкого генератора</strong> случайных чисел и имеют ограниченный срок действия (1 час).</li>
-                <li>Доступ к админ-панели <strong>жестко ограничен по Telegram ID</strong>.</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="tech-card">
-            <div class="icon-box orange">⚙️</div>
-            <div>
-              <h3>Фоновая работа</h3>
-              <p>Бот использует механизм <code>JobQueue</code> для выполнения периодических задач, таких как отправка напоминаний о занятиях и дедлайнах, не дожидаясь действий пользователя.</p>
-            </div>
-          </div>
-        </section>
 
         <!-- Glossary -->
         <section id="glossary" data-section="glossary">

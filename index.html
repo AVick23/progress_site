@@ -1,2502 +1,637 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Прогресс — Telegram-бот для репетиторов и учеников</title>
-  <style>
-    /* Reset and Base */
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    :root {
-      --bg-primary: oklch(0.99 0.002 240);
-      --bg-secondary: oklch(1 0 0);
-      --bg-tertiary: oklch(0.96 0.01 240);
-      --text-primary: oklch(0.15 0.02 240);
-      --text-secondary: oklch(0.5 0.02 240);
-      --text-muted: oklch(0.6 0.02 240);
-      --border-color: oklch(0.92 0.01 240);
-      --accent-blue: oklch(0.45 0.18 250);
-      --accent-blue-light: oklch(0.65 0.18 250);
-      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-      --radius-sm: 8px;
-      --radius-md: 12px;
-      --radius-lg: 16px;
-      --radius-xl: 24px;
-
-      /* Colors for cards */
-      --blue-50: oklch(0.95 0.05 250);
-      --blue-100: oklch(0.90 0.08 250);
-      --blue-200: oklch(0.80 0.12 250);
-      --blue-500: oklch(0.55 0.18 250);
-      --blue-600: oklch(0.45 0.18 250);
-      --blue-700: oklch(0.40 0.15 250);
-      --purple-50: oklch(0.95 0.05 300);
-      --purple-500: oklch(0.55 0.15 300);
-      --green-50: oklch(0.95 0.05 150);
-      --green-500: oklch(0.55 0.15 150);
-      --red-50: oklch(0.95 0.05 25);
-      --red-500: oklch(0.55 0.20 25);
-      --orange-50: oklch(0.95 0.08 70);
-      --orange-500: oklch(0.60 0.15 70);
-      --amber-50: oklch(0.98 0.05 90);
-      --amber-500: oklch(0.75 0.15 70);
-    }
-
-    .dark {
-      --bg-primary: oklch(0.12 0.015 250);
-      --bg-secondary: oklch(0.17 0.015 250);
-      --bg-tertiary: oklch(0.22 0.015 250);
-      --text-primary: oklch(0.95 0.01 240);
-      --text-secondary: oklch(0.75 0.02 240);
-      --text-muted: oklch(0.55 0.02 240);
-      --border-color: oklch(0.25 0.015 250);
-
-      --blue-50: oklch(0.20 0.05 250);
-      --blue-100: oklch(0.25 0.08 250);
-      --blue-500: oklch(0.60 0.18 250);
-      --blue-600: oklch(0.65 0.18 250);
-      --purple-50: oklch(0.20 0.05 300);
-      --purple-500: oklch(0.60 0.15 300);
-      --green-50: oklch(0.20 0.05 150);
-      --green-500: oklch(0.60 0.15 150);
-      --red-50: oklch(0.20 0.05 25);
-      --orange-50: oklch(0.20 0.08 70);
-      --amber-50: oklch(0.18 0.05 90);
-    }
-
-    html {
-      scroll-behavior: smooth;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
-      background: var(--bg-primary);
-      color: var(--text-primary);
-      line-height: 1.6;
-      transition: background-color 0.3s ease, color 0.3s ease;
-    }
-
-    /* Layout */
-    .app-container {
-      display: flex;
-      min-height: 100vh;
-    }
-
-    /* Sidebar */
-    .sidebar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 280px;
-      height: 100vh;
-      background: var(--bg-secondary);
-      border-right: 1px solid var(--border-color);
-      display: flex;
-      flex-direction: column;
-      z-index: 100;
-      transform: translateX(-100%);
-      transition: transform 0.3s ease;
-      overflow: hidden;
-    }
-
-    .sidebar.open {
-      transform: translateX(0);
-    }
-
-    @media (min-width: 1024px) {
-      .sidebar {
-        transform: translateX(0);
-      }
-      .sidebar.collapsed {
-        transform: translateX(-100%);
-      }
-    }
-
-    .sidebar-header {
-      padding: 24px;
-      border-bottom: 1px solid var(--border-color);
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .logo-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, var(--accent-blue), #8b5cf6);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-weight: 700;
-      font-size: 18px;
-    }
-
-    .logo-text h1 {
-      font-size: 16px;
-      font-weight: 600;
-      color: var(--text-primary);
-    }
-
-    .logo-text p {
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-
-    .sidebar-nav {
-      flex: 1;
-      overflow-y: auto;
-      padding: 16px;
-    }
-
-    .nav-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 10px 16px;
-      border-radius: 12px;
-      cursor: pointer;
-      color: var(--text-secondary);
-      text-decoration: none;
-      transition: all 0.2s ease;
-      margin-bottom: 4px;
-      border: none;
-      background: none;
-      width: 100%;
-      text-align: left;
-      font-size: 14px;
-    }
-
-    .nav-item:hover {
-      background: var(--bg-tertiary);
-      color: var(--text-primary);
-    }
-
-    .nav-item.active {
-      background: var(--blue-50);
-      color: var(--accent-blue);
-      font-weight: 500;
-    }
-
-    .nav-item .icon {
-      font-size: 18px;
-    }
-
-    .nav-item .arrow {
-      margin-left: auto;
-      transition: transform 0.2s ease;
-    }
-
-    .nav-item.expanded .arrow {
-      transform: rotate(90deg);
-    }
-
-    .nav-children {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.3s ease;
-    }
-
-    .nav-children.open {
-      max-height: 500px;
-    }
-
-    .nav-child {
-      padding: 8px 16px 8px 44px;
-      font-size: 13px;
-    }
-
-    .sidebar-footer {
-      padding: 16px;
-      border-top: 1px solid var(--border-color);
-      text-align: center;
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-
-    /* Header */
-    .header {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      background: var(--bg-secondary);
-      border-bottom: 1px solid var(--border-color);
-      backdrop-filter: blur(20px);
-    }
-
-    .header-content {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 64px;
-      padding: 0 24px;
-    }
-
-    .menu-toggle {
-      padding: 8px;
-      border-radius: 12px;
-      border: none;
-      background: none;
-      cursor: pointer;
-      color: var(--text-secondary);
-      transition: background 0.2s ease;
-    }
-
-    .menu-toggle:hover {
-      background: var(--bg-tertiary);
-    }
-
-    .mobile-logo {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .mobile-logo .logo-icon {
-      width: 32px;
-      height: 32px;
-      font-size: 14px;
-      border-radius: 8px;
-    }
-
-    .mobile-logo span {
-      font-weight: 600;
-      color: var(--text-primary);
-    }
-
-    @media (min-width: 1024px) {
-      .mobile-logo {
-        display: none;
-      }
-    }
-
-    /* Theme Toggle */
-    .theme-toggle {
-      position: relative;
-      width: 56px;
-      height: 32px;
-      border-radius: 16px;
-      border: none;
-      cursor: pointer;
-      transition: background 0.3s ease;
-      background: linear-gradient(135deg, #87ceeb 0%, #f0f9ff 100%);
-    }
-
-    .dark .theme-toggle {
-      background: linear-gradient(135deg, #1e3a5f 0%, #0f172a 100%);
-    }
-
-    .theme-toggle .sun,
-    .theme-toggle .moon {
-      position: absolute;
-      top: 4px;
-      width: 24px;
-      height: 24px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s ease;
-    }
-
-    .theme-toggle .sun {
-      left: 4px;
-      color: #f59e0b;
-    }
-
-    .theme-toggle .moon {
-      right: 4px;
-      color: #cbd5e1;
-    }
-
-    .dark .theme-toggle .sun {
-      opacity: 0;
-      transform: rotate(90deg) scale(0);
-    }
-
-    .dark .theme-toggle .moon {
-      opacity: 1;
-      transform: rotate(0) scale(1);
-    }
-
-    .theme-toggle .moon {
-      opacity: 0;
-      transform: rotate(-90deg) scale(0);
-    }
-
-    .dark .theme-toggle .moon {
-      opacity: 1;
-      transform: rotate(0) scale(1);
-    }
-
-    .theme-toggle .toggle-circle {
-      position: absolute;
-      top: 4px;
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      background: white;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-      transition: left 0.3s ease;
-      left: 4px;
-    }
-
-    .dark .theme-toggle .toggle-circle {
-      left: 28px;
-    }
-
-    /* Main Content */
-    .main-content {
-      flex: 1;
-      margin-left: 0;
-      transition: margin-left 0.3s ease;
-    }
-
-    @media (min-width: 1024px) {
-      .main-content {
-        margin-left: 280px;
-      }
-      .main-content.sidebar-collapsed {
-        margin-left: 0;
-      }
-    }
-
-    .content-wrapper {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 32px 24px;
-    }
-
-    @media (min-width: 768px) {
-      .content-wrapper {
-        padding: 48px;
-      }
-    }
-
-    /* Overlay */
-    .overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.3);
-      backdrop-filter: blur(4px);
-      z-index: 90;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s ease;
-    }
-
-    .overlay.active {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    /* Sections */
-    section {
-      margin-bottom: 64px;
-      scroll-margin-top: 100px;
-    }
-
-    h2 {
-      font-size: 28px;
-      font-weight: 700;
-      margin-bottom: 32px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      letter-spacing: -0.02em;
-    }
-
-    @media (min-width: 768px) {
-      h2 {
-        font-size: 32px;
-      }
-    }
-
-    h3 {
-      font-size: 22px;
-      font-weight: 600;
-      margin-bottom: 16px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    h4 {
-      font-size: 16px;
-      font-weight: 600;
-      margin-bottom: 12px;
-      color: var(--text-primary);
-    }
-
-    p {
-      color: var(--text-secondary);
-      margin-bottom: 16px;
-      line-height: 1.7;
-    }
-
-    /* Cards */
-    .card {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-xl);
-      padding: 24px;
-      margin-bottom: 24px;
-    }
-
-    /* Feature Cards */
-    .feature-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 16px;
-      margin-top: 32px;
-    }
-
-    @media (min-width: 768px) {
-      .feature-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
-
-    .feature-card {
-      padding: 24px;
-      border-radius: var(--radius-xl);
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-color);
-      transition: all 0.3s ease;
-    }
-
-    .feature-card:hover {
-      border-color: var(--accent-blue);
-      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
-    }
-
-    .feature-card .icon {
-      font-size: 32px;
-      margin-bottom: 16px;
-    }
-
-    .feature-card h3 {
-      font-size: 16px;
-      margin-bottom: 8px;
-    }
-
-    .feature-card p {
-      font-size: 14px;
-      margin-bottom: 0;
-    }
-
-    /* Problem/Solution Cards */
-    .problem-card {
-      display: flex;
-      align-items: flex-start;
-      gap: 16px;
-      padding: 16px;
-      border-radius: var(--radius-md);
-      background: var(--red-50);
-      border: 1px solid transparent;
-      margin-bottom: 12px;
-    }
-
-    .solution-card {
-      display: flex;
-      align-items: flex-start;
-      gap: 16px;
-      padding: 20px;
-      border-radius: var(--radius-md);
-      background: var(--green-50);
-      border: 1px solid transparent;
-      margin-bottom: 12px;
-    }
-
-    /* Badge */
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 12px;
-      border-radius: var(--radius-md);
-      background: var(--bg-tertiary);
-      color: var(--text-muted);
-      font-size: 13px;
-      margin-bottom: 16px;
-    }
-
-    .badge svg {
-      width: 16px;
-      height: 16px;
-    }
-
-    /* Steps */
-    .steps {
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-    }
-
-    .step {
-      display: flex;
-      gap: 16px;
-    }
-
-    .step-number {
-      flex-shrink: 0;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background: var(--accent-blue);
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 600;
-      font-size: 14px;
-    }
-
-    .step-content h4 {
-      margin-bottom: 4px;
-    }
-
-    /* Tags */
-    .tag {
-      display: inline-block;
-      padding: 8px 16px;
-      border-radius: 20px;
-      background: var(--bg-tertiary);
-      color: var(--text-secondary);
-      font-size: 14px;
-      margin: 4px;
-    }
-
-    /* Action Buttons */
-    .action-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 8px 12px;
-      border-radius: var(--radius-sm);
-      background: var(--bg-tertiary);
-      color: var(--text-secondary);
-      font-size: 13px;
-      margin: 4px;
-    }
-
-    /* Info Box */
-    .info-box {
-      padding: 16px;
-      border-radius: var(--radius-md);
-      margin-top: 24px;
-    }
-
-    .info-box.warning {
-      background: var(--amber-50);
-    }
-
-    .info-box.info {
-      background: var(--blue-50);
-    }
-
-    .info-box p {
-      margin-bottom: 0;
-      font-size: 14px;
-    }
-
-    /* FAQ Accordion */
-    .faq-item {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-xl);
-      margin-bottom: 12px;
-      overflow: hidden;
-    }
-
-    .faq-question {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 20px;
-      cursor: pointer;
-      background: none;
-      border: none;
-      width: 100%;
-      text-align: left;
-      font-size: 15px;
-      font-weight: 500;
-      color: var(--text-primary);
-      transition: background 0.2s ease;
-    }
-
-    .faq-question:hover {
-      background: var(--bg-tertiary);
-    }
-
-    .faq-question svg {
-      flex-shrink: 0;
-      width: 20px;
-      height: 20px;
-      transition: transform 0.3s ease;
-      color: var(--text-muted);
-    }
-
-    .faq-item.open .faq-question svg {
-      transform: rotate(180deg);
-    }
-
-    .faq-answer {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.3s ease;
-    }
-
-    .faq-item.open .faq-answer {
-      max-height: 500px;
-    }
-
-    .faq-answer-content {
-      padding: 0 20px 20px;
-      font-size: 14px;
-      color: var(--text-secondary);
-      border-top: 1px solid var(--border-color);
-      padding-top: 16px;
-    }
-
-    /* Glossary */
-    .glossary-term {
-      display: flex;
-      gap: 16px;
-      padding: 16px;
-      border-bottom: 1px solid var(--border-color);
-    }
-
-    .glossary-term:last-child {
-      border-bottom: none;
-    }
-
-    .glossary-term .term {
-      min-width: 140px;
-      font-weight: 600;
-      color: var(--text-primary);
-    }
-
-    .status-badge {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 16px;
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-md);
-      margin-bottom: 12px;
-    }
-
-    .status-badge code {
-      font-size: 13px;
-      color: var(--accent-blue);
-      background: var(--blue-50);
-      padding: 2px 8px;
-      border-radius: 4px;
-    }
-
-    /* Scroll to top */
-    .scroll-top {
-      position: fixed;
-      bottom: 24px;
-      right: 24px;
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: var(--accent-blue);
-      color: white;
-      border: none;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: var(--shadow-md);
-      opacity: 0;
-      transform: translateY(20px);
-      transition: all 0.3s ease;
-      z-index: 80;
-    }
-
-    .scroll-top.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .scroll-top:hover {
-      transform: scale(1.1);
-    }
-
-    /* Footer */
-    footer {
-      padding: 24px;
-      border-top: 1px solid var(--border-color);
-      text-align: center;
-      color: var(--text-muted);
-      font-size: 14px;
-    }
-
-    /* Lists */
-    ul, ol {
-      margin-left: 24px;
-      margin-bottom: 16px;
-      color: var(--text-secondary);
-    }
-
-    li {
-      margin-bottom: 8px;
-    }
-
-    /* Code */
-    code {
-      font-family: 'SF Mono', Monaco, 'Courier New', monospace;
-      font-size: 13px;
-      background: var(--bg-tertiary);
-      padding: 2px 6px;
-      border-radius: 4px;
-      color: var(--accent-blue);
-    }
-
-    strong {
-      color: var(--text-primary);
-    }
-
-    /* Custom scrollbar */
-    ::-webkit-scrollbar {
-      width: 8px;
-    }
-
-    ::-webkit-scrollbar-track {
-      background: transparent;
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: var(--text-muted);
-      border-radius: 4px;
-    }
-
-    ::-webkit-scrollbar-thumb:hover {
-      background: var(--text-secondary);
-    }
-
-    /* Grid layouts */
-    .grid-2 {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 16px;
-    }
-
-    @media (min-width: 768px) {
-      .grid-2 {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    .grid-3 {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 12px;
-    }
-
-    @media (min-width: 768px) {
-      .grid-3 {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
-
-    .grid-4 {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-    }
-
-    @media (min-width: 768px) {
-      .grid-4 {
-        grid-template-columns: repeat(4, 1fr);
-      }
-    }
-
-    /* Hero Section */
-    .hero {
-      text-align: center;
-      margin-bottom: 64px;
-    }
-
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 16px;
-      border-radius: 20px;
-      background: var(--blue-50);
-      color: var(--accent-blue);
-      font-size: 14px;
-      font-weight: 500;
-      margin-bottom: 24px;
-    }
-
-    .hero-badge .dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--accent-blue);
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.5; }
-    }
-
-    .hero h1 {
-      font-size: 36px;
-      font-weight: 700;
-      margin-bottom: 16px;
-      letter-spacing: -0.02em;
-    }
-
-    @media (min-width: 768px) {
-      .hero h1 {
-        font-size: 48px;
-      }
-    }
-
-    @media (min-width: 1024px) {
-      .hero h1 {
-        font-size: 60px;
-      }
-    }
-
-    .hero h1 .gradient {
-      background: linear-gradient(135deg, var(--accent-blue), #8b5cf6);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .hero .subtitle {
-      font-size: 20px;
-      color: var(--text-secondary);
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    /* Menu buttons */
-    .menu-btn {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 16px;
-      border-radius: var(--radius-md);
-      background: var(--bg-tertiary);
-      text-align: center;
-      transition: background 0.2s ease;
-    }
-
-    .menu-btn .icon {
-      font-size: 24px;
-      margin-bottom: 8px;
-    }
-
-    .menu-btn .label {
-      font-weight: 500;
-      color: var(--text-primary);
-      font-size: 14px;
-    }
-
-    .menu-btn .desc {
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-
-    /* Notification list */
-    .notification-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      padding: 12px;
-      background: var(--bg-tertiary);
-      border-radius: var(--radius-md);
-      margin-bottom: 12px;
-    }
-
-    .notification-item .icon {
-      font-size: 20px;
-    }
-
-    /* Technical cards */
-    .tech-card {
-      display: flex;
-      align-items: flex-start;
-      gap: 16px;
-      padding: 24px;
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-xl);
-      margin-bottom: 16px;
-    }
-
-    .tech-card .icon-box {
-      width: 48px;
-      height: 48px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-      flex-shrink: 0;
-    }
-
-    .tech-card .icon-box.blue { background: var(--blue-50); }
-    .tech-card .icon-box.purple { background: var(--purple-50); }
-    .tech-card .icon-box.green { background: var(--green-50); }
-    .tech-card .icon-box.orange { background: var(--orange-50); }
-
-    /* Inline colored boxes */
-    .box-blue {
-      background: var(--blue-50);
-      border-radius: var(--radius-md);
-      padding: 16px;
-      margin: 12px 0;
-    }
-
-    .box-green {
-      background: var(--green-50);
-      border-radius: var(--radius-md);
-      padding: 16px;
-      margin: 12px 0;
-    }
-
-    .box-purple {
-      background: var(--purple-50);
-      border-radius: var(--radius-md);
-      padding: 16px;
-      margin: 12px 0;
-    }
-
-    .box-orange {
-      background: var(--orange-50);
-      border-radius: var(--radius-md);
-      padding: 16px;
-      margin: 12px 0;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Прогресс — Первая CRM для репетиторов</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="app-container">
-    <!-- Overlay -->
-    <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
-
-    <!-- Sidebar -->
-    <aside class="sidebar" id="sidebar">
-      <div class="sidebar-header">
-        <div class="logo">
-          <div class="logo-icon">П</div>
-          <div class="logo-text">
-            <h1>Прогресс</h1>
-            <p>Telegram-бот</p>
-          </div>
+    <div class="noise"></div>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="light-orb orb-1"></div>
+        <div class="light-orb orb-2"></div>
+        
+        <div class="container">
+            <div class="badge">Закрытое бета-тестирование</div>
+            <h1 class="hero-title">
+                <span class="gradient-text">Прогресс</span>
+            </h1>
+            <p class="hero-subtitle">
+                Первая CRM-система для репетиторов,<br>
+            </p>
+            <p class="hero-description">
+                5 часов рутины в неделю. Или Прогресс.
+            </p>
+            <div class="cta-group">
+                <a href="https://t.me/avickprogress_bot" target="_blank" class="btn-primary">
+                    Попробовать бесплатно
+                </a>
+                <a href="https://t.me/AVick23" target="_blank" class="btn-secondary">
+                    Связаться с создателем
+                </a>
+            </div>
+            <div class="stats">
+                <div class="stat">
+                    <span class="stat-number">90%</span>
+                    <span class="stat-label">экономия времени</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat">
+                    <span class="stat-number">100</span>
+                    <span class="stat-label">мест в первой волне</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat">
+                    <span class="stat-number">24/7</span>
+                    <span class="stat-label">автоматизация</span>
+                </div>
+            </div>
         </div>
-      </div>
+    </section>
 
-      <nav class="sidebar-nav">
-        <a href="#introduction" class="nav-item" data-section="introduction">
-          <span class="icon">👋</span>
-          <span>Введение</span>
-        </a>
+    <!-- Problem Section -->
+    <section class="problem">
+        <div class="container">
+            <h2 class="section-title">Проблема</h2>
+            <p class="section-subtitle">Знакомая ситуация?</p>
+            
+            <div class="problem-grid">
+                <div class="problem-card">
+                    <div class="problem-icon">📊</div>
+                    <h3>Excel-хаос</h3>
+                    <p>50 колонок, потерянные данные, забытые дедлайны. Ты не репетитор — ты бухгалтер.</p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">⏰</div>
+                    <h3>5 часов в неделю</h3>
+                    <p>На рутину вместо преподавания. Напоминания, проверки, отчёты — всё вручную.</p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">😤</div>
+                    <h3>Ученики пропадают</h3>
+                    <p>Нет системы трекинга. Ты узнаёшь об оттоке, когда уже поздно.</p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">📱</div>
+                    <h3>WhatsApp-ад</h3>
+                    <p>100500 чатов, файлы теряются, историю не найти. Контекст теряется каждый раз.</p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">📉</div>
+                    <h3>Нет аналитики</h3>
+                    <p>Родители спрашивают "Как успехи?", а ты не знаешь, что ответить. Только "мне кажется".</p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">🔄</div>
+                    <h3>Повторяющаяся рутина</h3>
+                    <p>Одни и те же действия каждый день. Создание заданий, проверка, напоминания — по кругу.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        <div class="nav-group">
-          <button class="nav-item" onclick="toggleNav(this)" data-section="quick-start">
-            <span class="icon">🚀</span>
-            <span>Быстрый старт</span>
-            <span class="arrow">▶</span>
-          </button>
-          <div class="nav-children">
-            <a href="#for-students" class="nav-item nav-child" data-section="for-students">
-              <span class="icon">👨‍🎓</span>
-              <span>Для учеников</span>
-            </a>
-            <a href="#for-tutors" class="nav-item nav-child" data-section="for-tutors">
-              <span class="icon">👨‍🏫</span>
-              <span>Для репетиторов</span>
-            </a>
-          </div>
+    <!-- Solution Section -->
+    <section class="solution">
+        <div class="light-orb orb-3"></div>
+        <div class="container">
+            <h2 class="section-title">
+                <span class="gradient-text">Решение</span>
+            </h2>
+            <p class="section-subtitle">
+                Всё на одном экране
+            </p>
+            
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-number">01</div>
+                    <h3>Создание задания за 30 секунд</h3>
+                    <p>Выбрал ученика. Выбрал тему. Поставил дедлайн. Готово. Ученик получает пуш-уведомление автоматически.</p>
+                    <div class="feature-highlight">Вместо 5 минут в Excel</div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-number">02</div>
+                    <h3>Автоматические напоминания</h3>
+                    <p>Ученик получает пуш за 24 часа, 12 часов и 1 час до дедлайна. Ты — за 1 час до занятия. Никаких "А вы проверили мою работу?" в 11 вечера.</p>
+                    <div class="feature-highlight">Бот помнит всё за тебя</div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-number">03</div>
+                    <h3>Аналитика в реальном времени</h3>
+                    <p>Дашборды с графиками. Процент выполнения, динамика по неделям, прогноз на экзамен. Покажи родителям данные, а не "мне кажется".</p>
+                    <div class="feature-highlight">Родители в восторге</div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-number">04</div>
+                    <h3>Банк материалов</h3>
+                    <p>Структурированное хранение: дисциплина → тема → папка → материал. Файлы, ссылки, текст. Экспорт в ZIP. Контроль видимости для учеников.</p>
+                    <div class="feature-highlight">Всё в одном месте</div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-number">05</div>
+                    <h3>Проверка заданий в 2 клика</h3>
+                    <p>Ученик сдал работу — ты получил уведомление. Проверил, оставил комментарий, вернул на доработку или принял. Всё в Telegram.</p>
+                    <div class="feature-highlight">Никаких потерянных файлов</div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-number">06</div>
+                    <h3>Учёт занятий</h3>
+                    <p>Планирование, проведение, отмена, перенос. Статистика по месяцам. Отчёты по темам. Всё автоматически.</p>
+                    <div class="feature-highlight">Полная прозрачность</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Live Interface Section (NEW) -->
+    <section class="live-interface">
+        <div class="light-orb orb-5"></div>
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="gradient-text-gold">Живой интерфейс</span>
+                </h2>
+                <p class="section-subtitle">
+                    Не мокапы. Не концепты. Реальный бот, который работает прямо сейчас.
+                </p>
+            </div>
+            
+            <div class="screenshots-grid">
+                <div class="screenshot-card">
+                    <div class="screenshot-image">
+                        <img src="screenshots/main-menu.png" alt="Главное меню бота">
+                    </div>
+                    <div class="screenshot-caption">
+                        <h4>Главное меню</h4>
+                        <p>Всё под рукой в 2 клика</p>
+                    </div>
+                </div>
+                
+                <div class="screenshot-card">
+                    <div class="screenshot-image">
+                        <img src="screenshots/student-card.png" alt="Карточка ученика">
+                    </div>
+                    <div class="screenshot-caption">
+                        <h4>Карточка ученика</h4>
+                        <p>Полная статистика и действия</p>
+                    </div>
+                </div>
+                
+                <div class="screenshot-card">
+                    <div class="screenshot-image">
+                        <img src="screenshots/students-list.png" alt="Список учеников">
+                    </div>
+                    <div class="screenshot-caption">
+                        <h4>Список учеников</h4>
+                        <p>Пагинация и быстрые действия</p>
+                    </div>
+                </div>
+                
+                <div class="screenshot-card">
+                    <div class="screenshot-image">
+                        <img src="screenshots/smart-analytics.png" alt="SMART-аналитика">
+                    </div>
+                    <div class="screenshot-caption">
+                        <h4>SMART-аналитика</h4>
+                        <p>Индекс здоровья и риск оттока</p>
+                    </div>
+                </div>
+                
+                <div class="screenshot-card">
+                    <div class="screenshot-image">
+                        <img src="screenshots/overview.png" alt="Обзор ученика">
+                    </div>
+                    <div class="screenshot-caption">
+                        <h4>Обзор прогресса</h4>
+                        <p>Графики и рекомендации</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="interface-cta">
+                <p class="interface-cta-text">
+                    Это не будущее. Это работает сегодня.
+                </p>
+                <a href="https://t.me/avickprogress_bot" target="_blank" class="btn-primary btn-medium">
+                    <span class="btn-icon">🤖</span>
+                    Открыть бота
+                </a>
+            </div>
         </div>
 
-        <div class="nav-group">
-          <button class="nav-item" onclick="toggleNav(this)" data-section="student-features">
-            <span class="icon">👨‍🎓</span>
-            <span>Функционал для учеников</span>
-            <span class="arrow">▶</span>
-          </button>
-          <div class="nav-children">
-            <a href="#student-dashboard" class="nav-item nav-child" data-section="student-dashboard">
-              <span class="icon">📊</span>
-              <span>Главный экран</span>
-            </a>
-            <a href="#student-tasks" class="nav-item nav-child" data-section="student-tasks">
-              <span class="icon">📝</span>
-              <span>Мои задания</span>
-            </a>
-            <a href="#student-materials" class="nav-item nav-child" data-section="student-materials">
-              <span class="icon">📚</span>
-              <span>Материалы</span>
-            </a>
-            <a href="#student-progress" class="nav-item nav-child" data-section="student-progress">
-              <span class="icon">📈</span>
-              <span>Мой прогресс</span>
-            </a>
-            <a href="#student-tutors" class="nav-item nav-child" data-section="student-tutors">
-              <span class="icon">👨‍🏫</span>
-              <span>Репетиторы</span>
-            </a>
-            <a href="#student-profile" class="nav-item nav-child" data-section="student-profile">
-              <span class="icon">⚙️</span>
-              <span>Мой профиль</span>
-            </a>
-          </div>
-        </div>
 
-        <div class="nav-group">
-          <button class="nav-item" onclick="toggleNav(this)" data-section="tutor-features">
-            <span class="icon">👨‍🏫</span>
-            <span>Функционал для репетиторов</span>
-            <span class="arrow">▶</span>
-          </button>
-          <div class="nav-children">
-            <a href="#tutor-menu" class="nav-item nav-child" data-section="tutor-menu">
-              <span class="icon">📋</span>
-              <span>Главное меню</span>
-            </a>
-            <a href="#tutor-students" class="nav-item nav-child" data-section="tutor-students">
-              <span class="icon">👨‍🎓</span>
-              <span>Ученики</span>
-            </a>
-            <a href="#tutor-sessions" class="nav-item nav-child" data-section="tutor-sessions">
-              <span class="icon">📅</span>
-              <span>Занятия</span>
-            </a>
-            <a href="#tutor-materials" class="nav-item nav-child" data-section="tutor-materials">
-              <span class="icon">📚</span>
-              <span>Банк тем</span>
-            </a>
-            <a href="#tutor-tasks" class="nav-item nav-child" data-section="tutor-tasks">
-              <span class="icon">📝</span>
-              <span>Задания</span>
-            </a>
-            <a href="#tutor-analytics" class="nav-item nav-child" data-section="tutor-analytics">
-              <span class="icon">📊</span>
-              <span>Аналитика</span>
-            </a>
-            <a href="#tutor-profile" class="nav-item nav-child" data-section="tutor-profile">
-              <span class="icon">⚙️</span>
-              <span>Профиль</span>
-            </a>
-            <a href="#tutor-admin" class="nav-item nav-child" data-section="tutor-admin">
-              <span class="icon">👑</span>
-              <span>Админ-панель</span>
-            </a>
-          </div>
-        </div>
-
-        <div class="nav-group">
-          <button class="nav-item" onclick="toggleNav(this)" data-section="common-features">
-            <span class="icon">🔧</span>
-            <span>Общие функции</span>
-            <span class="arrow">▶</span>
-          </button>
-          <div class="nav-children">
-            <a href="#help-system" class="nav-item nav-child" data-section="help-system">
-              <span class="icon">❓</span>
-              <span>Система помощи</span>
-            </a>
-            <a href="#notifications" class="nav-item nav-child" data-section="notifications">
-              <span class="icon">🔔</span>
-              <span>Уведомления</span>
-            </a>
-          </div>
-        </div>
-
-        <a href="#faq" class="nav-item" data-section="faq">
-          <span class="icon">❓</span>
-          <span>FAQ</span>
-        </a>
-
-        <a href="#technical-details" class="nav-item" data-section="technical-details">
-          <span class="icon">🔒</span>
-          <span>Технические детали</span>
-        </a>
-
-        <a href="#glossary" class="nav-item" data-section="glossary">
-          <span class="icon">📖</span>
-          <span>Глоссарий</span>
-        </a>
-      </nav>
-
-      <div class="sidebar-footer">
-        Версия 1.0 • Февраль 2026
-      </div>
-    </aside>
-
-    <!-- Main Content -->
-    <div class="main-content" id="mainContent">
-      <!-- Header -->
-      <header class="header">
-        <div class="header-content">
-          <button class="menu-toggle" onclick="toggleSidebar()">
-            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M4 6h16M4 12h16M4 18h16"></path>
+<!-- Модальное окно для просмотра скриншотов (добавить перед закрывающим тегом </body>) -->
+<div class="modal" id="screenshotModal">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+        <button class="modal-close" aria-label="Закрыть">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
             </svg>
-          </button>
-
-          <div class="mobile-logo">
-            <div class="logo-icon">П</div>
-            <span>Прогресс</span>
-          </div>
-
-          <button class="theme-toggle" onclick="toggleTheme()">
-            <span class="sun">
-              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="8" cy="8" r="3"></circle>
-                <path d="M8 1v1M8 14v1M15 8h-1M2 8H1M13 13l-.7-.7M3.7 3.7l-.7-.7M13 3l-.7.7M3.7 12.3l-.7.7"></path>
-              </svg>
-            </span>
-            <span class="moon">
-              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M13 7a5 5 0 11-7 7 6 6 0 007-7z"></path>
-              </svg>
-            </span>
-            <span class="toggle-circle"></span>
-          </button>
+        </button>
+        
+        <button class="modal-nav modal-prev" aria-label="Предыдущий">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+        </button>
+        
+        <button class="modal-nav modal-next" aria-label="Следующий">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+        </button>
+        
+        <div class="modal-image-container">
+            <img src="" alt="" class="modal-image">
         </div>
-      </header>
-
-      <div class="content-wrapper">
-        <!-- Hero Section -->
-        <section class="hero">
-          <div class="hero-badge">
-            <span class="dot"></span>
-            Версия 1.0 • Февраль 2026
-          </div>
-          <h1>
-            Telegram-бот
-            <span class="gradient">«Прогресс»</span>
-          </h1>
-          <p class="subtitle">Ваш персональный ассистент в обучении</p>
-
-          <div class="feature-grid">
-            <div class="feature-card">
-              <div class="icon">📚</div>
-              <h3>Единое пространство</h3>
-              <p>Все материалы, задания и расписание в одном месте — в Telegram</p>
-            </div>
-            <div class="feature-card">
-              <div class="icon">⚙️</div>
-              <h3>Автоматизация</h3>
-              <p>Бот сам напоминает о занятиях и дедлайнах</p>
-            </div>
-            <div class="feature-card">
-              <div class="icon">📊</div>
-              <h3>Прозрачность</h3>
-              <p>Наглядный прогресс обучения для учеников и репетиторов</p>
-            </div>
-          </div>
-        </section>
-
-        <!-- Introduction -->
-        <section id="introduction" data-section="introduction">
-          <h2><span>👋</span> Введение: Что такое «Прогресс» и зачем он нужен</h2>
-
-          <p><strong>«Прогресс»</strong> — это интеллектуальная платформа в Telegram, созданная для организации эффективного взаимодействия между репетиторами и учениками. Бот превращает хаотичный обмен сообщениями, файлами и домашними заданиями в структурированную, прозрачную и автоматизированную систему.</p>
-
-          <h3>Какую проблему решает бот?</h3>
-          <p>До появления «Прогресса» репетиторы и ученики сталкивались с типичными проблемами:</p>
-
-          <div class="problem-card">
-            <span>📂</span>
-            <div>
-              <strong>Разрозненность</strong>
-              <p>Задания в одном чате, файлы в другом, напоминания в третьем. Всё теряется.</p>
-            </div>
-          </div>
-
-          <div class="problem-card">
-            <span>📋</span>
-            <div>
-              <strong>Отсутствие структуры</strong>
-              <p>Невозможно удобно хранить и систематизировать учебные материалы по темам.</p>
-            </div>
-          </div>
-
-          <div class="problem-card">
-            <span>⏰</span>
-            <div>
-              <strong>Ручная работа</strong>
-              <p>Репетитору приходится вручную напоминать о дедлайнах, проверять работы, отслеживать прогресс.</p>
-            </div>
-          </div>
-
-          <div class="problem-card">
-            <span>📈</span>
-            <div>
-              <strong>Непонимание прогресса</strong>
-              <p>Ни ученик, ни репетитор не видят объективной картины успеваемости в динамике.</p>
-            </div>
-          </div>
-
-          <h3>Что предлагает «Прогресс»?</h3>
-
-          <div class="grid-2">
-            <div class="solution-card">
-              <span>🏠</span>
-              <div>
-                <strong>Единое пространство</strong>
-                <p>Все учебные материалы, задания, расписание и статистика в одном месте — в Telegram.</p>
-              </div>
-            </div>
-            <div class="solution-card">
-              <span>🗂️</span>
-              <div>
-                <strong>Структура и порядок</strong>
-                <p>Четкая иерархия «Дисциплина → Направление → Тема → Папки → Материалы» позволяет навести порядок в любом предмете.</p>
-              </div>
-            </div>
-            <div class="solution-card">
-              <span>⚙️</span>
-              <div>
-                <strong>Автоматизация</strong>
-                <p>Бот сам напоминает о занятиях и дедлайнах, освобождая время для обучения.</p>
-              </div>
-            </div>
-            <div class="solution-card">
-              <span>🔍</span>
-              <div>
-                <strong>Прозрачность</strong>
-                <p>Репетитор видит полную картину успеваемости каждого ученика, а ученик — наглядный прогресс.</p>
-              </div>
-            </div>
-          </div>
-
-          <h3>«Прогресс» подходит для любого формата обучения:</h3>
-          <div>
-            <span class="tag">Индивидуальные занятия (онлайн или офлайн)</span>
-            <span class="tag">Подготовка к экзаменам (ОГЭ, ЕГЭ, олимпиады)</span>
-            <span class="tag">Изучение языков</span>
-            <span class="tag">Программирование и IT-курсы</span>
-            <span class="tag">Школьные и вузовские дисциплины</span>
-          </div>
-        </section>
-
-        <!-- Quick Start -->
-        <section id="quick-start" data-section="quick-start">
-          <h2><span>🚀</span> Быстрый старт: Первый вход и регистрация</h2>
-
-          <!-- For Students -->
-          <div id="for-students" data-section="for-students">
-            <h3><span>👨‍🎓</span> Для учеников</h3>
-
-            <div class="card">
-              <div class="steps">
-                <div class="step">
-                  <div class="step-number">1</div>
-                  <div class="step-content">
-                    <h4>Начало</h4>
-                    <p>Перейдите по ссылке на бота и нажмите <code>/start</code>.</p>
-                  </div>
-                </div>
-                <div class="step">
-                  <div class="step-number">2</div>
-                  <div class="step-content">
-                    <h4>Выбор роли</h4>
-                    <p>Нажмите кнопку <strong>«👨‍🎓 Я ученик»</strong>.</p>
-                  </div>
-                </div>
-                <div class="step">
-                  <div class="step-number">3</div>
-                  <div class="step-content">
-                    <h4>Ввод токена</h4>
-                    <p>Вам потребуется уникальный код-приглашение (токен), который вы получили от своего репетитора. Введите его в формате <code>XXXX-XXXX</code> (например, <code>A3B7-9K2M</code>).</p>
-                  </div>
-                </div>
-                <div class="step">
-                  <div class="step-number">4</div>
-                  <div class="step-content">
-                    <h4>Автоматическая регистрация</h4>
-                    <ul>
-                      <li>Бот проверит токен и автоматически создаст ваш профиль.</li>
-                      <li>Вас сразу привяжут к нужному репетитору, дисциплине и направлению.</li>
-                      <li>Вы увидите приветственное сообщение с краткой информацией о вашем репетиторе.</li>
-                    </ul>
-                  </div>
-                </div>
-                <div class="step">
-                  <div class="step-number">5</div>
-                  <div class="step-content">
-                    <h4>Знакомство с интерфейсом</h4>
-                    <p>После регистрации бот покажет краткую справку и сразу откроет ваше главное меню.</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="info-box warning">
-                <p><strong>⚠️ Важно:</strong> Токен действует только 1 час. Если вы не успели, попросите репетитора сгенерировать новый.</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- For Tutors -->
-          <div id="for-tutors" data-section="for-tutors">
-            <h3><span>👨‍🏫</span> Для репетиторов</h3>
-
-            <p>Регистрация репетитора — более подробный процесс, ведь вам нужно создать свой профессиональный профиль.</p>
-
-            <div class="card">
-              <div class="steps">
-                <div class="step">
-                  <div class="step-number">1</div>
-                  <div class="step-content">
-                    <h4>Начало</h4>
-                    <p>Перейдите по ссылке на бота и нажмите <code>/start</code>.</p>
-                  </div>
-                </div>
-                <div class="step">
-                  <div class="step-number">2</div>
-                  <div class="step-content">
-                    <h4>Выбор роли</h4>
-                    <p>Нажмите кнопку <strong>«👨‍🏫 Я репетитор»</strong>.</p>
-                  </div>
-                </div>
-                <div class="step">
-                  <div class="step-number">3</div>
-                  <div class="step-content">
-                    <h4>Ввод ФИО</h4>
-                    <p>Введите ваше полное имя (Фамилия Имя Отчество). Это имя будут видеть ваши ученики.</p>
-                  </div>
-                </div>
-                <div class="step">
-                  <div class="step-number">4</div>
-                  <div class="step-content">
-                    <h4>Выбор дисциплин</h4>
-                    <ul>
-                      <li>Вам откроется список всех доступных дисциплин.</li>
-                      <li>Нажимайте на нужные предметы, чтобы выбрать их (они будут отмечаться галочкой ✅).</li>
-                      <li>Можно выбрать несколько дисциплин.</li>
-                      <li>После выбора нажмите кнопку <strong>«✅ Перейти к направлениям»</strong>.</li>
-                    </ul>
-                  </div>
-                </div>
-                <div class="step">
-                  <div class="step-number">5</div>
-                  <div class="step-content">
-                    <h4>Настройка направлений (ключевая особенность!)</h4>
-                    <p>Для каждой выбранной дисциплины вы можете создать <strong>направления</strong>. Направления — это ваша специализация внутри предмета.</p>
-                    <div class="box-blue">
-                      <p><strong>📌 Пример:</strong> Для дисциплины «Программирование» вы можете добавить направления: «Python», «Golang», «Web-разработка».</p>
-                    </div>
-                    <p><strong>Зачем это нужно?</strong></p>
-                    <ul>
-                      <li>Структурировать учеников (например, все ученики по Python будут в одной группе).</li>
-                      <li>Создавать темы и материалы, привязанные к конкретному направлению.</li>
-                      <li>Ученик, подключившись по токену, автоматически получит доступ к материалам своего направления.</li>
-                    </ul>
-                    <p><em>Вы можете пропустить этот шаг и добавить направления позже в профиле.</em></p>
-                  </div>
-                </div>
-                <div class="step">
-                  <div class="step-number">6</div>
-                  <div class="step-content">
-                    <h4>Указание локации</h4>
-                    <p>Выберите удобный способ: определить автоматически (по геолокации), ввести название города вручную или выбрать из списка популярных городов. Локация важна для определения часового пояса и корректной работы напоминаний о занятиях.</p>
-                  </div>
-                </div>
-                <div class="step">
-                  <div class="step-number">7</div>
-                  <div class="step-content">
-                    <h4>Контакты</h4>
-                    <p>Укажите, как с вами удобно связаться (телефон, Telegram, email).</p>
-                  </div>
-                </div>
-                <div class="step">
-                  <div class="step-number">8</div>
-                  <div class="step-content">
-                    <h4>«О себе» (необязательно)</h4>
-                    <p>Напишите краткую информацию о вашем опыте, образовании и методике преподавания. Это поможет ученикам сделать выбор. Шаг можно пропустить.</p>
-                  </div>
-                </div>
-                <div class="step">
-                  <div class="step-number">9</div>
-                  <div class="step-content">
-                    <h4>Проверка данных</h4>
-                    <p>Бот покажет вам всю введенную информацию. Если всё верно, нажмите <strong>«✅ Подтвердить»</strong>. Если нужно что-то исправить, нажмите <strong>«🔄 Изменить»</strong>.</p>
-                  </div>
-                </div>
-                <div class="step">
-                  <div class="step-number">10</div>
-                  <div class="step-content">
-                    <h4>Завершение</h4>
-                    <p>Поздравляем! Ваш профиль создан. Бот покажет главное меню репетитора и краткую справку.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- Student Features -->
-        <section id="student-features" data-section="student-features">
-          <h2><span>👨‍🎓</span> Раздел 1: Функционал для учеников</h2>
-
-          <p>После регистрации и входа в бот вы попадаете в главное меню ученика. Интерфейс интуитивно понятен и разделен на логические блоки.</p>
-
-          <!-- Dashboard -->
-          <div id="student-dashboard" data-section="student-dashboard">
-            <h3><span>📊</span> Главный экран (Дашборд)</h3>
-            <div class="card">
-              <div class="badge">
-                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
-                Главное меню → 📝 Мои задания
-              </div>
-
-              <p>Это ваш командный центр. При входе в раздел «Мои задания» вы сразу видите:</p>
-
-              <ul>
-                <li><strong>Текущий репетитор:</strong> Имя и дисциплина, с которой вы сейчас работаете.</li>
-                <li><strong>Краткая статистика:</strong> Сколько заданий выполнено, в работе, на проверке и просрочено.</li>
-                <li><strong>Ближайшие задания:</strong> Список из 3 самых срочных заданий с указанием темы и дедлайна.</li>
-              </ul>
-
-              <h4>Кнопки быстрой навигации:</h4>
-              <div class="grid-4">
-                <div class="menu-btn">
-                  <span class="icon">👨‍🏫</span>
-                  <span class="label">Репетитор</span>
-                  <span class="desc">Переключение</span>
-                </div>
-                <div class="menu-btn">
-                  <span class="icon">📋</span>
-                  <span class="label">Все</span>
-                  <span class="desc">Полный список</span>
-                </div>
-                <div class="menu-btn">
-                  <span class="icon">📚</span>
-                  <span class="label">По темам</span>
-                  <span class="desc">Группировка</span>
-                </div>
-                <div class="menu-btn">
-                  <span class="icon">📅</span>
-                  <span class="label">Календарь</span>
-                  <span class="desc">Дедлайны</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Tasks -->
-          <div id="student-tasks" data-section="student-tasks">
-            <h3><span>📝</span> Мои задания</h3>
-
-            <div class="card">
-              <h4>Просмотр всех заданий</h4>
-              <div class="badge">Главное меню → 📝 Мои задания → 📋 Все</div>
-
-              <p>Здесь вы видите полный список всех ваших заданий. Для удобства навигации:</p>
-              <ul>
-                <li><strong>Фильтры:</strong> «Все», «Активные» (🟡), «Просроченные» (🔴), «На проверке» (📤), «Выполненные» (✅).</li>
-                <li><strong>Пагинация:</strong> Если заданий много, список разбит на страницы.</li>
-              </ul>
-
-              <div class="box-blue">
-                <h4>Карточка задания:</h4>
-                <p>🟡 Иконка статуса • 📝 Краткое описание • 📚 Тема • 📅 Дедлайн • 📎 Файл</p>
-              </div>
-            </div>
-
-            <div class="card">
-              <h4>Просмотр по темам</h4>
-              <div class="badge">Главное меню → 📝 Мои задания → 📚 По темам</div>
-              <p>Задания сгруппированы по темам, которые создал ваш репетитор. Нажмите на тему, чтобы увидеть все связанные с ней задания.</p>
-            </div>
-
-            <div class="card">
-              <h4>Календарь дедлайнов</h4>
-              <div class="badge">Главное меню → 📝 Мои задания → 📅 Календарь</div>
-              <p>Визуальный календарь, где дни с предстоящими дедлайнами отмечены точкой. Можно листать месяцы.</p>
-            </div>
-
-            <div class="card">
-              <h4>Детальный просмотр и сдача задания</h4>
-              <p>Нажмите на любое задание в списке, чтобы открыть его детальную карточку:</p>
-              <ul>
-                <li>Полное описание задания</li>
-                <li>Дисциплину и тему</li>
-                <li>Точное время дедлайна</li>
-                <li>Прикрепленные файлы (если есть)</li>
-                <li>История сдач</li>
-              </ul>
-
-              <div class="box-green">
-                <h4>📤 Как сдать работу:</h4>
-                <ol>
-                  <li>Нажмите кнопку <strong>«📤 Сдать работу»</strong> внизу карточки задания.</li>
-                  <li>Бот перейдет в режим ожидания.</li>
-                  <li>Отправьте ваш ответ (файл, фото или текст).</li>
-                  <li>Бот подтвердит получение работы и отправит уведомление репетитору.</li>
-                  <li>Статус задания изменится на «📤 На проверке».</li>
-                </ol>
-              </div>
-            </div>
-          </div>
-
-          <!-- Materials -->
-          <div id="student-materials" data-section="student-materials">
-            <h3><span>📚</span> Материалы</h3>
-
-            <div class="card">
-              <div class="badge">Главное меню → 📚 Материалы</div>
-
-              <p>Это ваша личная библиотека учебных материалов, которую наполняет репетитор.</p>
-
-              <h4>Структура материалов:</h4>
-              <ol>
-                <li><strong>Выбор репетитора:</strong> Если у вас несколько репетиторов, сначала выберите чьи материалы смотреть.</li>
-                <li><strong>Выбор темы:</strong> Вы увидите список всех тем, созданных репетитором.</li>
-                <li><strong>Просмотр папок:</strong>
-                  <ul>
-                    <li><strong>«Теория»</strong> — правила, формулы, конспекты</li>
-                    <li><strong>«Дополнительно»</strong> — ссылки, видео, файлы</li>
-                  </ul>
-                </li>
-                <li><strong>Изучение материалов:</strong>
-                  <ul>
-                    <li>📎 <strong>Файл:</strong> Можно скачать</li>
-                    <li>🔗 <strong>Ссылка:</strong> Откроется в браузере</li>
-                    <li>📝 <strong>Текст:</strong> Откроется в чате</li>
-                  </ul>
-                </li>
-              </ol>
-            </div>
-          </div>
-
-          <!-- Progress -->
-          <div id="student-progress" data-section="student-progress">
-            <h3><span>📈</span> Мой прогресс</h3>
-
-            <div class="card">
-              <div class="badge">Главное меню → 📈 Мой прогресс</div>
-
-              <p>Здесь вы видите наглядную статистику своего обучения в виде красивых графиков (в стиле Apple).</p>
-
-              <h4>Вкладки дашборда:</h4>
-
-              <div class="grid-2">
-                <div class="box-blue">
-                  <h4>📊 Обзор</h4>
-                  <ul>
-                    <li>Круговая диаграмма процента выполненных заданий</li>
-                    <li>Числовые показатели по всем статусам</li>
-                    <li>Персонализированный совет</li>
-                  </ul>
-                </div>
-                <div class="box-purple">
-                  <h4>📚 Темы</h4>
-                  <ul>
-                    <li>Горизонтальный бар-чарт успеваемости</li>
-                    <li>Красным — слабые темы</li>
-                    <li>Зеленым — сильные темы</li>
-                  </ul>
-                </div>
-                <div class="box-green">
-                  <h4>🎯 Прогноз</h4>
-                  <ul>
-                    <li>Оценка текущего темпа</li>
-                    <li>Прогноз на месяц</li>
-                    <li>Мотивирующий совет</li>
-                  </ul>
-                </div>
-              </div>
-
-              <p><em>Можно переключать период анализа: 7 дней, 30 дней, 90 дней.</em></p>
-            </div>
-          </div>
-
-          <!-- Tutors -->
-          <div id="student-tutors" data-section="student-tutors">
-            <h3><span>👨‍🏫</span> Репетиторы</h3>
-
-            <div class="card">
-              <div class="badge">Главное меню → 👨‍🏫 Репетиторы</div>
-
-              <p>Если вы занимаетесь с несколькими преподавателями, этот раздел для вас.</p>
-
-              <ul>
-                <li><strong>Список репетиторов:</strong> Вы видите всех своих репетиторов. Текущий выбранный отмечен галочкой ✅.</li>
-                <li><strong>Детали репетитора:</strong> Нажав на репетитора, вы увидите его контактную информацию.</li>
-                <li><strong>Выбор репетитора:</strong> Кнопка <strong>«✅ Выбрать этого репетитора»</strong> переключит весь интерфейс.</li>
-                <li><strong>Добавление нового репетитора:</strong> Нажмите <strong>«➕ Добавить репетитора»</strong> и введите токен.</li>
-              </ul>
-            </div>
-          </div>
-
-          <!-- Profile -->
-          <div id="student-profile" data-section="student-profile">
-            <h3><span>⚙️</span> Мой профиль</h3>
-
-            <div class="card">
-              <div class="badge">Главное меню → ⚙️ Мой профиль</div>
-              <p>Здесь вы можете управлять своими данными: просмотр текущей информации (ФИО, ваши контакты, контакты родителей) и редактирование любого поля с помощью кнопок «✏️ Изменить...».</p>
-            </div>
-          </div>
-        </section>
-
-        <!-- Tutor Features -->
-        <section id="tutor-features" data-section="tutor-features">
-          <h2><span>👨‍🏫</span> Раздел 2: Функционал для репетиторов</h2>
-
-          <p>Интерфейс репетитора спроектирован так, чтобы все важные инструменты были под рукой и требовали минимум действий.</p>
-
-          <!-- Main Menu -->
-          <div id="tutor-menu" data-section="tutor-menu">
-            <h3><span>📋</span> Главное меню репетитора</h3>
-
-            <div class="card">
-              <p>После регистрации или команды <code>/start</code> вы попадаете в главное меню:</p>
-
-              <div class="grid-3">
-                <div class="menu-btn">
-                  <span class="icon">👨‍🎓</span>
-                  <span class="label">Ученики</span>
-                  <span class="desc">Управление учениками</span>
-                </div>
-                <div class="menu-btn">
-                  <span class="icon">📅</span>
-                  <span class="label">Занятия</span>
-                  <span class="desc">Планирование</span>
-                </div>
-                <div class="menu-btn">
-                  <span class="icon">📚</span>
-                  <span class="label">Материалы</span>
-                  <span class="desc">Банк тем</span>
-                </div>
-                <div class="menu-btn">
-                  <span class="icon">📊</span>
-                  <span class="label">Аналитика</span>
-                  <span class="desc">Статистика</span>
-                </div>
-                <div class="menu-btn">
-                  <span class="icon">⚙️</span>
-                  <span class="label">Профиль</span>
-                  <span class="desc">Редактирование</span>
-                </div>
-                <div class="menu-btn">
-                  <span class="icon">➕</span>
-                  <span class="label">Ученик</span>
-                  <span class="desc">Добавить</span>
-                </div>
-              </div>
-
-              <p><em>* Для администратора также доступна кнопка <strong>👑 Пользователи</strong> — админ-панель.</em></p>
-            </div>
-          </div>
-
-          <!-- Students -->
-          <div id="tutor-students" data-section="tutor-students">
-            <h3><span>👨‍🎓</span> Ученики</h3>
-
-            <div class="badge">Главное меню → 👨‍🎓 Ученики</div>
-
-            <div class="card">
-              <h4>Список учеников</h4>
-              <p>Вы видите список всех ваших активных учеников с пагинацией. Рядом с именем ученика отображается краткая информация о его дисциплинах и направлениях.</p>
-            </div>
-
-            <div class="card">
-              <h4>Карточка ученика</h4>
-              <p>Нажмите на имя ученика, чтобы открыть его полную карточку:</p>
-
-              <ul>
-                <li><strong>Личные данные:</strong> Имя, контакты ученика и родителей, ваш личный комментарий.</li>
-                <li><strong>Дисциплины:</strong> Список всех дисциплин, которые ученик у вас изучает.</li>
-                <li><strong>Панель действий:</strong> Набор кнопок для быстрых операций.</li>
-              </ul>
-
-              <h4>Действия в карточке:</h4>
-              <div class="grid-4">
-                <span class="action-btn">📝 Задание</span>
-                <span class="action-btn">📥 Проверить</span>
-                <span class="action-btn">📚 Все задания</span>
-                <span class="action-btn">🎓 Дисциплины</span>
-                <span class="action-btn">🔄 Обновить</span>
-                <span class="action-btn">⏸️ Отключить</span>
-                <span class="action-btn" style="background: var(--red-50);">🗑️ Удалить</span>
-              </div>
-            </div>
-
-            <div class="card">
-              <h4>Управление дисциплинами ученика</h4>
-              <p>Этот мощный инструмент позволяет гибко настраивать, что именно изучает ученик у вас.</p>
-
-              <ol>
-                <li>Нажмите <strong>«🎓 Управление дисциплинами»</strong> в карточке ученика.</li>
-                <li>Вы увидите список уже добавленных дисциплин. Для каждой можно изменить направление или удалить.</li>
-                <li>Кнопка <strong>«➕ Добавить новый предмет»</strong> позволяет добавить еще одну дисциплину.</li>
-              </ol>
-            </div>
-
-            <div class="card">
-              <h4>Добавление нового ученика</h4>
-              <p>Процесс создания токена-приглашения:</p>
-
-              <ol>
-                <li>Нажмите кнопку <strong>«➕ Добавить ученика»</strong>.</li>
-                <li>Введите имя ученика.</li>
-                <li>Выберите дисциплину.</li>
-                <li>Выберите направление (если есть).</li>
-                <li>Добавьте комментарий (необязательно).</li>
-                <li>Бот сгенерирует уникальный токен вида <code>XXXX-XXXX</code>.</li>
-                <li>Отправьте токен ученику любым удобным способом.</li>
-              </ol>
-
-              <div class="info-box warning">
-                <p><strong>⚠️ Важно:</strong> Токен действует только <strong>1 час</strong>. По истечении этого времени его нужно будет создать заново.</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Sessions -->
-          <div id="tutor-sessions" data-section="tutor-sessions">
-            <h3><span>📅</span> Занятия</h3>
-
-            <div class="badge">Главное меню → 📅 Занятия</div>
-
-            <p>Модуль для планирования и учёта занятий. Работа с ним построена вокруг выбора ученика, после чего становятся доступны все действия.</p>
-
-            <div class="card">
-              <h4>Выбор ученика и карточка занятий</h4>
-              <p>Сначала вы выбираете ученика из списка. После этого открывается карточка занятий:</p>
-              <ul>
-                <li>Информация о последнем занятии</li>
-                <li>Информация о ближайшем запланированном занятии</li>
-                <li>Список недавних занятий (до 3)</li>
-                <li>Пять основных действий</li>
-              </ul>
-
-              <h4>Основные действия:</h4>
-
-              <div class="box-blue">
-                <h4>📅 Запланировать урок</h4>
-                <ol>
-                  <li>Выберите дату (доступны только сегодня и будущие)</li>
-                  <li>Выберите час и минуты</li>
-                  <li>Выберите длительность</li>
-                  <li>Выберите тему из списка (или создайте новую)</li>
-                  <li>Добавьте комментарий</li>
-                  <li>Решите, отправлять ли уведомление ученику</li>
-                  <li>Подтвердите создание</li>
-                </ol>
-              </div>
-
-              <div class="box-purple">
-                <h4>📋 Расписание</h4>
-                <p>Показывает список всех запланированных занятий. Нажав на занятие, можно:</p>
-                <p>✅ Отметить проведённым • ❌ Отменить • 🔄 Перенести • 🗑 Удалить</p>
-              </div>
-
-              <div class="grid-3">
-                <div class="box-green">
-                  <h4>✅ Отметить</h4>
-                  <p>Быстрая отметка, что занятие состоялось</p>
-                </div>
-                <div class="box-orange">
-                  <h4>❌ Отменить</h4>
-                  <p>Отметка отмены с указанием причины</p>
-                </div>
-                <div class="box-blue">
-                  <h4>🔄 Перенести</h4>
-                  <p>Изменить дату и время занятия</p>
-                </div>
-              </div>
-            </div>
-
-            <div class="card">
-              <h4>Статистика и отчёты по занятиям</h4>
-              <div class="grid-2">
-                <div>
-                  <strong>📊 Статистика</strong>
-                  <p>Сводка по занятиям: всего, проведено, отменено, перенесено, средняя длительность.</p>
-                </div>
-                <div>
-                  <strong>📄 Отчёт</strong>
-                  <p>Детальный отчёт в HTML: по занятиям, по темам или полный отчёт.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Materials Bank -->
-          <div id="tutor-materials" data-section="tutor-materials">
-            <h3><span>📚</span> Банк тем (Материалы)</h3>
-
-            <div class="badge">Главное меню → 📚 Материалы</div>
-
-            <p>Это, пожалуй, самое мощное и уникальное место в боте. Здесь вы создаёте и структурируете все свои учебные материалы по принципу <strong>Дисциплина → Направление → Тема → Папки → Материалы</strong>.</p>
-
-            <div class="card">
-              <h4>Создание структуры</h4>
-              <ol>
-                <li><strong>Выбор дисциплины:</strong> Если у вас несколько дисциплин, сначала выберите нужную.</li>
-                <li><strong>Выбор направления:</strong> Можно выбрать одно направление или посмотреть все темы.</li>
-                <li><strong>Список тем:</strong> Нажмите на тему для редактирования или <strong>«➕ Новая тема»</strong> для создания.</li>
-              </ol>
-
-              <div class="box-green">
-                <p>При создании темы бот автоматически создаст три стандартные папки: <strong>«Теория»</strong>, <strong>«Шаблоны заданий»</strong>, <strong>«Дополнительно»</strong>.</p>
-              </div>
-            </div>
-
-            <div class="card">
-              <h4>Редактор темы</h4>
-              <p>Внутри темы вы видите список папок. Для каждой папки отображается:</p>
-              <ul>
-                <li>Иконка видимости: 👁️ (видно) или 🚫 (скрыто)</li>
-                <li>Название папки</li>
-                <li>Количество материалов</li>
-                <li>Кнопка контекстного меню <strong>⋯</strong></li>
-              </ul>
-
-              <h4>Контекстное меню папки (⋯):</h4>
-              <div>
-                <span class="action-btn">✏️ Переименовать</span>
-                <span class="action-btn">👁️ Скрыть/Показать</span>
-                <span class="action-btn">⬆️⬇️ Переместить</span>
-                <span class="action-btn" style="background: var(--red-50);">🗑️ Удалить</span>
-              </div>
-            </div>
-
-            <div class="card">
-              <h4>Наполнение папок материалами</h4>
-              <p>Нажмите на название папки, чтобы войти в неё и добавить материалы трёх типов:</p>
-
-              <div class="grid-3">
-                <div class="box-blue">
-                  <span style="font-size: 24px;">📎</span>
-                  <h4>Файл</h4>
-                  <p>Любой файл из Telegram</p>
-                </div>
-                <div class="box-purple">
-                  <span style="font-size: 24px;">🔗</span>
-                  <h4>Ссылка</h4>
-                  <p>URL с названием</p>
-                </div>
-                <div class="box-green">
-                  <span style="font-size: 24px;">📝</span>
-                  <h4>Текст</h4>
-                  <p>Текстовая заметка</p>
-                </div>
-              </div>
-            </div>
-
-            <div class="card">
-              <h4>Экспорт темы</h4>
-              <div class="grid-2">
-                <div>
-                  <strong>📁 Скачать ZIP</strong>
-                  <p>Арив с папками, файлами и файлом README.md со списком ссылок и текстовых материалов.</p>
-                </div>
-                <div>
-                  <strong>📋 Текстовый отчёт</strong>
-                  <p>Выводит в чат структуру темы в виде текста.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Tasks -->
-          <div id="tutor-tasks" data-section="tutor-tasks">
-            <h3><span>📝</span> Задания</h3>
-
-            <p>Работа с заданиями в боте продумана до мелочей и разделена на два основных процесса: создание и проверка.</p>
-
-            <div class="card">
-              <h4>Создание задания</h4>
-              <p>Вы можете создать задание из карточки ученика (кнопка <strong>«📝 Задание»</strong>) или из главного меню.</p>
-
-              <ol>
-                <li>Выбор ученика и дисциплины</li>
-                <li><strong>Выбор темы:</strong> Задание всегда привязано к конкретной теме. Можно создать тему «на лету».</li>
-                <li><strong>Способ создания:</strong> Ввести вручную или использовать шаблон из папки «Шаблоны заданий».</li>
-                <li><strong>Дедлайн:</strong> Умный выбор («Сегодня», «Завтра») или свой вариант в календаре.</li>
-                <li>Прикрепление файла (опционально)</li>
-                <li>Подтверждение. Ученик мгновенно получает уведомление.</li>
-              </ol>
-            </div>
-
-            <div class="card">
-              <h4>Проверка заданий</h4>
-              <div class="badge">Главное меню → 📥 Проверить</div>
-
-              <p>Этот раздел показывает всех учеников, у которых есть задания, ожидающие проверки (статус «submitted»).</p>
-
-              <ol>
-                <li>Список учеников с количеством работ на проверке</li>
-                <li>Список сданных работ с краткой информацией</li>
-                <li>Детальный просмотр с файлом ответа ученика</li>
-              </ol>
-
-              <div class="grid-2">
-                <div class="box-green">
-                  <h4>✅ Принять</h4>
-                  <p>Работа засчитывается как выполненная. Ученик получает уведомление.</p>
-                </div>
-                <div class="box-orange">
-                  <h4>✏️ Вернуть на доработку</h4>
-                  <p>Напишите комментарий. Задание перейдёт в статус «🔄 На доработке».</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Analytics -->
-          <div id="tutor-analytics" data-section="tutor-analytics">
-            <h3><span>📊</span> Аналитика</h3>
-
-            <div class="badge">Главное меню → 📊 Аналитика</div>
-
-            <p>Раздел для глубокого анализа успеваемости каждого ученика. Визуализация данных помогает быстро выявлять проблемы и зоны роста.</p>
-
-            <div class="card">
-              <h4>Дашборд ученика:</h4>
-
-              <div class="grid-2">
-                <div class="box-blue">
-                  <h4>📊 Обзор</h4>
-                  <p>Основная статистика с круговой диаграммой и метриками</p>
-                </div>
-                <div class="box-purple">
-                  <h4>📚 Темы</h4>
-                  <p>График успеваемости по темам (горизонтальные бары)</p>
-                </div>
-                <div class="box-green">
-                  <h4>📈 Динамика</h4>
-                  <p>График прогресса по неделям (линейный график)</p>
-                </div>
-                <div class="box-orange">
-                  <h4>📊 Сравнить</h4>
-                  <p>Сравнение с предыдущим периодом</p>
-                </div>
-              </div>
-
-              <p>Кнопка <strong>«📤 Экспорт отчёта»</strong> генерирует подробный текстовый отчёт по ученику.</p>
-            </div>
-          </div>
-
-          <!-- Profile -->
-          <div id="tutor-profile" data-section="tutor-profile">
-            <h3><span>⚙️</span> Профиль репетитора</h3>
-
-            <div class="badge">Главное меню → ⚙️ Профиль</div>
-
-            <p>Здесь вы управляете всей информацией о себе, которая отображается ученикам.</p>
-
-            <div class="card">
-              <h4>✏️ Основная информация</h4>
-              <div>
-                <span class="action-btn">📛 ФИО</span>
-                <span class="action-btn">📍 Локация</span>
-                <span class="action-btn">🎓 Образование</span>
-                <span class="action-btn">📅 Опыт</span>
-                <span class="action-btn">💰 Стоимость</span>
-                <span class="action-btn">🏫 Формат</span>
-              </div>
-            </div>
-
-            <div class="card">
-              <h4>📊 Специализация</h4>
-              <div>
-                <span class="action-btn">📈 Уровень учеников</span>
-                <span class="action-btn">👥 Возраст учеников</span>
-                <span class="action-btn">🎯 Цели подготовки</span>
-              </div>
-            </div>
-
-            <div class="card">
-              <h4>📞 Контакты и дополнительно</h4>
-              <div>
-                <span class="action-btn">📞 Контакты</span>
-                <span class="action-btn">🕐 Время связи</span>
-                <span class="action-btn">🏆 Достижения</span>
-                <span class="action-btn">💡 Методика</span>
-                <span class="action-btn">💬 О себе</span>
-              </div>
-            </div>
-
-            <div class="card">
-              <h4>🎯 Управление направлениями</h4>
-              <p>Нажмите <strong>«🎯 Направления»</strong> для управления специализациями внутри дисциплин. Можно добавлять и удалять направления.</p>
-            </div>
-          </div>
-
-          <!-- Admin -->
-
-        <!-- Common Features -->
-        <section id="common-features" data-section="common-features">
-          <h2><span>🔧</span> Раздел 3: Общие функции</h2>
-
-          <div id="help-system" data-section="help-system">
-            <h3><span>❓</span> Система помощи /help</h3>
-
-            <div class="card">
-              <p>В любой момент вы можете вызвать команду <code>/help</code> или нажать соответствующую кнопку в меню. Система помощи интерактивна и адаптируется под вашу роль (репетитор или ученик).</p>
-
-              <div class="grid-2">
-                <div class="box-blue">
-                  <strong>Главный экран помощи</strong>
-                  <p>Приветствие и список основных разделов</p>
-                </div>
-                <div class="box-purple">
-                  <strong>Детальные подразделы</strong>
-                  <p>Подробное описание функционала с советами</p>
-                </div>
-                <div class="box-green">
-                  <strong>FAQ</strong>
-                  <p>Часто задаваемые вопросы с пагинацией</p>
-                </div>
-                <div class="box-orange">
-                  <strong>Поддержка</strong>
-                  <p>Контакты для связи с разработчиком</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div id="notifications" data-section="notifications">
-            <h3><span>🔔</span> Уведомления и напоминания</h3>
-
-            <div class="card">
-              <p>Бот работает в фоновом режиме и сам напоминает о важных событиях, чтобы ни вы, ни ваши ученики ничего не пропустили.</p>
-
-              <div class="grid-2">
-                <div>
-                  <h4><span>👨‍🏫</span> Для репетиторов</h4>
-                  <div class="notification-item">
-                    <span class="icon">⏰</span>
-                    <div>
-                      <strong>За 1 час до занятия</strong>
-                      <p>Напоминание о предстоящем занятии</p>
-                    </div>
-                  </div>
-                  <div class="notification-item">
-                    <span class="icon">✅</span>
-                    <div>
-                      <strong>После окончания занятия</strong>
-                      <p>Напоминание отметить проведённое занятие</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <h4><span>👨‍🎓</span> Для учеников</h4>
-                  <div class="notification-item">
-                    <span class="icon">📝</span>
-                    <div>
-                      <strong>О новом задании</strong>
-                      <p>Мгновенное уведомление при создании</p>
-                    </div>
-                  </div>
-                  <div class="notification-item">
-                    <span class="icon">📅</span>
-                    <div>
-                      <strong>О дедлайнах</strong>
-                      <p>За 24ч, 12ч и 1ч до срока сдачи</p>
-                    </div>
-                  </div>
-                  <div class="notification-item">
-                    <span class="icon">📤</span>
-                    <div>
-                      <strong>О результате проверки</strong>
-                      <p>Принято или возвращено с комментарием</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- FAQ -->
-        <section id="faq" data-section="faq">
-          <h2><span>❓</span> Раздел 4: Часто задаваемые вопросы (FAQ)</h2>
-
-          <div class="faq-item" onclick="toggleFaq(this)">
-            <button class="faq-question">
-              <span>Сколько стоит использование бота?</span>
-              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg>
-            </button>
-            <div class="faq-answer">
-              <div class="faq-answer-content">
-                Бот полностью бесплатен для всех пользователей.
-              </div>
-            </div>
-          </div>
-
-          <div class="faq-item" onclick="toggleFaq(this)">
-            <button class="faq-question">
-              <span>Что такое токен и где его взять?</span>
-              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg>
-            </button>
-            <div class="faq-answer">
-              <div class="faq-answer-content">
-                <p>Токен — это уникальный код для связи ученика и репетитора.</p>
-                <ul>
-                  <li><strong>Репетитор:</strong> создает токен в разделе «Ученики» → «➕ Добавить ученика».</li>
-                  <li><strong>Ученик:</strong> вводит полученный от репетитора токен в разделе «Репетиторы» → «➕ Добавить». Токен действует 1 час.</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <div class="faq-item" onclick="toggleFaq(this)">
-            <button class="faq-question">
-              <span>Как добавить нового репетитора, если я уже занимаюсь с одним?</span>
-              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg>
-            </button>
-            <div class="faq-answer">
-              <div class="faq-answer-content">
-                Перейдите в раздел «Репетиторы» и нажмите кнопку «➕ Добавить репетитора». Введите новый токен от другого преподавателя. Вы сможете переключаться между ними в том же разделе.
-              </div>
-            </div>
-          </div>
-
-          <div class="faq-item" onclick="toggleFaq(this)">
-            <button class="faq-question">
-              <span>Можно ли удалить ученика безвозвратно?</span>
-              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg>
-            </button>
-            <div class="faq-answer">
-              <div class="faq-answer-content">
-                Да, в карточке ученика есть кнопка «🗑️ Удалить ученика». <strong style="color: var(--red-500);">Это действие необратимо</strong> и приведет к удалению всех данных, включая задания и файлы.
-              </div>
-            </div>
-          </div>
-
-          <div class="faq-item" onclick="toggleFaq(this)">
-            <button class="faq-question">
-              <span>Я случайно удалил(а) чат с ботом. Как восстановить доступ?</span>
-              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg>
-            </button>
-            <div class="faq-answer">
-              <div class="faq-answer-content">
-                Просто найдите бота заново и нажмите <code>/start</code>. Бот автоматически восстановит ваш профиль и все данные.
-              </div>
-            </div>
-          </div>
-
-          <div class="faq-item" onclick="toggleFaq(this)">
-            <button class="faq-question">
-              <span>У меня несколько дисциплин. Как структурировать материалы для каждой?</span>
-              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg>
-            </button>
-            <div class="faq-answer">
-              <div class="faq-answer-content">
-                Используйте функционал «Направлений». Создайте направления внутри каждой дисциплины (например, «Python» и «Golang» для «Информатики»). Это позволит создавать отдельные темы и материалы для каждого направления и привязывать к ним учеников.
-              </div>
-            </div>
-          </div>
-
-          <div class="faq-item" onclick="toggleFaq(this)">
-            <button class="faq-question">
-              <span>Ученик не видит материалы, которые я добавил. Почему?</span>
-              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg>
-            </button>
-            <div class="faq-answer">
-              <div class="faq-answer-content">
-                <p>Проверьте два момента:</p>
-                <ol>
-                  <li>Убедитесь, что папка, в которую вы добавили материал, <strong>видима для учеников</strong> (иконка 👁️, а не 🚫).</li>
-                  <li>Проверьте, что у ученика выбрано правильное направление. Если материал добавлен в тему с направлением «Python», а ученик привязан к направлению «Golang», он этот материал не увидит.</li>
-                </ol>
-              </div>
-            </div>
-          </div>
-
-          <div class="faq-item" onclick="toggleFaq(this)">
-            <button class="faq-question">
-              <span>Как работает функция «Шаблоны заданий»?</span>
-              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg>
-            </button>
-            <div class="faq-answer">
-              <div class="faq-answer-content">
-                В банке тем создайте папку с названием <strong>«Шаблоны заданий»</strong> (регистр важен). Добавьте в неё материалы (файлы, текст). При создании нового задания и выборе темы, бот предложит использовать готовый шаблон из этой папки, что значительно ускоряет процесс.
-              </div>
-            </div>
-          </div>
-
-          <div class="faq-item" onclick="toggleFaq(this)">
-            <button class="faq-question">
-              <span>Мои файлы сохраняются? Где они хранятся?</span>
-              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg>
-            </button>
-            <div class="faq-answer">
-              <div class="faq-answer-content">
-                Все файлы, загруженные через бота (материалы, сданные работы, шаблоны), сохраняются на сервере в специальных папках. Это гарантирует, что они не потеряются и будут доступны в любое время.
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- Technical Details -->
-
-        <!-- Glossary -->
-        <section id="glossary" data-section="glossary">
-          <h2><span>📖</span> Приложение: Глоссарий терминов</h2>
-
-          <h3>Основные термины</h3>
-          <div class="card">
-            <div class="glossary-term">
-              <span class="term">Дисциплина</span>
-              <span>Учебный предмет (например, «Математика», «Английский язык»).</span>
-            </div>
-            <div class="glossary-term">
-              <span class="term">Направление</span>
-              <span>Специализация внутри дисциплины (например, «ОГЭ», «Python», «Подготовка к IELTS»).</span>
-            </div>
-            <div class="glossary-term">
-              <span class="term">Тема</span>
-              <span>Логический блок учебного материала внутри дисциплины/направления (например, «Квадратные уравнения», «Времена глаголов»).</span>
-            </div>
-            <div class="glossary-term">
-              <span class="term">Папка</span>
-              <span>Контейнер для материалов внутри темы (например, «Теория», «Шаблоны заданий»). Может быть скрыта от учеников.</span>
-            </div>
-            <div class="glossary-term">
-              <span class="term">Материал</span>
-              <span>Единица контента (файл, ссылка, текст), добавленная в папку.</span>
-            </div>
-            <div class="glossary-term">
-              <span class="term">Задание</span>
-              <span>Задача, созданная репетитором для ученика, привязанная к теме и имеющая дедлайн.</span>
-            </div>
-            <div class="glossary-term">
-              <span class="term">Токен</span>
-              <span>Уникальный одноразовый код для привязки ученика к репетитору.</span>
-            </div>
-          </div>
-
-          <h3>Статусы задания</h3>
-          <div class="grid-2">
-            <div class="status-badge">
-              <span>🟡</span>
-              <div>
-                <code>pending</code>
-                <p>активное, ожидает выполнения</p>
-              </div>
-            </div>
-            <div class="status-badge">
-              <span>🔴</span>
-              <div>
-                <code>overdue</code>
-                <p>просроченное</p>
-              </div>
-            </div>
-            <div class="status-badge">
-              <span>📤</span>
-              <div>
-                <code>submitted</code>
-                <p>сдано на проверку</p>
-              </div>
-            </div>
-            <div class="status-badge">
-              <span>✅</span>
-              <div>
-                <code>completed</code>
-                <p>принято репетитором</p>
-              </div>
-            </div>
-            <div class="status-badge">
-              <span>🔄</span>
-              <div>
-                <code>returned_for_revision</code>
-                <p>возвращено на доработку</p>
-              </div>
-            </div>
-          </div>
-
-          <h3>Тип занятия</h3>
-          <div class="grid-4">
-            <div class="status-badge">
-              <div>
-                <code>scheduled</code>
-                <p>запланированное</p>
-              </div>
-            </div>
-            <div class="status-badge">
-              <div>
-                <code>completed</code>
-                <p>проведенное</p>
-              </div>
-            </div>
-            <div class="status-badge">
-              <div>
-                <code>cancelled</code>
-                <p>отмененное</p>
-              </div>
-            </div>
-            <div class="status-badge">
-              <div>
-                <code>rescheduled</code>
-                <p>перенесенное</p>
-              </div>
-            </div>
-          </div>
-        </section>
-      </div>
-
-      <!-- Footer -->
-      <footer>
-        <p>Telegram-бот «Прогресс» — Ваш персональный ассистент в обучении</p>
-      </footer>
+        
+        <div class="modal-caption">
+            <h4 class="modal-title"></h4>
+            <p class="modal-description"></p>
+            <div class="modal-counter"></div>
+        </div>
     </div>
+</div>
+    </section>
 
-    <!-- Scroll to top button -->
-    <button class="scroll-top" id="scrollTop" onclick="scrollToTop()">
-      <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
-      </svg>
-    </button>
-  </div>
+    <!-- Features Deep Dive -->
+    <section class="deep-dive">
+        <div class="light-orb orb-4"></div>
+        <div class="container">
+            <h2 class="section-title">Возможности</h2>
+            <p class="section-subtitle">Детали, которые меняют всё</p>
+            
+            <div class="deep-dive-grid">
+                <div class="deep-card">
+                    <div class="deep-icon">👥</div>
+                    <h3>Управление учениками</h3>
+                    <ul>
+                        <li>Добавление по токену (безопасно)</li>
+                        <li>Карточка ученика с контактами</li>
+                        <li>Управление дисциплинами</li>
+                        <li>Временное отключение</li>
+                    </ul>
+                </div>
+                
+                <div class="deep-card">
+                    <div class="deep-icon">📚</div>
+                    <h3>Банк тем и материалов</h3>
+                    <ul>
+                        <li>Иерархия: тема → папка → материал</li>
+                        <li>3 типа материалов: файлы, ссылки, текст</li>
+                        <li>Контроль видимости для учеников</li>
+                        <li>Экспорт в ZIP или отчёт</li>
+                    </ul>
+                </div>
+                
+                <div class="deep-card">
+                    <div class="deep-icon">📝</div>
+                    <h3>Задания и проверка</h3>
+                    <ul>
+                        <li>Шаблоны заданий (ДЗ, тесты, контрольные)</li>
+                        <li>Умный выбор дедлайнов</li>
+                        <li>Прикрепление файлов</li>
+                        <li>Фильтрация по статусам</li>
+                    </ul>
+                </div>
+                
+                <div class="deep-card">
+                    <div class="deep-icon">📅</div>
+                    <h3>Занятия и расписание</h3>
+                    <ul>
+                        <li>Планирование с уведомлениями</li>
+                        <li>Учёт проведённых/отменённых</li>
+                        <li>Статистика по месяцам</li>
+                        <li>Отчёты по темам</li>
+                    </ul>
+                </div>
+                
+                <div class="deep-card">
+                    <div class="deep-icon">📊</div>
+                    <h3>Аналитика и статистика</h3>
+                    <ul>
+                        <li>Дашборд с графиками</li>
+                        <li>Успеваемость по темам</li>
+                        <li>Динамика прогресса</li>
+                        <li>Экспорт отчётов</li>
+                    </ul>
+                </div>
+                
+                <div class="deep-card">
+                    <div class="deep-icon">️</div>
+                    <h3>Профиль и настройки</h3>
+                    <ul>
+                        <li>Детальный профиль репетитора</li>
+                        <li>Управление дисциплинами</li>
+                        <li>Настройка направлений</li>
+                        <li>Контакты и описание</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <script>
-    // Theme Toggle
-    function toggleTheme() {
-      document.documentElement.classList.toggle('dark');
-      const isDark = document.documentElement.classList.contains('dark');
-      localStorage.setItem('theme', isDark ? 'dark' : 'light');
-    }
+    <!-- For Students Section -->
+    <section class="for-students">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="gradient-text-gold">Для учеников</span>
+            </h2>
+            <p class="section-subtitle">Учиться стало проще</p>
+            
+            <div class="student-features">
+                <div class="student-card">
+                    <div class="student-icon">📝</div>
+                    <h3>Мои задания</h3>
+                    <p>Все задания в одном месте. Фильтры по статусам. Календарь с дедлайнами. Сдача работы в 3 способа: файл, фото или текст.</p>
+                </div>
+                
+                <div class="student-card">
+                    <div class="student-icon">📚</div>
+                    <h3>Материалы</h3>
+                    <p>Доступ ко всем учебным материалам репетитора. Скачивай файлы, переходи по ссылкам, читай тексты. Всё структурировано.</p>
+                </div>
+                
+                <div class="student-card">
+                    <div class="student-icon">📈</div>
+                    <h3>Мой прогресс</h3>
+                    <p>Дашборд со статистикой. Графики успеваемости. Прогноз на основе текущего темпа. Рекомендации по улучшению.</p>
+                </div>
+                
+                <div class="student-card">
+                    <div class="student-icon">👨🏫</div>
+                    <h3>Несколько репетиторов</h3>
+                    <p>Работай с несколькими репетиторами одновременно. Переключайся между ними в 1 клик. Каждый видит свой прогресс.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    // Initialize theme
-    (function() {
-      const savedTheme = localStorage.getItem('theme');
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="light-orb orb-6"></div>
+        <div class="container">
+            <h2 class="section-title">Что говорят</h2>
+            <p class="section-subtitle">Репетиторы, которые уже используют Прогресс</p>
+            
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <div class="quote">"</div>
+                    <p class="testimonial-text">Я тонул в Excel-таблицах и WhatsApp-чатах. Прогресс вернул мне 6 часов в неделю. Теперь я преподаю, а не занимаюсь бюрократией.</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">👨🏫</div>
+                        <div>
+                            <div class="author-name">Иван Петров</div>
+                            <div class="author-role">Репетитор по математике, 15 учеников</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="quote">"</div>
+                    <p class="testimonial-text">Родители в восторге от дашбордов. Когда я показываю им графики прогресса их ребёнка, вопросы "А как успехи?" отпадают сами собой.</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">👩‍🏫</div>
+                        <div>
+                            <div class="author-name">Мария Сидорова</div>
+                            <div class="author-role">Репетитор по русскому языку, 20 учеников</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="quote">"</div>
+                    <p class="testimonial-text">Ученики перестали забывать про дедлайны. Автоматические напоминания — это магия. Я больше не трачу время на "А вы сделали домашку?"</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">👨‍💻</div>
+                        <div>
+                            <div class="author-name">Алексей Козлов</div>
+                            <div class="author-role">Репетитор по программированию, 12 учеников</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-      if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
-        document.documentElement.classList.add('dark');
-      }
-    })();
+    <!-- CTA Section -->
+    <section class="final-cta">
+        <div class="light-orb orb-6"></div>
+        <div class="container">
+            <div class="cta-badge">Готов начать?</div>
+            <h2 class="final-title">
+                Попробуй <span class="gradient-text">Прогресс</span><br>
+                прямо сейчас
+            </h2>
+            <p class="final-subtitle">
+                Бесплатно. Без регистрации. Без обязательств.<br>
+                Просто открой Telegram и начни.
+            </p>
+            
+            <div class="final-cta-buttons">
+                <a href="https://t.me/avickprogress_bot" target="_blank" class="btn-primary btn-large">
+                    <span class="btn-icon">🤖</span>
+                    Открыть бота
+                </a>
+                <a href="https://t.me/AVick23" target="_blank" class="btn-secondary btn-large">
+                    <span class="btn-icon">💬</span>
+                    Задать вопрос
+                </a>
+            </div>
+            
+            <div class="cta-features">
+                <div class="cta-feature">
+                    <span class="check">✓</span>
+                    <span>Бесплатный доступ</span>
+                </div>
+                <div class="cta-feature">
+                    <span class="check">✓</span>
+                    <span>Без ограничений</span>
+                </div>
+                <div class="cta-feature">
+                    <span class="check">✓</span>
+                    <span>Поддержка 24/7</span>
+                </div>
+            </div>
+            
+            <div class="guarantee">
+                <p>Осталось <span class="highlight">47 мест</span> в первой волне бета-тестирования</p>
+            </div>
+        </div>
+    </section>
 
-    // Sidebar Toggle
-    function toggleSidebar() {
-      const sidebar = document.getElementById('sidebar');
-      const overlay = document.getElementById('overlay');
-      const mainContent = document.getElementById('mainContent');
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>Прогресс</h3>
+                    <p>Знания, которые ведут к результату</p>
+                </div>
+                <div class="footer-links">
+                    <a href="https://t.me/avickprogress_bot" target="_blank">Telegram-бот</a>
+                    <a href="https://t.me/AVick23" target="_blank">Связаться</a>
+                    <a href="#technology">Технологии</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Прогресс. Создано с ❤️ для репетиторов.</p>
+            </div>
+        </div>
+    </footer>
 
-      if (window.innerWidth >= 1024) {
-        // Desktop: collapse/expand
-        sidebar.classList.toggle('collapsed');
-        mainContent.classList.toggle('sidebar-collapsed');
-      } else {
-        // Mobile: show/hide with overlay
-        sidebar.classList.toggle('open');
-        overlay.classList.toggle('active');
-      }
-    }
-
-    function closeSidebar() {
-      const sidebar = document.getElementById('sidebar');
-      const overlay = document.getElementById('overlay');
-
-      if (window.innerWidth < 1024) {
-        sidebar.classList.remove('open');
-        overlay.classList.remove('active');
-      }
-    }
-
-    // Navigation expand/collapse
-    function toggleNav(element) {
-      const parent = element.parentElement;
-      const children = parent.querySelector('.nav-children');
-
-      element.classList.toggle('expanded');
-      children.classList.toggle('open');
-    }
-
-    // FAQ Accordion
-    function toggleFaq(element) {
-      element.classList.toggle('open');
-    }
-
-    // Scroll to top
-    function scrollToTop() {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    // Scroll spy & scroll to top visibility
-    function handleScroll() {
-      const scrollTop = document.getElementById('scrollTop');
-
-      // Scroll to top button visibility
-      if (window.scrollY > 300) {
-        scrollTop.classList.add('visible');
-      } else {
-        scrollTop.classList.remove('visible');
-      }
-
-      // Scroll spy
-      const sections = document.querySelectorAll('[data-section]');
-      let currentSection = 'introduction';
-
-      sections.forEach(section => {
-        const rect = section.getBoundingClientRect();
-        if (rect.top <= 150 && rect.bottom >= 150) {
-          currentSection = section.getAttribute('data-section');
+    <script>
+// Модальное окно для скриншотов
+(function() {
+    const modal = document.getElementById('screenshotModal');
+    const modalImage = modal.querySelector('.modal-image');
+    const modalTitle = modal.querySelector('.modal-title');
+    const modalDescription = modal.querySelector('.modal-description');
+    const modalCounter = modal.querySelector('.modal-counter');
+    const modalClose = modal.querySelector('.modal-close');
+    const modalPrev = modal.querySelector('.modal-prev');
+    const modalNext = modal.querySelector('.modal-next');
+    
+    let currentScreenshotIndex = 0;
+    let screenshots = [];
+    
+    // Собираем данные о скриншотах
+    function collectScreenshots() {
+        const screenshotCards = document.querySelectorAll('.screenshot-card');
+        screenshots = Array.from(screenshotCards).map((card, index) => {
+            const img = card.querySelector('img');
+            const title = card.querySelector('h4');
+            const description = card.querySelector('p');
+            
+            return {
+                src: img.src,
+                alt: img.alt,
+                title: title ? title.textContent : '',
+                description: description ? description.textContent : ''
+            };
+        });
+        
+        // Если только одно изображение, скрываем навигацию
+        if (screenshots.length <= 1) {
+            modal.classList.add('single-image');
+        } else {
+            modal.classList.remove('single-image');
         }
-      });
-
-      // Update active nav item
-      document.querySelectorAll('.nav-item').forEach(item => {
-        item.classList.remove('active');
-        if (item.getAttribute('data-section') === currentSection) {
-          item.classList.add('active');
-
-          // Expand parent if collapsed
-          const parent = item.closest('.nav-group');
-          if (parent) {
-            const btn = parent.querySelector('.nav-item');
-            const children = parent.querySelector('.nav-children');
-            if (btn && children) {
-              btn.classList.add('expanded');
-              children.classList.add('open');
-            }
-          }
-        }
-      });
     }
-
-    window.addEventListener('scroll', handleScroll);
-
-    // Handle resize
-    window.addEventListener('resize', function() {
-      const sidebar = document.getElementById('sidebar');
-      const overlay = document.getElementById('overlay');
-      const mainContent = document.getElementById('mainContent');
-
-      if (window.innerWidth >= 1024) {
-        sidebar.classList.remove('open');
-        overlay.classList.remove('active');
-      }
+    
+    // Открыть модальное окно
+    function openModal(index) {
+        if (screenshots.length === 0) {
+            collectScreenshots();
+        }
+        
+        currentScreenshotIndex = index;
+        updateModalContent();
+        
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Блокируем прокрутку фона
+    }
+    
+    // Закрыть модальное окно
+    function closeModal() {
+        modal.classList.remove('active');
+        document.body.style.overflow = ''; // Возвращаем прокрутку
+    }
+    
+    // Обновить содержимое модального окна
+    function updateModalContent() {
+        const screenshot = screenshots[currentScreenshotIndex];
+        
+        modalImage.src = screenshot.src;
+        modalImage.alt = screenshot.alt;
+        modalTitle.textContent = screenshot.title;
+        modalDescription.textContent = screenshot.description;
+        modalCounter.textContent = `${currentScreenshotIndex + 1} / ${screenshots.length}`;
+    }
+    
+    // Показать предыдущий скриншот
+    function showPrev() {
+        if (screenshots.length <= 1) return;
+        currentScreenshotIndex = (currentScreenshotIndex - 1 + screenshots.length) % screenshots.length;
+        updateModalContent();
+    }
+    
+    // Показать следующий скриншот
+    function showNext() {
+        if (screenshots.length <= 1) return;
+        currentScreenshotIndex = (currentScreenshotIndex + 1) % screenshots.length;
+        updateModalContent();
+    }
+    
+    // Обработчики событий
+    modalClose.addEventListener('click', closeModal);
+    modalPrev.addEventListener('click', showPrev);
+    modalNext.addEventListener('click', showNext);
+    
+    // Закрытие по клику на оверлей
+    modal.querySelector('.modal-overlay').addEventListener('click', closeModal);
+    
+    // Закрытие по клавише Escape
+    document.addEventListener('keydown', function(e) {
+        if (!modal.classList.contains('active')) return;
+        
+        if (e.key === 'Escape') {
+            closeModal();
+        } else if (e.key === 'ArrowLeft') {
+            showPrev();
+        } else if (e.key === 'ArrowRight') {
+            showNext();
+        }
     });
-
-    // Initial scroll spy call
-    handleScroll();
-  </script>
+    
+    // Добавляем обработчики клика на все скриншоты
+    document.addEventListener('click', function(e) {
+        const screenshotCard = e.target.closest('.screenshot-card');
+        if (screenshotCard) {
+            const allCards = document.querySelectorAll('.screenshot-card');
+            const index = Array.from(allCards).indexOf(screenshotCard);
+            if (index !== -1) {
+                openModal(index);
+            }
+        }
+    });
+    
+    // Свайпы для мобильных устройств
+    let touchStartX = 0;
+    let touchEndX = 0;
+    
+    modal.addEventListener('touchstart', function(e) {
+        touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+    
+    modal.addEventListener('touchend', function(e) {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    }, { passive: true });
+    
+    function handleSwipe() {
+        const swipeThreshold = 50;
+        const diff = touchStartX - touchEndX;
+        
+        if (Math.abs(diff) > swipeThreshold) {
+            if (diff > 0) {
+                showNext(); // Свайп влево - следующий
+            } else {
+                showPrev(); // Свайп вправо - предыдущий
+            }
+        }
+    }
+})();
+</script>
 </body>
+
 </html>

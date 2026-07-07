@@ -65,12 +65,16 @@ body {
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    height: 100%;
+    min-height: 100vh;
+    position: relative;
 }
 
 .container {
     max-width: var(--container-max);
     margin: 0 auto;
     padding: 0 20px;
+    width: 100%;
 }
 
 /* Noise texture */
@@ -868,297 +872,6 @@ body {
 }
 
 /* ========================================
-   RESPONSIVE DESIGN - TABLET (768px - 1024px)
-   ======================================== */
-@media (max-width: 1024px) and (min-width: 769px) {
-    :root {
-        --section-padding: 100px;
-    }
-    
-    .hero {
-        padding: 60px 20px;
-    }
-    
-    .hero-title {
-        font-size: clamp(50px, 10vw, 100px);
-    }
-    
-    .problem-grid,
-    .features,
-    .deep-dive-grid,
-    .student-features {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .tech-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-    
-    .testimonial-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .stats {
-        gap: 30px;
-    }
-    
-    .stat-divider {
-        height: 50px;
-    }
-}
-
-/* ========================================
-   RESPONSIVE DESIGN - MOBILE (max-width: 768px)
-   ======================================== */
-@media (max-width: 768px) {
-    :root {
-        --section-padding: 80px;
-    }
-    
-    .hero {
-        padding: 60px 20px;
-        min-height: auto;
-    }
-    
-    .hero-title {
-        font-size: clamp(48px, 12vw, 80px);
-        letter-spacing: -2px;
-    }
-    
-    .badge {
-        font-size: 12px;
-        padding: 6px 16px;
-        margin-bottom: 30px;
-    }
-    
-    .cta-group {
-        flex-direction: column;
-        align-items: stretch;
-    }
-    
-    .btn-primary,
-    .btn-secondary {
-        width: 100%;
-        justify-content: center;
-        padding: 16px 30px;
-    }
-    
-    .stats {
-        flex-direction: column;
-        gap: 25px;
-    }
-    
-    .stat-divider {
-        display: none;
-    }
-    
-    .stat {
-        text-align: center;
-    }
-    
-    .problem-grid,
-    .features,
-    .deep-dive-grid,
-    .student-features,
-    .tech-grid,
-    .testimonial-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .problem-card,
-    .feature-card,
-    .deep-card,
-    .student-card,
-    .tech-item,
-    .testimonial-card {
-        padding: 30px 25px;
-    }
-    
-    .section-subtitle {
-        margin-bottom: 60px;
-    }
-    
-    .final-cta-buttons {
-        flex-direction: column;
-        align-items: stretch;
-    }
-    
-    .btn-large {
-        padding: 18px 40px;
-        font-size: 16px;
-    }
-    
-    .cta-features {
-        flex-direction: column;
-        gap: 20px;
-    }
-    
-    .footer-content {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
-    
-    .footer-links {
-        justify-content: center;
-    }
-    
-    .light-orb {
-        filter: blur(80px);
-        opacity: 0.3;
-    }
-    
-    .orb-1,
-    .orb-2,
-    .orb-3,
-    .orb-4,
-    .orb-5,
-    .orb-6 {
-        width: 300px;
-        height: 300px;
-    }
-}
-
-/* ========================================
-   RESPONSIVE DESIGN - SMALL MOBILE (max-width: 480px)
-   ======================================== */
-@media (max-width: 480px) {
-    :root {
-        --section-padding: 60px;
-    }
-    
-    .container {
-        padding: 0 15px;
-    }
-    
-    .hero-title {
-        font-size: clamp(40px, 12vw, 70px);
-        letter-spacing: -1px;
-    }
-    
-    .hero-subtitle {
-        font-size: clamp(18px, 4vw, 24px);
-    }
-    
-    .section-title {
-        font-size: clamp(32px, 6vw, 48px);
-    }
-    
-    .problem-card,
-    .feature-card,
-    .deep-card,
-    .student-card {
-        padding: 25px 20px;
-    }
-    
-    .problem-icon,
-    .student-icon {
-        font-size: 40px;
-    }
-    
-    .feature-highlight {
-        padding: 10px 15px;
-        font-size: 13px;
-    }
-    
-    .testimonial-text {
-        font-size: 15px;
-    }
-    
-    .quote {
-        font-size: 60px;
-    }
-    
-    .cta-badge {
-        font-size: 14px;
-        padding: 8px 20px;
-    }
-    
-    .final-title {
-        font-size: clamp(32px, 7vw, 48px);
-    }
-}
-
-/* ========================================
-   RESPONSIVE DESIGN - VERY SMALL (max-width: 360px)
-   ======================================== */
-@media (max-width: 360px) {
-    .hero-title {
-        font-size: 36px;
-    }
-    
-    .btn-primary,
-    .btn-secondary {
-        padding: 14px 25px;
-        font-size: 14px;
-    }
-    
-    .stat-number {
-        font-size: 32px;
-    }
-    
-    .problem-card,
-    .feature-card,
-    .deep-card,
-    .student-card {
-        padding: 20px 15px;
-    }
-}
-
-/* ========================================
-   LANDSCAPE MOBILE (max-height: 500px)
-   ======================================== */
-@media (max-height: 500px) and (orientation: landscape) {
-    .hero {
-        min-height: auto;
-        padding: 40px 20px;
-    }
-    
-    .hero-title {
-        font-size: 60px;
-    }
-}
-
-/* ========================================
-   ACCESSIBILITY & PERFORMANCE
-   ======================================== */
-@media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-    }
-}
-
-/* Focus styles for accessibility */
-a:focus,
-button:focus {
-    outline: 2px solid var(--gold-primary);
-    outline-offset: 4px;
-}
-
-/* Print styles */
-@media print {
-    .noise,
-    .light-orb {
-        display: none;
-    }
-    
-    body {
-        background: white;
-        color: black;
-    }
-    
-    .hero {
-        min-height: auto;
-        page-break-after: always;
-    }
-}
-
-
-/* ========================================
    LIVE INTERFACE SECTION (UPDATED)
    ======================================== */
 .live-interface {
@@ -1169,15 +882,21 @@ button:focus {
 
 .section-header {
     text-align: center;
-    margin-bottom: 80px;
+    margin-bottom: clamp(40px, 8vw, 80px);
+    padding: 0 20px;
 }
 
 .screenshots-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 40px;
-    margin-bottom: 80px;
-    justify-items: center;
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(20px, 4vw, 40px);
+    margin-bottom: clamp(40px, 8vw, 80px);
+    padding: 0 20px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .screenshot-card {
@@ -1188,7 +907,8 @@ button:focus {
     transition: all 0.4s ease;
     position: relative;
     width: 100%;
-    max-width: 400px;
+    margin: 0 auto;
+    box-sizing: border-box;
 }
 
 .screenshot-card::before {
@@ -1230,6 +950,7 @@ button:focus {
     height: 100%;
     object-fit: contain;
     transition: transform 0.4s ease;
+    display: block;
 }
 
 .screenshot-card:hover .screenshot-image img {
@@ -1237,12 +958,12 @@ button:focus {
 }
 
 .screenshot-caption {
-    padding: 25px;
+    padding: clamp(15px, 4vw, 25px);
     text-align: center;
 }
 
 .screenshot-caption h4 {
-    font-size: 20px;
+    font-size: clamp(16px, 4vw, 20px);
     margin-bottom: 8px;
     color: var(--white);
     font-weight: 600;
@@ -1250,17 +971,21 @@ button:focus {
 
 .screenshot-caption p {
     color: var(--white-muted);
-    font-size: 14px;
+    font-size: clamp(12px, 3vw, 14px);
 }
 
 .interface-cta {
     text-align: center;
-    padding: 60px 20px;
+    padding: clamp(30px, 6vw, 60px) 20px;
     background: var(--black-card);
-    border-radius: 30px;
+    border-radius: 24px;
     border: 1px solid rgba(212, 175, 55, 0.2);
     position: relative;
     overflow: hidden;
+    margin: 0 20px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .interface-cta::before {
@@ -1283,121 +1008,6 @@ button:focus {
 .btn-medium {
     padding: 20px 45px;
     font-size: 17px;
-}
-
-/* ========================================
-   RESPONSIVE - TABLET (768px - 1024px)
-   ======================================== */
-@media (max-width: 1024px) and (min-width: 769px) {
-    .screenshots-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 30px;
-    }
-    
-    .screenshot-card {
-        max-width: 350px;
-    }
-}
-
-/* ========================================
-   RESPONSIVE - MOBILE (max-width: 768px)
-   ======================================== */
-@media (max-width: 768px) {
-    .screenshots-grid {
-        grid-template-columns: 1fr;
-        gap: 30px;
-        justify-items: center;
-    }
-    
-    .screenshot-card {
-        max-width: 320px;
-        width: 100%;
-    }
-    
-    .screenshot-image {
-        aspect-ratio: 9 / 16;
-    }
-    
-    .screenshot-caption {
-        padding: 20px;
-    }
-    
-    .screenshot-caption h4 {
-        font-size: 18px;
-    }
-    
-    .screenshot-caption p {
-        font-size: 13px;
-    }
-    
-    .interface-cta {
-        padding: 40px 20px;
-    }
-    
-    .interface-cta-text {
-        font-size: 20px;
-    }
-    
-    .btn-medium {
-        padding: 18px 40px;
-        font-size: 16px;
-    }
-}
-
-/* ========================================
-   RESPONSIVE - SMALL MOBILE (max-width: 480px)
-   ======================================== */
-@media (max-width: 480px) {
-    .screenshots-grid {
-        gap: 25px;
-    }
-    
-    .screenshot-card {
-        max-width: 100%;
-    }
-    
-    .screenshot-image {
-        aspect-ratio: 9 / 16;
-    }
-    
-    .screenshot-caption {
-        padding: 18px 15px;
-    }
-    
-    .screenshot-caption h4 {
-        font-size: 16px;
-        margin-bottom: 6px;
-    }
-    
-    .screenshot-caption p {
-        font-size: 12px;
-    }
-}
-
-/* ========================================
-   RESPONSIVE - VERY SMALL (max-width: 360px)
-   ======================================== */
-@media (max-width: 360px) {
-    .screenshot-image {
-        aspect-ratio: 9 / 16;
-    }
-    
-    .screenshot-caption h4 {
-        font-size: 15px;
-    }
-}
-
-/* ========================================
-   LARGE SCREENS (min-width: 1400px)
-   ======================================== */
-@media (min-width: 1400px) {
-    .screenshots-grid {
-        gap: 50px;
-    }
-    
-    .screenshot-card {
-        max-width: 450px;
-    }
 }
 
 /* ========================================
@@ -1544,228 +1154,454 @@ button:focus {
 }
 
 /* ========================================
-   MODAL RESPONSIVE - TABLET
+   RESPONSIVE - TABLET (768px - 1024px)
    ======================================== */
 @media (max-width: 1024px) and (min-width: 769px) {
-    .modal-image-container {
-        max-width: 85vw;
-        max-height: 65vh;
+    :root {
+        --section-padding: 100px;
     }
     
-    .modal-image {
-        max-height: 65vh;
+    .hero {
+        padding: 60px 20px;
     }
     
-    .modal-nav {
-        width: 45px;
-        height: 45px;
+    .hero-title {
+        font-size: clamp(50px, 10vw, 100px);
     }
     
-    .modal-prev {
-        left: 15px;
+    .problem-grid,
+    .features,
+    .deep-dive-grid,
+    .student-features {
+        grid-template-columns: repeat(2, 1fr);
     }
     
-    .modal-next {
-        right: 15px;
+    .tech-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .testimonial-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .stats {
+        gap: 30px;
+    }
+    
+    .stat-divider {
+        height: 50px;
     }
 }
 
 /* ========================================
-   MODAL RESPONSIVE - MOBILE
+   RESPONSIVE - MOBILE (max-width: 768px)
    ======================================== */
 @media (max-width: 768px) {
-    .modal-content {
-        padding: 15px;
+    :root {
+        --section-padding: 80px;
     }
     
-    .modal-close {
-        top: 15px;
-        right: 15px;
-        width: 40px;
-        height: 40px;
+    .hero {
+        padding: 60px 20px;
+        min-height: auto;
     }
     
-    .modal-nav {
-        width: 40px;
-        height: 40px;
+    .hero-title {
+        font-size: clamp(48px, 12vw, 80px);
+        letter-spacing: -2px;
     }
     
-    .modal-prev {
-        left: 10px;
+    .badge {
+        font-size: 12px;
+        padding: 6px 16px;
+        margin-bottom: 30px;
     }
     
-    .modal-next {
-        right: 10px;
+    .cta-group {
+        flex-direction: column;
+        align-items: stretch;
     }
     
-    .modal-image-container {
-        max-width: 95vw;
-        max-height: 60vh;
+    .btn-primary,
+    .btn-secondary {
+        width: 100%;
+        justify-content: center;
+        padding: 16px 30px;
     }
     
-    .modal-image {
-        max-height: 60vh;
+    .stats {
+        flex-direction: column;
+        gap: 25px;
     }
     
-    .modal-caption {
-        margin-top: 20px;
+    .stat-divider {
+        display: none;
     }
     
-    .modal-title {
-        font-size: 20px;
+    .stat {
+        text-align: center;
     }
     
-    .modal-description {
-        font-size: 14px;
+    .problem-grid,
+    .features,
+    .deep-dive-grid,
+    .student-features,
+    .tech-grid,
+    .testimonial-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .problem-card,
+    .feature-card,
+    .deep-card,
+    .student-card,
+    .tech-item,
+    .testimonial-card {
+        padding: 30px 25px;
+    }
+    
+    .section-subtitle {
+        margin-bottom: 60px;
+    }
+    
+    .final-cta-buttons {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .btn-large {
+        padding: 18px 40px;
+        font-size: 16px;
+    }
+    
+    .cta-features {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .footer-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .footer-links {
+        justify-content: center;
+    }
+    
+    .light-orb {
+        filter: blur(80px);
+        opacity: 0.3;
+    }
+    
+    .orb-1,
+    .orb-2,
+    .orb-3,
+    .orb-4,
+    .orb-5,
+    .orb-6 {
+        width: 300px;
+        height: 300px;
     }
 }
 
 /* ========================================
-   MODAL RESPONSIVE - SMALL MOBILE
+   RESPONSIVE - SMALL MOBILE (max-width: 480px)
    ======================================== */
 @media (max-width: 480px) {
-    .modal-content {
-        padding: 10px;
+    :root {
+        --section-padding: 60px;
     }
     
-    .modal-close {
-        top: 10px;
-        right: 10px;
-        width: 36px;
-        height: 36px;
+    .container {
+        padding: 0 15px;
     }
     
-    .modal-close svg {
-        width: 20px;
-        height: 20px;
+    .hero-title {
+        font-size: clamp(40px, 12vw, 70px);
+        letter-spacing: -1px;
     }
     
-    .modal-nav {
-        width: 36px;
-        height: 36px;
+    .hero-subtitle {
+        font-size: clamp(18px, 4vw, 24px);
     }
     
-    .modal-nav svg {
-        width: 24px;
-        height: 24px;
+    .section-title {
+        font-size: clamp(32px, 6vw, 48px);
     }
     
-    .modal-prev {
-        left: 5px;
+    .problem-card,
+    .feature-card,
+    .deep-card,
+    .student-card {
+        padding: 25px 20px;
     }
     
-    .modal-next {
-        right: 5px;
+    .problem-icon,
+    .student-icon {
+        font-size: 40px;
     }
     
-    .modal-image-container {
-        max-width: 100vw;
-        max-height: 55vh;
-        border-radius: 8px;
-    }
-    
-    .modal-image {
-        max-height: 55vh;
-        border-radius: 8px;
-    }
-    
-    .modal-caption {
-        margin-top: 15px;
-    }
-    
-    .modal-title {
-        font-size: 18px;
-    }
-    
-    .modal-description {
+    .feature-highlight {
+        padding: 10px 15px;
         font-size: 13px;
     }
     
-    .modal-counter {
-        font-size: 12px;
+    .testimonial-text {
+        font-size: 15px;
+    }
+    
+    .quote {
+        font-size: 60px;
+    }
+    
+    .cta-badge {
+        font-size: 14px;
+        padding: 8px 20px;
+    }
+    
+    .final-title {
+        font-size: clamp(32px, 7vw, 48px);
+    }
+    
+    .screenshots-grid {
+        padding: 0 15px;
+        gap: 25px;
+    }
+    
+    .screenshot-card {
+        border-radius: 16px;
+    }
+    
+    .screenshot-caption {
+        padding: 15px;
+    }
+    
+    .screenshot-caption h4 {
+        font-size: 16px;
+    }
+    
+    .interface-cta {
+        margin: 0 15px;
+        padding: 30px 15px;
+        border-radius: 20px;
+    }
+    
+    .interface-cta-text {
+        font-size: 20px;
+    }
+    
+    .btn-medium {
+        padding: 18px 40px;
+        font-size: 16px;
     }
 }
 
 /* ========================================
-   MODAL RESPONSIVE - VERY SMALL
+   RESPONSIVE - VERY SMALL (max-width: 360px) - HUAWEI P40
    ======================================== */
 @media (max-width: 360px) {
-    .modal-image-container {
-        max-height: 50vh;
+    :root {
+        --section-padding: 60px;
     }
     
-    .modal-image {
-        max-height: 50vh;
+    .container {
+        padding: 0 12px;
     }
     
-    .modal-title {
+    .hero {
+        padding: 60px 0;
+    }
+    
+    .hero-title {
+        font-size: 36px;
+        letter-spacing: -1px;
+    }
+    
+    .hero-subtitle {
         font-size: 16px;
+        line-height: 1.4;
+    }
+    
+    .hero-description {
+        font-size: 15px;
+        line-height: 1.4;
+    }
+    
+    .section-title {
+        font-size: 28px;
+        letter-spacing: -1px;
+    }
+    
+    .section-subtitle {
+        font-size: 15px;
+        line-height: 1.4;
+    }
+    
+    .problem-card,
+    .feature-card,
+    .deep-card,
+    .student-card {
+        padding: 20px 15px;
+    }
+    
+    .problem-icon,
+    .student-icon {
+        font-size: 36px;
+    }
+    
+    .feature-highlight {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+    
+    .cta-group {
+        gap: 15px;
+    }
+    
+    .btn-primary,
+    .btn-secondary {
+        padding: 14px 25px;
+        font-size: 14px;
+    }
+    
+    .stat-number {
+        font-size: 32px;
+    }
+    
+    .screenshot-card {
+        border-radius: 14px;
+    }
+    
+    .screenshot-caption {
+        padding: 12px;
+    }
+    
+    .screenshot-caption h4 {
+        font-size: 15px;
+    }
+    
+    .screenshot-caption p {
+        font-size: 12px;
+    }
+    
+    .interface-cta {
+        margin: 0 10px;
+        padding: 25px 10px;
+        border-radius: 18px;
+    }
+    
+    .interface-cta-text {
+        font-size: 18px;
+    }
+    
+    .btn-medium {
+        padding: 16px 35px;
+        font-size: 15px;
+    }
+    
+    .footer {
+        padding: 40px 10px 25px;
+    }
+    
+    .footer-links {
+        gap: 15px;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .footer-links a {
+        font-size: 13px;
+    }
+    
+    .footer-bottom p {
+        font-size: 12px;
     }
 }
 
 /* ========================================
-   MODAL RESPONSIVE - LANDSCAPE MOBILE
+   RESPONSIVE - LANDSCAPE MOBILE (max-height: 500px)
    ======================================== */
 @media (max-height: 500px) and (orientation: landscape) {
-    .modal-image-container {
-        max-height: 70vh;
+    .hero {
+        min-height: auto;
+        padding: 40px 20px;
     }
     
-    .modal-image {
-        max-height: 70vh;
+    .hero-title {
+        font-size: 60px;
     }
     
-    .modal-caption {
-        margin-top: 10px;
+    .section-title {
+        font-size: 40px;
     }
     
-    .modal-title {
-        font-size: 16px;
-        margin-bottom: 5px;
+    .section-subtitle {
+        font-size: 20px;
     }
     
-    .modal-description {
-        font-size: 12px;
-        margin-bottom: 8px;
+    .screenshots-grid {
+        padding: 0 15px;
+        gap: 20px;
+    }
+    
+    .screenshot-card {
+        border-radius: 16px;
+    }
+    
+    .screenshot-caption {
+        padding: 15px;
+    }
+    
+    .screenshot-caption h4 {
+        font-size: 18px;
+    }
+    
+    .interface-cta {
+        margin: 0 15px;
+        padding: 30px 15px;
+        border-radius: 20px;
+    }
+    
+    .interface-cta-text {
+        font-size: 22px;
     }
 }
 
 /* ========================================
-   MODAL ANIMATIONS
-   ======================================== */
-@keyframes modalFadeIn {
-    from {
-        opacity: 0;
-        transform: scale(0.9);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-.modal.active .modal-content {
-    animation: modalFadeIn 0.3s ease;
-}
-
-/* ========================================
-   MODAL ACCESSIBILITY
+   ACCESSIBILITY & PERFORMANCE
    ======================================== */
 @media (prefers-reduced-motion: reduce) {
-    .modal {
-        transition: none;
-    }
-    
-    .modal.active .modal-content {
-        animation: none;
-    }
-    
-    .modal-close:hover {
-        transform: none;
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
     }
 }
 
-/* Скрываем навигацию, если только одно изображение */
-.modal.single-image .modal-nav {
-    display: none;
+/* Focus styles for accessibility */
+a:focus,
+button:focus {
+    outline: 2px solid var(--gold-primary);
+    outline-offset: 4px;
+}
+
+/* Print styles */
+@media print {
+    .noise,
+    .light-orb {
+        display: none;
+    }
+    
+    body {
+        background: white;
+        color: black;
+    }
+    
+    .hero {
+        min-height: auto;
+        page-break-after: always;
+    }
 }
